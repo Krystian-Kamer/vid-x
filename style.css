@@ -40,6 +40,7 @@ a {
   height: 50px;
   background-color: rgba(0, 0, 0, 0.9);
   border-radius: 0px 0px 10px 10px;
+  z-index: 9;
 }
 .nav-logo,
 .nav-link {
@@ -97,7 +98,7 @@ a {
   padding: 15px 0;
 }
 
-.nav-link:hover .nav-ul {
+.nav-ul-active {
   position: absolute;
   left: 0;
   display: flex;
@@ -235,6 +236,7 @@ h2 span {
     0 0 150px rgb(255, 0, 0);
   cursor: pointer;
   padding: 10px;
+  z-index: 1;
 }
 .footer {
   position: fixed;

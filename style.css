@@ -74,6 +74,7 @@ a {
 
 .nav-link {
   position: relative;
+  cursor: pointer;
 }
 
 .nav-link:hover {
@@ -154,92 +155,61 @@ h2 span {
 }
 
 .cards-container {
-  margin-top: 155px;
-  padding: 100px 50px;
+  position: relative;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  height: 500px;
+  flex-wrap: wrap;
 }
 
 .card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 320px;
-  height: 600px;
-  margin: 10px;
-  overflow: hidden;
-  border-radius: 15px;
-  background-position: center;
-  background-size: cover;
-  cursor: pointer;
-  box-shadow: 0px 0px 40px 30px rgb(11, 8, 8);
-}
-
-.card-info {
-  position: absolute;
-  display: none;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background-color: rgba(0, 0, 0, 0.8);
-  font-size: 20px;
-  padding: 0 10px;
-}
-
-.card-middle .card-info-title {
-  font-size: 30px;
-}
-
-.card:hover .card-info {
   display: flex;
   flex-direction: column;
+  width: 290px;
+  height: 350px;
+  overflow: hidden;
+  margin: 20px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  z-index: 1;
+  opacity: 85%;
+  cursor: pointer;
+}
+
+.card-poster {
+  display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 0px 50px 55px rgba(0, 0, 0, 0.8);
+  width: 290px;
+  height: 290px;
+  transition: transform 0.3s;
+  z-index: -100;
 }
 
-.card img {
-  position: absolute;
+.card-poster img {
+  width: 100%;
   height: 100%;
-  border-radius: 15px;
 }
 
-.card-middle {
-  height: 700px;
-  width: 400px;
+.card-title {
+  padding-top: 5px;
+  height: 60px;
+  text-align: center;
+  background-color: black;
 }
 
-.card-furthest {
-  height: 550px;
+.card:hover .card-poster {
+  transform: scale(1.05);
+}
+.card:hover {
+  opacity: 100%;
 }
 
-.card-info-stars {
-  position: absolute;
-  bottom: 0;
-}
-
-.card-info-stars span {
-  color: yellow;
-  font-size: 25px;
-  text-shadow: 0 0 5px #f6ff00, 0 0 20px #f6ff00, 0 0 90px #f6ff00,
-    0 0 150px #f6ff00;
-}
-
-.card-icon-arrow {
-  font-size: 40px;
-  color: rgb(247, 250, 200);
-  text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
-    0 0 150px rgb(255, 0, 0);
-  cursor: pointer;
-  padding: 10px;
-  z-index: 1;
-}
 .footer {
-  position: fixed;
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   bottom: 0;

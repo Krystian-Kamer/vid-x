@@ -24,29 +24,29 @@ const fetchMovies = async (link) => {
   movies = json.results;
 };
 
-const fetchPopularMovies = () => {
+const fetchPopularMovies = async () => {
   cardsContainer.textContent = '';
-  fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`);
+  await fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`);
   createCards();
 };
 
-const fetchTopRatedMovies = (params) => {
+const fetchTopRatedMovies = async () => {
   cardsContainer.textContent = '';
-  fetchMovies(
+  await fetchMovies(
     `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`
   );
   createCards();
 };
 
-const fetchUpcomingMovies = (params) => {
+const fetchUpcomingMovies = async () => {
   cardsContainer.textContent = '';
-  fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`);
+  await fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`);
   createCards();
 };
 
-const fetchNowPlayingMovies = (params) => {
+const fetchNowPlayingMovies = async () => {
   cardsContainer.textContent = '';
-  fetchMovies(
+  await fetchMovies(
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`
   );
   createCards();
@@ -58,8 +58,8 @@ const createCards = () => {
     let movieID = movies[i].id;
     cardsContainer.append(card);
     card.innerHTML = `<div class="card"><div class="card-poster"><img src="
-    https://www.themoviedb.org/t/p/w220_and_h330_face${movies[i].poster_path}"></div><p class="card-title">${movies[i].title}</p></div>`;
-    console.log(movies[i].poster_path);
+    https://www.themoviedb.org/t/p/w220_and_h330_face${movies[i].backdrop_path}"></div><p class="card-title">${movies[i].title}</p></div>`;
+    console.log(movies[i]);
   }
 
 };

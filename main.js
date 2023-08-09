@@ -6,9 +6,12 @@ const movieMenu = document.querySelector('.movie-menu');
 const seriesMenu = document.querySelector('.series-menu');
 const cardsContainer = document.querySelector('.cards-container');
 
+const nowPlayingMoviesBtn = document.querySelector('.btn-now-playing-movies');
+const popularMoviesBtn = document.querySelector('.btn-popular-movies');
+const topRatedMoviesBtn = document.querySelector('.btn-top-rated-movies');
+const upcomingMoviesBtn = document.querySelector('.btn-upcoming-movies');
+
 const spanYear = document.querySelector('.current-year span');
-const currentYear = new Date().getFullYear();
-spanYear.textContent = ` ${currentYear} `;
 
 const API_KEY = '57b4025ea3b2beb4d12b65e71d4dc270';
 let movies = [];
@@ -22,7 +25,30 @@ const fetchMovies = async (link) => {
 };
 
 const fetchPopularMovies = () => {
+  cardsContainer.textContent = '';
   fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`);
+  createCard();
+};
+
+const fetchTopRatedMovies = (params) => {
+  cardsContainer.textContent = '';
+  fetchMovies(
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`
+  );
+  createCard();
+};
+
+const fetchUpcomingMovies = (params) => {
+  cardsContainer.textContent = '';
+  fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`);
+  createCard();
+};
+
+const fetchNowPlayingMovies = (params) => {
+  cardsContainer.textContent = '';
+  fetchMovies(
+    `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`
+  );
   createCard();
 };
 
@@ -30,12 +56,9 @@ const createCard = () => {
   for (let i = 0; i < movies.length; i++) {
     let card = document.createElement('div');
     let movieID = movies[i].id;
-
     cardsContainer.append(card);
-    card.innerHTML = `<div class="card"><div class="card-poster"><img src=${`https://api.themoviedb.org/3/movie/${movieID}/images`}></div><p class="card-title">${
-      movies[i].title
-    }</p>
-</div>`;
+    card.innerHTML = `<div class="card"><div class="card-poster"><img src="
+    https://api.themoviedb.org/3/movie/${movieID}/images"></div><p class="card-title">${movies[i].title}</p></div>`;
   }
 };
 
@@ -47,8 +70,18 @@ const showSeries = () => {
   seriesList.classList.toggle('nav-ul-active');
 };
 
+const getCurrentYear = () => {
+  const currentYear = new Date().getFullYear();
+  spanYear.textContent = ` ${currentYear} `;
+};
+getCurrentYear();
+
 // ************LISTENERS************
 
 movieMenu.addEventListener('click', showMovies);
 seriesMenu.addEventListener('click', showSeries);
-window.addEventListener('click', fetchPopularMovies);
+
+popularMoviesBtn.addEventListener('click', fetchPopularMovies);
+topRatedMoviesBtn.addEventListener('click', fetchTopRatedMovies);
+upcomingMoviesBtn.addEventListener('click', fetchUpcomingMovies);
+nowPlayingMoviesBtn.addEventListener('click', fetchNowPlayingMovies);

@@ -129,6 +129,31 @@ h2 {
   font-size: 25px;
 }
 
+.button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button{
+  padding: 10px 20px;
+  margin: 20px;
+  border-radius: 15px;
+  background-color: rgba(21, 17, 17, 0.424);
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+  font-family: 'Syne Mono', monospace;
+  font-size: 20px;
+  text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
+    0 0 150px rgb(73, 73, 73);
+    transition: transform .3s;
+}
+
+button:hover{
+  color: #ff8484;
+transform: scale(1.05);}
+
 h2 {
   padding: 10px 0;
   font-size: 40px;

@@ -186,7 +186,7 @@ h2 {
   border: 2px solid white;
   font-family: 'Syne Mono', monospace;
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
-  0 0 150px rgb(73, 73, 73);
+    0 0 150px rgb(73, 73, 73);
   transition: transform 0.3s;
   cursor: pointer;
 }
@@ -195,7 +195,8 @@ h2 {
   color: rgb(247, 250, 200);
 }
 
-.btn-choose:hover, .btn-choose:hover span {
+.btn-choose:hover,
+.btn-choose:hover span {
   transform: scale(1.05);
   color: #ff8484;
 }
@@ -277,6 +278,17 @@ h2 span {
 }
 .card:hover {
   opacity: 100%;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 50vw;
+  background-color: rgba(107, 71, 71, 0.8);
+  border-radius: 30px;
 }
 
 .footer {

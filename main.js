@@ -6,16 +6,17 @@ const movieMenu = document.querySelector('.movie-menu');
 const seriesMenu = document.querySelector('.series-menu');
 const cardsContainer = document.querySelector('.cards-container');
 const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
+const switchBgcBtn = document.querySelector('.button-bgc-switch');
+const currentTitle = document.querySelector('h2');
 
 // ************BUTTONS VARIABLES************
-// ************BUTTONS VARIABLES************
+
 const nowPlayingVideosBtn = document.querySelector('.btn-now-playing-movies');
 const popularVideosBtn = document.querySelector('.btn-popular-movies');
 const topRatedVideosBtn = document.querySelector('.btn-top-rated-movies');
 const upcomingVideosBtn = document.querySelector('.btn-upcoming-movies');
 const buttonsListSpan = document.querySelectorAll('.btn-choose span');
-
-const switchBgcBtn = document.querySelector('.button-bgc-switch');
+const chooseButtonsList = [...document.querySelectorAll('.btn-choose')]
 const switchToMoviesBtn = document.querySelector('.switch-btn-movies');
 const switchToSeriesBtn = document.querySelector('.switch-btn-series');
 
@@ -93,7 +94,6 @@ fetchNowPlayingVideos();
 
 const createCards = () => {
   movies.forEach((movie) => {
-    console.log(movie);
     let card = document.createElement('div');
     card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${
       movie.poster_path
@@ -132,6 +132,10 @@ const toggleButton = (typeOfVideo) => {
   });
 };
 
+const setCurrentTitle = (e) => {
+  currentTitle.textContent = e.currentTarget.textContent
+};
+
 const getCurrentYear = () => {
   const currentYear = new Date().getFullYear();
   spanYear.textContent = ` ${currentYear} `;
@@ -149,3 +153,7 @@ topRatedVideosBtn.addEventListener('click', fetchTopRatedVideos);
 upcomingVideosBtn.addEventListener('click', fetchUpcomingVideos);
 switchToMoviesBtn.addEventListener('click', () => toggleButton('Movies'));
 switchToSeriesBtn.addEventListener('click', () => toggleButton('Series'));
+
+chooseButtonsList.forEach((button) => {
+  button.addEventListener('click', setCurrentTitle);
+});

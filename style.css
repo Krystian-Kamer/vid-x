@@ -178,16 +178,17 @@ h2 {
 .btn-choose {
   padding: 10px 30px;
   margin: 20px;
+  font-size: 20px;
   border-radius: 30px;
+  text-transform: uppercase;
   background-color: transparent;
   color: white;
   border: 2px solid white;
-  cursor: pointer;
   font-family: 'Syne Mono', monospace;
-  font-size: 20px;
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
-    0 0 150px rgb(73, 73, 73);
+  0 0 150px rgb(73, 73, 73);
   transition: transform 0.3s;
+  cursor: pointer;
 }
 
 .btn-choose span {

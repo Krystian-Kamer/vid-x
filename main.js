@@ -10,6 +10,11 @@ const nowPlayingMoviesBtn = document.querySelector('.btn-now-playing-movies');
 const popularMoviesBtn = document.querySelector('.btn-popular-movies');
 const topRatedMoviesBtn = document.querySelector('.btn-top-rated-movies');
 const upcomingMoviesBtn = document.querySelector('.btn-upcoming-movies');
+const buttonsListSpan = document.querySelectorAll('.btn-choose span');
+
+const switchBgcBtn = document.querySelector('.button-bgc-switch');
+const switchToMoviesBtn = document.querySelector('.switch-btn-movies');
+const switchToSeriesBtn = document.querySelector('.switch-btn-series');
 
 const spanYear = document.querySelector('.current-year span');
 
@@ -22,11 +27,14 @@ const fetchMovies = async (link) => {
   const res = await fetch(link);
   const json = await res.json();
   movies = json.results;
+  createCards();
 };
 
 const fetchPopularMovies = async () => {
   cardsContainer.textContent = '';
-  await fetchMovies(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`);
+  await fetchMovies(
+    `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
+  );
   createCards();
 };
 
@@ -35,13 +43,13 @@ const fetchTopRatedMovies = async () => {
   await fetchMovies(
     `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`
   );
-  createCards();
 };
 
 const fetchUpcomingMovies = async () => {
   cardsContainer.textContent = '';
-  await fetchMovies(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`);
-  createCards();
+  await fetchMovies(
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`
+  );
 };
 
 const fetchNowPlayingMovies = async () => {
@@ -49,19 +57,16 @@ const fetchNowPlayingMovies = async () => {
   await fetchMovies(
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`
   );
-  createCards();
 };
 
-const createCards = () => {
-  for (let i = 0; i < movies.length; i++) {
-    let card = document.createElement('div');
-    let movieID = movies[i].id;
-    cardsContainer.append(card);
-    card.innerHTML = `<div class="card"><div class="card-poster"><img src="
-    https://www.themoviedb.org/t/p/w220_and_h330_face${movies[i].backdrop_path}"></div><p class="card-title">${movies[i].title}</p></div>`;
-    console.log(movies[i]);
-  }
+fetchNowPlayingMovies();
 
+const createCards = () => {
+  movies.forEach((movie) => {
+    let card = document.createElement('div');
+    card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${movie.backdrop_path}" alt="${movie.title} poster"></div><p class="card-title">${movie.title}</p></div>`;
+    cardsContainer.append(card);
+  });
 };
 
 const showMovies = () => {
@@ -72,11 +77,29 @@ const showSeries = () => {
   seriesList.classList.toggle('nav-ul-active');
 };
 
+const toggleButton = (typeOfVideo) => {
+  if (typeOfVideo === 'Movies') {
+    switchBgcBtn.style.left = '0';
+    switchToMoviesBtn.classList.add('active');
+    switchToSeriesBtn.classList.remove('active');
+    buttonsListSpan.forEach(
+      (button) => (button.textContent = `${typeOfVideo}`)
+    );
+  } else if (typeOfVideo === 'Series') {
+    switchBgcBtn.style.left = '50%';
+    switchToMoviesBtn.classList.remove('active');
+    switchToSeriesBtn.classList.add('active');
+    buttonsListSpan.forEach(
+      (button) => (button.textContent = `${typeOfVideo}`)
+    );
+  }
+};
+
 const getCurrentYear = () => {
   const currentYear = new Date().getFullYear();
   spanYear.textContent = ` ${currentYear} `;
 };
-getCurrentYear();
+getCurrentYear();() =>
 
 // ************LISTENERS************
 
@@ -87,3 +110,6 @@ popularMoviesBtn.addEventListener('click', fetchPopularMovies);
 topRatedMoviesBtn.addEventListener('click', fetchTopRatedMovies);
 upcomingMoviesBtn.addEventListener('click', fetchUpcomingMovies);
 nowPlayingMoviesBtn.addEventListener('click', fetchNowPlayingMovies);
+
+switchToMoviesBtn.addEventListener('click', () => toggleButton('Movies'));
+switchToSeriesBtn.addEventListener('click', () =>toggleButton('Series'));

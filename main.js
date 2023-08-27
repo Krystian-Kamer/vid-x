@@ -6,7 +6,6 @@ const movieMenu = document.querySelector('.movie-menu');
 const seriesMenu = document.querySelector('.series-menu');
 const cardsContainer = document.querySelector('.cards-container');
 const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
-const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
 
 // ************BUTTONS VARIABLES************
 // ************BUTTONS VARIABLES************
@@ -31,7 +30,6 @@ const fetchMovies = async (link) => {
   const res = await fetch(link);
   const json = await res.json();
   movies = json.results;
-  createCards();
   createCards();
 };
 
@@ -72,12 +70,9 @@ fetchNowPlayingMovies();
 
 const createCards = () => {
   movies.forEach((movie) => {
-  movies.forEach((movie) => {
     let card = document.createElement('div');
     card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${movie.backdrop_path}" alt="${movie.title} poster"></div><p class="card-title">${movie.title}</p></div>`;
-    card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${movie.backdrop_path}" alt="${movie.title} poster"></div><p class="card-title">${movie.title}</p></div>`;
     cardsContainer.append(card);
-  });
   });
 };
 
@@ -113,10 +108,7 @@ const getCurrentYear = () => {
   spanYear.textContent = ` ${currentYear} `;
 };
 getCurrentYear();
-() =>
-() =>
 
-  // ************LISTENERS************
   // ************LISTENERS************
 
   movieMenu.addEventListener('click', showMovies);

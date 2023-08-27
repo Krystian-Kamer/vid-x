@@ -5,16 +5,15 @@ const seriesList = document.querySelector('.series-list');
 const movieMenu = document.querySelector('.movie-menu');
 const seriesMenu = document.querySelector('.series-menu');
 const cardsContainer = document.querySelector('.cards-container');
+const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
 
+// ************BUTTONS VARIABLES************
 const nowPlayingMoviesBtn = document.querySelector('.btn-now-playing-movies');
 const popularMoviesBtn = document.querySelector('.btn-popular-movies');
 const topRatedMoviesBtn = document.querySelector('.btn-top-rated-movies');
 const upcomingMoviesBtn = document.querySelector('.btn-upcoming-movies');
 const buttonsListSpan = document.querySelectorAll('.btn-choose span');
-
-const switchBgcBtn = document.querySelector('.button-bgc-switch');
-const switchToMoviesBtn = document.querySelector('.switch-btn-movies');
-const switchToSeriesBtn = document.querySelector('.switch-btn-series');
+const toggleBtns = [...document.querySelectorAll('.toggle-btn')];
 
 const spanYear = document.querySelector('.current-year span');
 
@@ -77,39 +76,33 @@ const showSeries = () => {
   seriesList.classList.toggle('nav-ul-active');
 };
 
-const toggleButton = (typeOfVideo) => {
-  if (typeOfVideo === 'Movies') {
-    switchBgcBtn.style.left = '0';
-    switchToMoviesBtn.classList.add('active');
-    switchToSeriesBtn.classList.remove('active');
-    buttonsListSpan.forEach(
-      (button) => (button.textContent = `${typeOfVideo}`)
-    );
-  } else if (typeOfVideo === 'Series') {
-    switchBgcBtn.style.left = '50%';
-    switchToMoviesBtn.classList.remove('active');
-    switchToSeriesBtn.classList.add('active');
-    buttonsListSpan.forEach(
-      (button) => (button.textContent = `${typeOfVideo}`)
-    );
+const chooseTypeOfVideo = (toggleBtn) => {
+  if (toggleBtn.classList.contains('active')) {
+    switchBgcOfBtn.style.left = '0';
+  } else {
+    switchBgcOfBtn.style.left = '50%';
   }
+  buttonsListSpan.forEach(
+    (button) => (button.textContent = `${toggleBtn.textContent}`)
+  );
 };
 
 const getCurrentYear = () => {
   const currentYear = new Date().getFullYear();
   spanYear.textContent = ` ${currentYear} `;
 };
-getCurrentYear();() =>
+getCurrentYear();
+() =>
 
-// ************LISTENERS************
+  // ************LISTENERS************
 
-movieMenu.addEventListener('click', showMovies);
+  movieMenu.addEventListener('click', showMovies);
 seriesMenu.addEventListener('click', showSeries);
 
 popularMoviesBtn.addEventListener('click', fetchPopularMovies);
 topRatedMoviesBtn.addEventListener('click', fetchTopRatedMovies);
 upcomingMoviesBtn.addEventListener('click', fetchUpcomingMovies);
 nowPlayingMoviesBtn.addEventListener('click', fetchNowPlayingMovies);
-
-switchToMoviesBtn.addEventListener('click', () => toggleButton('Movies'));
-switchToSeriesBtn.addEventListener('click', () =>toggleButton('Series'));
+toggleBtns.forEach((toggleBtn) =>
+  toggleBtn.addEventListener('click', () => chooseTypeOfVideo(toggleBtn))
+);

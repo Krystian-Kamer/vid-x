@@ -6,7 +6,9 @@ const movieMenu = document.querySelector('.movie-menu');
 const seriesMenu = document.querySelector('.series-menu');
 const cardsContainer = document.querySelector('.cards-container');
 const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
+const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
 
+// ************BUTTONS VARIABLES************
 // ************BUTTONS VARIABLES************
 const nowPlayingMoviesBtn = document.querySelector('.btn-now-playing-movies');
 const popularMoviesBtn = document.querySelector('.btn-popular-movies');
@@ -30,6 +32,7 @@ const fetchMovies = async (link) => {
   const json = await res.json();
   movies = json.results;
   createCards();
+  createCards();
 };
 
 const fetchPopularMovies = async () => {
@@ -51,6 +54,9 @@ const fetchUpcomingMovies = async () => {
   await fetchMovies(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`
   );
+  await fetchMovies(
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`
+  );
 };
 
 const fetchNowPlayingMovies = async () => {
@@ -62,11 +68,16 @@ const fetchNowPlayingMovies = async () => {
 
 fetchNowPlayingMovies();
 
+fetchNowPlayingMovies();
+
 const createCards = () => {
+  movies.forEach((movie) => {
   movies.forEach((movie) => {
     let card = document.createElement('div');
     card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${movie.backdrop_path}" alt="${movie.title} poster"></div><p class="card-title">${movie.title}</p></div>`;
+    card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${movie.backdrop_path}" alt="${movie.title} poster"></div><p class="card-title">${movie.title}</p></div>`;
     cardsContainer.append(card);
+  });
   });
 };
 
@@ -103,9 +114,12 @@ const getCurrentYear = () => {
 };
 getCurrentYear();
 () =>
+() =>
 
   // ************LISTENERS************
+  // ************LISTENERS************
 
+  movieMenu.addEventListener('click', showMovies);
   movieMenu.addEventListener('click', showMovies);
 seriesMenu.addEventListener('click', showSeries);
 

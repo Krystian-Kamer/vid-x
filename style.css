@@ -11,7 +11,6 @@ html {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
   background-image: linear-gradient(
     180deg,
     #000000 0%,
@@ -128,17 +127,59 @@ h2 {
   font-size: 25px;
 }
 
-.button-container{
+.buttons-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-button{
-  padding: 10px 20px;
+.buttons-switch-box {
+  position: relative;
+  margin: 20px 0;
+  background-color: transparent;
+  border-radius: 30px;
+  border: 2px solid #411414;
+}
+
+.toggle-btn {
+  position: relative;
+  text-align: center;
+  padding: 10px 30px;
+  font-size: 24px;
+  background-color: transparent;
+  border: 0;
+  font-family: 'Syne Mono', monospace;
+  color: white;
+  outline: none;
+  text-shadow: none;
+  cursor: pointer;
+}
+
+.button-bgc-switch {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #411414;
+  border-radius: 30px;
+  transition: 0.5s;
+  border: 2px solid #411414;
+}
+
+.active {
+  color: rgb(247, 250, 200);
+  text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
+    0 0 150px rgb(255, 0, 0);
+  transform: scale(1.1);
+}
+
+.btn-choose {
+  padding: 10px 30px;
   margin: 20px;
-  border-radius: 15px;
-  background-color: rgba(21, 17, 17, 0.424);
+  border-radius: 30px;
+  background-color: transparent;
   color: white;
   border: 2px solid white;
   cursor: pointer;
@@ -146,12 +187,17 @@ button{
   font-size: 20px;
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
     0 0 150px rgb(73, 73, 73);
-    transition: transform .3s;
+  transition: transform 0.3s;
 }
 
-button:hover{
+.btn-choose span {
+  color: rgb(247, 250, 200);
+}
+
+.btn-choose:hover, .btn-choose:hover span {
+  transform: scale(1.05);
   color: #ff8484;
-transform: scale(1.05);}
+}
 
 h2 {
   padding: 10px 0;
@@ -214,8 +260,8 @@ h2 span {
 }
 
 .card-poster img {
- width: 100%;
- height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .card-title {

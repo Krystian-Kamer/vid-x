@@ -11,7 +11,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monofett&family=Syne+Mono&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -19,69 +18,58 @@
     <nav class="nav">
         <a class="nav-logo" href="#"><i class="nav-icon fa-solid fa-clapperboard"></i>VID<span>web</span></a>
         <input placeholder="Enter title of film or series...                      🔍" class="nav-input" type="text">
-        <a class="nav-link movie-menu">MOVIE
-            <i class="nav-arrow fa-solid fa-chevron-down"></i>
-            <ul class="nav-ul movies-list">
-                <li class="category">Comedy</li>
-                <li class="category">Horror</li>
-                <li class="category">Thriller</li>
-                <li class="category">Drama</li>
-                <li class="category">Document</li>
-                <li class="category">Action</li>
-                <li class="category">Animation</li>
-                <li class="category">Fantasy</li>
-            </ul>
-        </a>
-        <a class="nav-link series-menu">SERIES
-            <i class="nav-arrow fa-solid fa-chevron-down"></i>
-            <ul class="nav-ul series-list">
-                <li class="category">Comedy</li>
-                <li class="category">Horror</li>
-                <li class="category">Thriller</li>
-                <li class="category">Drama</li>
-            </ul>
-        </a>
-        <a class="nav-link nav-link-about" href="#">ABOUT US</a>
-        <a class="nav-link nav-link-contact" href="#">CONTACT</a>
+        <a class="nav-link" href="#">about us</a>
+        <a class="nav-link" href="#">contact</a>
     </nav>
 
-    <h1>All your favorite movies and series in one place</h1>
-
-    <div class="buttons-container">
-        <div class="buttons-switch-box">
-            <div class="button-bgc-switch"></div>
-            <button class="toggle-btn switch-btn-movies active">Movies</button>
-            <button class="toggle-btn switch-btn-series">Series</button>
-        </div>
-        <div class="buttons-choose-box">
-            <button class="btn-choose btn-now-playing-movies">Now playing <span>Movies</span></button>
-            <button class="btn-choose btn-popular-movies">Popular <span>Movies</span></button>
-            <button class="btn-choose btn-top-rated-movies">Top rated <span>Movies</span></button>
-            <button class="btn-choose btn-upcoming-movies">Upcoming <span>Movies</span></button>
-        </div>
-    </div>
-
-    <h2>Now playing <span>movies</span></h2>
-
     <main class="main">
+        <h1>All your favorite movies and series in one place</h1>
+        <div class="buttons-container">
+            <div class="buttons-switch-box">
+                <div class="button-bgc-switch"></div>
+                <button class="toggle-btn switch-btn-movies">Movies</button>
+                <button class="toggle-btn switch-btn-series">Series</button>
+            </div>
+            <div class="buttons-choose-box">
+                <button class="btn-choose btn-now-playing-movies">Now playing <span>Movies</span></button>
+                <button class="btn-choose btn-popular-movies">Popular <span>Movies</span></button>
+                <button class="btn-choose btn-top-rated-movies">Top rated <span>Movies</span></button>
+                <button class="btn-choose btn-upcoming-movies">Upcoming <span>Movies</span></button>
+            </div>
+        </div>
+        <h2>Now playing <span>movies</span></h2>
 
         <div class="cards-container">
-            <div class="card">
-                <div class="card-poster">
-                    <img src="./img/test.jpg" alt="">
-                </div>
-                <p class="card-title">Lorem, ipsum fgfgfgor.</p>
+        </div>
+    </main>
+
+    <div class="modal">
+        <div class="modal-flex-box">
+            <div class="modal-left-side">
+                <img src="./img/photo3.jpg" alt="">
             </div>
-            <div class="card">
-                <div class="card-poster">
-                    <img src="./img/photo4.jpg" alt="">
-                </div>
-                <p class="card-title">Lorem, ipsum dolor.</p>
+            <div class="modal-right-side">
+                <p>
+                    <i class="fa-solid fa-clapperboard"></i> Title:
+                </p>
+                <p class="modal-title">Avengers gfgfg fgfggg</p>
+                <p>
+                    <i class="fa-solid fa-ghost"></i> Genre:
+                </p>
+                <p class="modal-genre">Horror, Comedy</p>
+                <p>
+                    <i class="fa-solid fa-calendar"></i> Relase date:
+                </p>
+                <p class="modal-relase-date">12.12.2023 r.</p>
+                <p>
+                    <i class="fa-solid fa-star"></i> Vote average:
+                </p>
+                <p class="modal-vote-average">7.7</p>
             </div>
         </div>
-
-        <div class="modal">fgfgfg</div>
-    </main>
+        <p class="modal-overview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis commodi iure
+            vel,expedita quia vitae laborum dignissimos illo suscipit cumque?</p>
+    </div>
 
     <footer class="footer">
         <p class="footer-text">All rights reserved.</p>

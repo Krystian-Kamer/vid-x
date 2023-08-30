@@ -1,9 +1,5 @@
 // ************VARIABLES************
 
-const moviesList = document.querySelector('.movies-list');
-const seriesList = document.querySelector('.series-list');
-const movieMenu = document.querySelector('.movie-menu');
-const seriesMenu = document.querySelector('.series-menu');
 const cardsContainer = document.querySelector('.cards-container');
 const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
 const switchBgcBtn = document.querySelector('.button-bgc-switch');
@@ -16,7 +12,7 @@ const popularVideosBtn = document.querySelector('.btn-popular-movies');
 const topRatedVideosBtn = document.querySelector('.btn-top-rated-movies');
 const upcomingVideosBtn = document.querySelector('.btn-upcoming-movies');
 const buttonsListSpan = document.querySelectorAll('.btn-choose span');
-const chooseButtonsList = [...document.querySelectorAll('.btn-choose')]
+const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
 const switchToMoviesBtn = document.querySelector('.switch-btn-movies');
 const switchToSeriesBtn = document.querySelector('.switch-btn-series');
 
@@ -96,34 +92,25 @@ const createCards = () => {
   movies.forEach((movie) => {
     let card = document.createElement('div');
     card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${
-      movie.poster_path
+      movie.backdrop_path
     }" alt="${
       movie.title ? movie.title : movie.name
     } poster"></div><p class="card-title">${
       movie.title ? movie.title : movie.name
     }</p></div>`;
     cardsContainer.append(card);
+    card.addEventListener('click', () => {
+      createAndShowModal(movie);
+    });
   });
-};
-
-const showMovies = () => {
-  moviesList.classList.toggle('nav-ul-active');
-};
-
-const showSeries = () => {
-  seriesList.classList.toggle('nav-ul-active');
 };
 
 const toggleButton = (typeOfVideo) => {
   if (typeOfVideo === 'Movies') {
     switchBgcBtn.style.left = '0';
-    switchToMoviesBtn.classList.add('active');
-    switchToSeriesBtn.classList.remove('active');
     upcomingVideosBtn.innerHTML = `Upcoming <span>${typeOfVideo}</span>`;
   } else if (typeOfVideo === 'Series') {
     switchBgcBtn.style.left = '50%';
-    switchToMoviesBtn.classList.remove('active');
-    switchToSeriesBtn.classList.add('active');
     upcomingVideosBtn.innerHTML = `On the air <span>${typeOfVideo}</span>`;
   }
 
@@ -133,7 +120,42 @@ const toggleButton = (typeOfVideo) => {
 };
 
 const setCurrentTitle = (e) => {
-  currentTitle.textContent = e.currentTarget.textContent
+  currentTitle.textContent = e.currentTarget.textContent;
+};
+
+const createAndShowModal = (movie) => {
+  console.log(movie);
+  const modal = document.createElement('div');
+  document.body.append(modal);
+  modal.classList.add('modal');
+  modal.innerHTML = `<div class="modal-flex-box">
+  <button class = "modal-close-btn">X</button>
+<div class="modal-left-side">
+<img src="https://www.themoviedb.org/t/p/w220_and_h330_face${
+    movie.poster_path
+  }" alt="${movie.title ? movie.title : movie.name} poster">
+</div>
+<div class="modal-right-side">
+  <p>
+      <i class="fa-solid fa-clapperboard"></i> Title:
+  </p>
+  <p class="modal-title">${movie.title}</p>
+  <p>
+      <i class="fa-solid fa-ghost"></i> Genre:
+  </p>
+  <p class="modal-genre">${movie.genre}</p>
+  <p>
+      <i class="fa-solid fa-calendar"></i> Relase date:
+  </p>
+  <p class="modal-relase-date">${movie.release_date}</p>
+  <p>
+      <i class="fa-solid fa-star"></i> Vote average:
+  </p>
+  <p class="modal-vote-average">${movie.vote_average}</p>
+</div>
+</div>
+<p class="modal-overview">${movie.overview}</p>`;
+  modal.classList.add('modal-active');
 };
 
 const getCurrentYear = () => {
@@ -144,16 +166,12 @@ getCurrentYear();
 
 // ************LISTENERS************
 
-movieMenu.addEventListener('click', showMovies);
-seriesMenu.addEventListener('click', showSeries);
-
 nowPlayingVideosBtn.addEventListener('click', fetchNowPlayingVideos);
 popularVideosBtn.addEventListener('click', fetchPopularVideos);
 topRatedVideosBtn.addEventListener('click', fetchTopRatedVideos);
 upcomingVideosBtn.addEventListener('click', fetchUpcomingVideos);
 switchToMoviesBtn.addEventListener('click', () => toggleButton('Movies'));
 switchToSeriesBtn.addEventListener('click', () => toggleButton('Series'));
-
 chooseButtonsList.forEach((button) => {
   button.addEventListener('click', setCurrentTitle);
 });

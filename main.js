@@ -5,6 +5,12 @@ const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
 const switchBgcBtn = document.querySelector('.button-bgc-switch');
 const currentTitle = document.querySelector('h2');
 
+const sections = [
+  document.querySelector('.nav'),
+  document.querySelector('.main'),
+  document.querySelector('.footer'),
+];
+
 // ************BUTTONS VARIABLES************
 
 const nowPlayingVideosBtn = document.querySelector('.btn-now-playing-movies');
@@ -37,7 +43,7 @@ const fetchNowPlayingVideos = async () => {
     await fetchMovies(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`
     );
-  } else if (nowPlayingVideosBtn.textContent.includes('Series')) {
+  } else {
     await fetchMovies(
       `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}`
     );
@@ -88,6 +94,26 @@ const fetchUpcomingVideos = async () => {
 
 fetchNowPlayingVideos();
 
+const fetchGenresOfVideo = async () => {
+  if (currentTitle.textContent.includes('Movies')) {
+    await fetchMovies(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
+    );
+  } else {
+    await fetchMovies(
+      `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`
+    );
+  }
+};
+
+//here I must make genres show
+// const getGenresOfVideo = (movie) => {
+//   let genres = fetchGenresOfVideo();
+//   let genresNames = [];
+//   return genresNames;
+// };
+
+
 const createCards = () => {
   movies.forEach((movie) => {
     let card = document.createElement('div');
@@ -100,7 +126,7 @@ const createCards = () => {
     }</p></div>`;
     cardsContainer.append(card);
     card.addEventListener('click', () => {
-      createAndShowModal(movie);
+      createModal(movie);
     });
   });
 };
@@ -119,11 +145,24 @@ const toggleButton = (typeOfVideo) => {
   });
 };
 
+
+//here I must make the text not double
 const setCurrentTitle = (e) => {
-  currentTitle.textContent = e.currentTarget.textContent;
+  currentTitle.textContent=" "
+  const titleFromButton = e.currentTarget;
+  let number = 0;
+
+  const addLetterToTitle = (e) => {
+    currentTitle.textContent += titleFromButton.textContent[number];
+    number++;
+    if (number === titleFromButton.textContent.length)
+      return clearInterval(indexTyping);
+  };
+
+  const indexTyping = setInterval(addLetterToTitle, 70);
 };
 
-const createAndShowModal = (movie) => {
+const createModal = (movie) => {
   console.log(movie);
   const modal = document.createElement('div');
   document.body.append(modal);
@@ -139,15 +178,17 @@ const createAndShowModal = (movie) => {
   <p>
       <i class="fa-solid fa-clapperboard"></i> Title:
   </p>
-  <p class="modal-title">${movie.title}</p>
+  <p class="modal-title">${movie.title ? movie.title : movie.name}</p>
   <p>
       <i class="fa-solid fa-ghost"></i> Genre:
   </p>
-  <p class="modal-genre">${movie.genre}</p>
+  // <p class="modal-genre"></p>
   <p>
       <i class="fa-solid fa-calendar"></i> Relase date:
   </p>
-  <p class="modal-relase-date">${movie.release_date}</p>
+  <p class="modal-relase-date">${
+    movie.release_date ? movie.release_date : movie.first_air_date
+  }</p>
   <p>
       <i class="fa-solid fa-star"></i> Vote average:
   </p>
@@ -155,7 +196,31 @@ const createAndShowModal = (movie) => {
 </div>
 </div>
 <p class="modal-overview">${movie.overview}</p>`;
+  makeFontSizeSmaller(movie);
   modal.classList.add('modal-active');
+  const deleteButton = modal.querySelector('.modal-close-btn');
+  deleteButton.addEventListener('click', () => {
+    modal.classList.remove('modal-active');
+    sections.forEach((section) => {
+      section.classList.remove('blur-active');
+    });
+  });
+  sections.forEach((section) => {
+    section.classList.add('blur-active');
+  });
+};
+
+const makeFontSizeSmaller = (movie) => {
+  const overviewsElement = document.querySelectorAll('.modal-overview');
+  if (movie.overview.length > 500) {
+    overviewsElement.forEach(
+      (overviewElement) => (overviewElement.style.fontSize = '16px')
+    );
+  } else if (movie.overview.length > 600) {
+    overviewsElement.forEach(
+      (overviewElement) => (overviewElement.style.fontSize = '14px')
+    );
+  }
 };
 
 const getCurrentYear = () => {

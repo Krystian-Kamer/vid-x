@@ -42,7 +42,7 @@ a {
   padding: 40px 0;
   height: 50px;
   background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 40px 40px;
   z-index: 9;
 }
 
@@ -50,25 +50,22 @@ a {
   letter-spacing: 5px;
   font-size: 40px;
   color: #fafafa;
-  font-family: 'Syne Mono', monospace;
 }
-.nav-logo span {
-  font-size: 30px;
-  font-family: 'Monofett', monospace;
-}
+
 .nav-input {
   border-radius: 15px;
   padding: 10px 25px;
   color: white;
   border: black;
   font-size: 18px;
-  width: 400px;
   background-color: #82828242;
+  font-family: 'Syne Mono', monospace;
 }
 
 .nav-input:focus {
   outline: none;
   background-color: rgba(50, 50, 50, 0.8);
+  font-family: 'Syne Mono', monospace;
 }
 
 .nav-link {
@@ -78,18 +75,11 @@ a {
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
     0 0 150px rgb(73, 73, 73);
   border: 2px solid transparent;
-  font-family: 'Syne Mono', monospace;
   transition: 0.3s;
 }
 
 .nav-link:hover {
   border: 2px solid white;
-}
-
-.nav-icon {
-  margin-right: 5px;
-  font-size: 50px;
-  text-shadow: -20px 10px 5px rgb(200, 200, 200);
 }
 
 h1,
@@ -207,7 +197,8 @@ h2 span {
   display: flex;
   flex-direction: column;
   width: 220px;
-  height: 390px;
+  min-height: 390px;
+  max-height: 450px;
   overflow: hidden;
   margin: 20px;
   flex-shrink: 0;
@@ -233,8 +224,9 @@ h2 span {
 }
 
 .card-title {
-  padding-top: 5px;
-  height: 60px;
+  padding-top: 7px;
+  min-height: 60px;
+  max-height: 100px;
   text-align: center;
   background-color: black;
 }
@@ -248,8 +240,6 @@ h2 span {
 
 .modal {
   position: fixed;
-  top: 45%;
-  left: 50%;
   transform: translate(-50%, -50%);
   height: 80vh;
   width: 60vw;
@@ -257,15 +247,24 @@ h2 span {
   max-width: 800px;
   background-color: rgba(20, 19, 19, 0.9);
   border-radius: 30px;
-  visibility: hidden;
   opacity: 0;
-  overflow: hidden;
+  transition: 0.5s;
 }
 
 .modal-active {
-  top: 50%;
-  visibility: visible;
-  opacity: 1;
+  left: 50%;
+  animation: showModal 0.7s forwards;
+}
+
+@keyframes showModal {
+  0% {
+    top: 30%;
+    opacity: 0;
+  }
+  100% {
+    top: 50%;
+    opacity: 1;
+  }
 }
 
 .modal-flex-box {
@@ -282,28 +281,25 @@ h2 span {
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-left: 30px;
+  font-size: 30px;
 }
 
 .modal-right-side p:nth-child(2n-1) {
-  font-size: 30px;
-  color: #d5fbf8;
-}
-
-.modal-right-side p:nth-child(2n) {
-  font-size: 30px;
-
+  margin-top: 45px;
 }
 
 .modal-overview {
-  padding: 20px 100px;
+  padding: 0 50px;
   font-size: 26px;
 }
 
+
+/* how to make padding work in modal-close-btn */
 .modal-close-btn {
   position: absolute;
-  top: 10px;
-  right: 20px;
+  top: 15px;
+  right: 30px;
   font-size: 50px;
   border: none;
   background-color: transparent;
@@ -312,10 +308,11 @@ h2 span {
   cursor: pointer;
 }
 
-.modal-close-btn:hover{
+
+.modal-close-btn:hover {
   transform: scale(1.1);
   text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
-  0 0 150px rgb(255, 0, 0);
+    0 0 150px rgb(255, 0, 0);
 }
 
 .footer {

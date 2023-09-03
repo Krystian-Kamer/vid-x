@@ -1,34 +1,175 @@
 // ************VARIABLES************
-
 const cardsContainer = document.querySelector('.cards-container');
 const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
 const switchBgcBtn = document.querySelector('.button-bgc-switch');
 const currentTitle = document.querySelector('h2');
+const buttonsListSpan = document.querySelectorAll('.btn-choose span');
 
 const sections = [
   document.querySelector('.nav'),
   document.querySelector('.main'),
   document.querySelector('.footer'),
 ];
+const spanYear = document.querySelector('.current-year span');
+const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
+let movies = [];
+let titleIsRunning = false;
+let indexTyping;
+const moviesGenres = [
+  {
+    id: 28,
+    name: 'Action',
+  },
+  {
+    id: 12,
+    name: 'Adventure',
+  },
+  {
+    id: 16,
+    name: 'Animation',
+  },
+  {
+    id: 35,
+    name: 'Comedy',
+  },
+  {
+    id: 80,
+    name: 'Crime',
+  },
+  {
+    id: 99,
+    name: 'Documentary',
+  },
+  {
+    id: 18,
+    name: 'Drama',
+  },
+  {
+    id: 10751,
+    name: 'Family',
+  },
+  {
+    id: 14,
+    name: 'Fantasy',
+  },
+  {
+    id: 36,
+    name: 'History',
+  },
+  {
+    id: 27,
+    name: 'Horror',
+  },
+  {
+    id: 10402,
+    name: 'Music',
+  },
+  {
+    id: 9648,
+    name: 'Mystery',
+  },
+  {
+    id: 10749,
+    name: 'Romance',
+  },
+  {
+    id: 878,
+    name: 'Science Fiction',
+  },
+  {
+    id: 10770,
+    name: 'TV Movie',
+  },
+  {
+    id: 53,
+    name: 'Thriller',
+  },
+  {
+    id: 10752,
+    name: 'War',
+  },
+  {
+    id: 37,
+    name: 'Western',
+  },
+];
+const seriesGenres = [
+  {
+    id: 10759,
+    name: 'Action & Adventure',
+  },
+  {
+    id: 16,
+    name: 'Animation',
+  },
+  {
+    id: 35,
+    name: 'Comedy',
+  },
+  {
+    id: 80,
+    name: 'Crime',
+  },
+  {
+    id: 99,
+    name: 'Documentary',
+  },
+  {
+    id: 18,
+    name: 'Drama',
+  },
+  {
+    id: 10751,
+    name: 'Family',
+  },
+  {
+    id: 10762,
+    name: 'Kids',
+  },
+  {
+    id: 9648,
+    name: 'Mystery',
+  },
+  {
+    id: 10763,
+    name: 'News',
+  },
+  {
+    id: 10764,
+    name: 'Reality',
+  },
+  {
+    id: 10765,
+    name: 'Sci-Fi & Fantasy',
+  },
+  {
+    id: 10766,
+    name: 'Soap',
+  },
+  {
+    id: 10767,
+    name: 'Talk',
+  },
+  {
+    id: 10768,
+    name: 'War & Politics',
+  },
+  {
+    id: 37,
+    name: 'Western',
+  },
+];
 
 // ************BUTTONS VARIABLES************
-
 const nowPlayingVideosBtn = document.querySelector('.btn-now-playing-movies');
 const popularVideosBtn = document.querySelector('.btn-popular-movies');
 const topRatedVideosBtn = document.querySelector('.btn-top-rated-movies');
 const upcomingVideosBtn = document.querySelector('.btn-upcoming-movies');
-const buttonsListSpan = document.querySelectorAll('.btn-choose span');
 const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
 const switchToMoviesBtn = document.querySelector('.switch-btn-movies');
 const switchToSeriesBtn = document.querySelector('.switch-btn-series');
 
-const spanYear = document.querySelector('.current-year span');
-
-const API_KEY = '57b4025ea3b2beb4d12b65e71d4dc270';
-let movies = [];
-
 // ************FUNCTIONS************
-
 const fetchMovies = async (link) => {
   const res = await fetch(link);
   const json = await res.json();
@@ -94,25 +235,6 @@ const fetchUpcomingVideos = async () => {
 
 fetchNowPlayingVideos();
 
-const fetchGenresOfVideo = async () => {
-  if (currentTitle.textContent.includes('Movies')) {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
-    );
-  } else {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`
-    );
-  }
-};
-
-//here I must make genres show
-// const getGenresOfVideo = (movie) => {
-//   let genres = fetchGenresOfVideo();
-//   let genresNames = [];
-//   return genresNames;
-// };
-
 const createCards = () => {
   movies.forEach((movie) => {
     let card = document.createElement('div');
@@ -133,30 +255,57 @@ const createCards = () => {
 const toggleButton = (typeOfVideo) => {
   if (typeOfVideo === 'Movies') {
     switchBgcBtn.style.left = '0';
+    switchToMoviesBtn.classList.add('toggle-active');
+    switchToSeriesBtn.classList.remove('toggle-active');
     upcomingVideosBtn.innerHTML = `Upcoming <span>${typeOfVideo}</span>`;
   } else if (typeOfVideo === 'Series') {
     switchBgcBtn.style.left = '50%';
+    switchToSeriesBtn.classList.add('toggle-active');
+    switchToMoviesBtn.classList.remove('toggle-active');
     upcomingVideosBtn.innerHTML = `On the air <span>${typeOfVideo}</span>`;
   }
-
   buttonsListSpan.forEach((button) => {
     button.textContent = `${typeOfVideo}`;
   });
 };
 
-//here I must make the text not double
 const setCurrentTitle = (e) => {
-  currentTitle.textContent = ' ';
+  if (titleIsRunning) {
+    clearInterval(indexTyping);
+    titleIsRunning = false;
+  }
+  titleIsRunning = true;
+  currentTitle.textContent = '';
   const titleFromButton = e.currentTarget;
   let number = 0;
   const addLetterToTitle = (e) => {
     currentTitle.textContent += titleFromButton.textContent[number];
     number++;
-    if (number === titleFromButton.textContent.length)
-      return clearInterval(indexTyping);
+    if (number === titleFromButton.textContent.length) {
+      clearInterval(indexTyping);
+      titleIsRunning = false;
+    }
   };
-  const indexTyping = setInterval(addLetterToTitle, 70);
+  indexTyping = setInterval(addLetterToTitle, 70);
 };
+
+// const showGenresInModal = (movie) => {
+//   if (switchToMoviesBtn.classList.contains('toggle-active')) {
+
+//     let filteredArray = arrayOfObjects.filter((obj) =>
+//       arrayOfNumbers.includes(obj.id)
+//     );
+//     filteredArray.forEach((obj) => console.log(obj.name));
+
+//     // moviesGenres
+//   } else if (switchToSeriesBtn.classList.contains('toggle-active')) {
+
+//     let filteredArray = arrayOfObjects.filter(obj => arrayOfNumbers.includes(obj.id));
+// filteredArray.forEach(obj => console.log(obj.name))
+//     // seriesGenres
+//   }
+//   console.log(movie.genre_ids);
+// };
 
 const createModal = (movie) => {
   const modal = document.createElement('div');
@@ -177,7 +326,7 @@ const createModal = (movie) => {
   <p>
       <i class="fa-solid fa-ghost"></i> Genre:
   </p>
-  // <p class="modal-genre"></p>
+  <p class="modal-genre">${showGenresInModal(movie)}</p>
   <p>
       <i class="fa-solid fa-calendar"></i> Relase date:
   </p>
@@ -196,7 +345,6 @@ const createModal = (movie) => {
   modal.classList.add('modal-active');
   const deleteButton = modal.querySelector('.modal-close-btn');
   deleteButton.addEventListener('click', () => closeModal(modal));
-
   sections.forEach((section) => {
     section.classList.add('blur-active');
   });
@@ -207,16 +355,14 @@ const closeModal = (modal) => {
   sections.forEach((section) => {
     section.classList.remove('blur-active');
   });
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeModal(modal);
     }
   });
-
   document.addEventListener('click', (e) => {
-    if(modal.classList.contains('modal-active') && e.target == document.body) {
-      closeModal(modal)
+    if (modal.classList.contains('modal-active') && e.target == document.body) {
+      closeModal(modal);
     }
   });
 };

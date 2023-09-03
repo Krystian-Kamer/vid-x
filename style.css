@@ -47,7 +47,7 @@ a {
 }
 
 .nav-logo {
-  letter-spacing: 5px;
+  letter-spacing: 10px;
   font-size: 40px;
   color: #fafafa;
 }
@@ -56,15 +56,16 @@ a {
   border-radius: 15px;
   padding: 10px 25px;
   color: white;
-  border: black;
+  border: transparent;
   font-size: 18px;
+  width: 350px;
   background-color: #82828242;
   font-family: 'Syne Mono', monospace;
 }
 
 .nav-input:focus {
   outline: none;
-  background-color: rgba(50, 50, 50, 0.8);
+  background-color: rgba(78, 77, 77, 0.8);
   font-family: 'Syne Mono', monospace;
 }
 
@@ -76,10 +77,6 @@ a {
     0 0 150px rgb(73, 73, 73);
   border: 2px solid transparent;
   transition: 0.3s;
-}
-
-.nav-link:hover {
-  border: 2px solid white;
 }
 
 h1,
@@ -118,6 +115,12 @@ h2 {
   cursor: pointer;
 }
 
+.toggle-active {
+  color: rgb(245, 247, 221);
+  text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
+    0 0 150px rgb(255, 0, 0);
+}
+
 .button-bgc-switch {
   position: absolute;
   left: 0;
@@ -130,6 +133,12 @@ h2 {
   border: 2px solid #411414;
 }
 
+.buttons-choose-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
 .btn-choose {
   padding: 10px 30px;
   margin: 20px;
@@ -307,7 +316,6 @@ h2 span {
   padding: 15px;
   z-index: 999;
 }
-
 
 .modal-close-btn:hover {
   transform: scale(1.1);

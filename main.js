@@ -113,12 +113,11 @@ const fetchGenresOfVideo = async () => {
 //   return genresNames;
 // };
 
-
 const createCards = () => {
   movies.forEach((movie) => {
     let card = document.createElement('div');
     card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${
-      movie.backdrop_path
+      movie.poster_path
     }" alt="${
       movie.title ? movie.title : movie.name
     } poster"></div><p class="card-title">${
@@ -145,25 +144,21 @@ const toggleButton = (typeOfVideo) => {
   });
 };
 
-
 //here I must make the text not double
 const setCurrentTitle = (e) => {
-  currentTitle.textContent=" "
+  currentTitle.textContent = ' ';
   const titleFromButton = e.currentTarget;
   let number = 0;
-
   const addLetterToTitle = (e) => {
     currentTitle.textContent += titleFromButton.textContent[number];
     number++;
     if (number === titleFromButton.textContent.length)
       return clearInterval(indexTyping);
   };
-
   const indexTyping = setInterval(addLetterToTitle, 70);
 };
 
 const createModal = (movie) => {
-  console.log(movie);
   const modal = document.createElement('div');
   document.body.append(modal);
   modal.classList.add('modal');
@@ -171,7 +166,7 @@ const createModal = (movie) => {
   <button class = "modal-close-btn">X</button>
 <div class="modal-left-side">
 <img src="https://www.themoviedb.org/t/p/w220_and_h330_face${
-    movie.poster_path
+    movie.backdrop_path
   }" alt="${movie.title ? movie.title : movie.name} poster">
 </div>
 <div class="modal-right-side">
@@ -196,29 +191,41 @@ const createModal = (movie) => {
 </div>
 </div>
 <p class="modal-overview">${movie.overview}</p>`;
+  closeModal(modal);
   makeFontSizeSmaller(movie);
   modal.classList.add('modal-active');
   const deleteButton = modal.querySelector('.modal-close-btn');
-  deleteButton.addEventListener('click', () => {
-    modal.classList.remove('modal-active');
-    sections.forEach((section) => {
-      section.classList.remove('blur-active');
-    });
-  });
+  deleteButton.addEventListener('click', () => closeModal(modal));
+
   sections.forEach((section) => {
     section.classList.add('blur-active');
   });
 };
 
+const closeModal = (modal) => {
+  modal.classList.remove('modal-active');
+  sections.forEach((section) => {
+    section.classList.remove('blur-active');
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal(modal);
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if(modal.classList.contains('modal-active') && e.target == document.body) {
+      closeModal(modal)
+    }
+  });
+};
+
 const makeFontSizeSmaller = (movie) => {
   const overviewsElement = document.querySelectorAll('.modal-overview');
-  if (movie.overview.length > 500) {
+  if (movie.overview.length > 600) {
     overviewsElement.forEach(
-      (overviewElement) => (overviewElement.style.fontSize = '16px')
-    );
-  } else if (movie.overview.length > 600) {
-    overviewsElement.forEach(
-      (overviewElement) => (overviewElement.style.fontSize = '14px')
+      (overviewElement) => (overviewElement.style.fontSize = '18px')
     );
   }
 };

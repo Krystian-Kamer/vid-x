@@ -241,14 +241,14 @@ h2 span {
 .modal {
   position: fixed;
   transform: translate(-50%, -50%);
-  height: 80vh;
+  min-height: 80vh;
+  max-height: 90vh;
   width: 60vw;
-  max-height: 1000px;
-  max-width: 800px;
+  max-width: 1000px;
   background-color: rgba(20, 19, 19, 0.9);
   border-radius: 30px;
   opacity: 0;
-  transition: 0.5s;
+  padding: 15px 10px;
 }
 
 .modal-active {
@@ -269,7 +269,7 @@ h2 span {
 
 .modal-flex-box {
   display: flex;
-  padding: 40px 40px;
+  padding: 20px;
 }
 
 .modal-left-side img {
@@ -290,22 +290,22 @@ h2 span {
 }
 
 .modal-overview {
-  padding: 0 50px;
+  padding: 0 25px;
   font-size: 26px;
 }
 
-
-/* how to make padding work in modal-close-btn */
 .modal-close-btn {
   position: absolute;
-  top: 15px;
-  right: 30px;
+  top: 0px;
+  right: 10px;
   font-size: 50px;
   border: none;
   background-color: transparent;
   font-family: 'Syne Mono', monospace;
   color: rgb(251, 68, 68);
   cursor: pointer;
+  padding: 15px;
+  z-index: 999;
 }
 
 

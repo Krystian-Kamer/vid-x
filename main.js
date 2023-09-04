@@ -258,7 +258,7 @@ const toggleButton = (typeOfVideo) => {
     switchToMoviesBtn.classList.add('toggle-active');
     switchToSeriesBtn.classList.remove('toggle-active');
     upcomingVideosBtn.innerHTML = `Upcoming <span>${typeOfVideo}</span>`;
-  } else if (typeOfVideo === 'Series') {
+  } else {
     switchBgcBtn.style.left = '50%';
     switchToSeriesBtn.classList.add('toggle-active');
     switchToMoviesBtn.classList.remove('toggle-active');
@@ -289,23 +289,18 @@ const setCurrentTitle = (e) => {
   indexTyping = setInterval(addLetterToTitle, 70);
 };
 
-// const showGenresInModal = (movie) => {
-//   if (switchToMoviesBtn.classList.contains('toggle-active')) {
-
-//     let filteredArray = arrayOfObjects.filter((obj) =>
-//       arrayOfNumbers.includes(obj.id)
-//     );
-//     filteredArray.forEach((obj) => console.log(obj.name));
-
-//     // moviesGenres
-//   } else if (switchToSeriesBtn.classList.contains('toggle-active')) {
-
-//     let filteredArray = arrayOfObjects.filter(obj => arrayOfNumbers.includes(obj.id));
-// filteredArray.forEach(obj => console.log(obj.name))
-//     // seriesGenres
-//   }
-//   console.log(movie.genre_ids);
-// };
+const showGenresInModal = (movie) => {
+  let arrayOfCategories = [];
+  console.log(movie);
+  movie.genre_ids.forEach((movieId) => {
+    moviesGenres.forEach((movieGenre) => {
+      if (movieId === movieGenre.id) {
+        arrayOfCategories.push(movieGenre.name);
+      }
+    });
+  });
+  return arrayOfCategories.join(", ");
+};
 
 const createModal = (movie) => {
   const modal = document.createElement('div');

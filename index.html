@@ -22,23 +22,27 @@
         <a class="nav-link" href="#">contact</a>
     </nav>
 
+
     <main class="main">
         <h1>All your favorite movies and series in one place</h1>
-        <div class="buttons-container">
-            <div class="buttons-switch-box">
-                <div class="button-bgc-switch"></div>
-                <button class="toggle-btn switch-btn-movies toggle-active">Movies</button>
-                <button class="toggle-btn switch-btn-series">Series</button>
-            </div>
-            <div class="buttons-choose-box">
-                <button class="btn-choose btn-now-playing-movies">Now playing <span>Movies</span></button>
-                <button class="btn-choose btn-popular-movies">Popular <span>Movies</span></button>
-                <button class="btn-choose btn-top-rated-movies">Top rated <span>Movies</span></button>
-                <button class="btn-choose btn-upcoming-movies">Upcoming <span>Movies</span></button>
-            </div>
-            <p>---or select by Categories---</p>
+        <div class="switcher-box">
+            <button class="switcher">
+                <p class="switch-to-movies switch-to-active">Movies
+                <div class="switcher-background"></div>
+                </p>
+                <p class="switch-to-series">Series</p>
+            </button>
+        </div>
 
-            ---here categories---
+        <div class="buttons-choose-box">
+            <button class="btn-choose btn-now-playing-movies btn-choose-active">Now playing <span>Movies</span></button>
+            <button class="btn-choose btn-popular-movies">Popular <span>Movies</span></button>
+            <button class="btn-choose btn-top-rated-movies">Top rated <span>Movies</span></button>
+            <button class="btn-choose btn-upcoming-movies">Upcoming <span>Movies</span></button>
+        </div>
+        <p>---or select by Categories---</p>
+
+        ---here categories---
 
         </div>
         <h2>Now playing <span>Movies</span></h2>
@@ -52,7 +56,7 @@
         <p class="current-year">©<span></span>K.Kamer</p>
     </footer>
 
-    <script src="./main.js"></script>
+    <script type="module" src="./main.js"></script>
 </body>
 
 </html>

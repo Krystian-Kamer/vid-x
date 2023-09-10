@@ -86,51 +86,59 @@ h2 {
   font-size: 25px;
 }
 
-.buttons-container {
+.main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 
-.buttons-switch-box {
+.switcher-box {
   position: relative;
-  margin: 20px 0;
+  margin: 30px 0;
+}
+.switcher {
+  position: relative;
   background-color: transparent;
-  border-radius: 30px;
+  border: none;
+  height: 50px;
+  width: 300px;
+  border-radius: 25px;
+  cursor: pointer;
+  z-index: 0;
   border: 2px solid #411414;
 }
 
-.toggle-btn {
+.switcher p {
   position: relative;
-  text-align: center;
-  padding: 10px 30px;
-  font-size: 24px;
-  background-color: transparent;
-  border: 0;
-  font-family: 'Syne Mono', monospace;
   color: white;
-  outline: none;
-  text-shadow: none;
-  cursor: pointer;
+  display: inline;
+  font-size: 24px;
+  font-family: 'Syne Mono', monospace;
+  z-index: 999;
+  margin: 0 10px;
 }
 
-.toggle-active {
+.switcher-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 25px;
+  background-color: #411414;
+  transition: left 0.5s;
+}
+
+.switch-bgc-to-active {
+  left: 50%;
+}
+
+.switch-to-active {
   color: rgb(245, 247, 221);
   text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
     0 0 150px rgb(255, 0, 0);
-}
-
-.button-bgc-switch {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background-color: #411414;
-  border-radius: 30px;
-  transition: 0.5s;
-  border: 2px solid #411414;
+  overflow: hidden;
 }
 
 .buttons-choose-box {
@@ -159,12 +167,19 @@ h2 {
   color: rgb(247, 250, 200);
 }
 
+.btn-choose-active {
+  border: 3px solid rgb(111, 219, 53);
+}
+
+
 .btn-choose:hover,
 .btn-choose:hover span,
 .nav-link:hover {
   transform: scale(1.05);
   color: #ff8484;
 }
+
+
 
 h2 {
   padding: 10px 0;

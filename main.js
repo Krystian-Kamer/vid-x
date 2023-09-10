@@ -1,173 +1,32 @@
+import { moviesGenres, seriesGenres } from './genres.js';
+
 // ************VARIABLES************
 const cardsContainer = document.querySelector('.cards-container');
-const switchBgcOfBtn = document.querySelector('.button-bgc-switch');
-const switchBgcBtn = document.querySelector('.button-bgc-switch');
 const currentTitle = document.querySelector('h2');
 const buttonsListSpan = document.querySelectorAll('.btn-choose span');
-
+const switcherBgc = document.querySelector('.switcher-background');
+const switchToMovies = document.querySelector('.switch-to-movies');
+const switchToSeries = document.querySelector('.switch-to-series');
 const sections = [
   document.querySelector('.nav'),
   document.querySelector('.main'),
   document.querySelector('.footer'),
 ];
 const spanYear = document.querySelector('.current-year span');
+
 const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
 let movies = [];
 let titleIsRunning = false;
+let videoFlag = 'movie';
 let indexTyping;
-const moviesGenres = [
-  {
-    id: 28,
-    name: 'Action',
-  },
-  {
-    id: 12,
-    name: 'Adventure',
-  },
-  {
-    id: 16,
-    name: 'Animation',
-  },
-  {
-    id: 35,
-    name: 'Comedy',
-  },
-  {
-    id: 80,
-    name: 'Crime',
-  },
-  {
-    id: 99,
-    name: 'Documentary',
-  },
-  {
-    id: 18,
-    name: 'Drama',
-  },
-  {
-    id: 10751,
-    name: 'Family',
-  },
-  {
-    id: 14,
-    name: 'Fantasy',
-  },
-  {
-    id: 36,
-    name: 'History',
-  },
-  {
-    id: 27,
-    name: 'Horror',
-  },
-  {
-    id: 10402,
-    name: 'Music',
-  },
-  {
-    id: 9648,
-    name: 'Mystery',
-  },
-  {
-    id: 10749,
-    name: 'Romance',
-  },
-  {
-    id: 878,
-    name: 'Science Fiction',
-  },
-  {
-    id: 10770,
-    name: 'TV Movie',
-  },
-  {
-    id: 53,
-    name: 'Thriller',
-  },
-  {
-    id: 10752,
-    name: 'War',
-  },
-  {
-    id: 37,
-    name: 'Western',
-  },
-];
-const seriesGenres = [
-  {
-    id: 10759,
-    name: 'Action & Adventure',
-  },
-  {
-    id: 16,
-    name: 'Animation',
-  },
-  {
-    id: 35,
-    name: 'Comedy',
-  },
-  {
-    id: 80,
-    name: 'Crime',
-  },
-  {
-    id: 99,
-    name: 'Documentary',
-  },
-  {
-    id: 18,
-    name: 'Drama',
-  },
-  {
-    id: 10751,
-    name: 'Family',
-  },
-  {
-    id: 10762,
-    name: 'Kids',
-  },
-  {
-    id: 9648,
-    name: 'Mystery',
-  },
-  {
-    id: 10763,
-    name: 'News',
-  },
-  {
-    id: 10764,
-    name: 'Reality',
-  },
-  {
-    id: 10765,
-    name: 'Sci-Fi & Fantasy',
-  },
-  {
-    id: 10766,
-    name: 'Soap',
-  },
-  {
-    id: 10767,
-    name: 'Talk',
-  },
-  {
-    id: 10768,
-    name: 'War & Politics',
-  },
-  {
-    id: 37,
-    name: 'Western',
-  },
-];
 
 // ************BUTTONS VARIABLES************
+const switcher = document.querySelector('.switcher');
 const nowPlayingVideosBtn = document.querySelector('.btn-now-playing-movies');
 const popularVideosBtn = document.querySelector('.btn-popular-movies');
 const topRatedVideosBtn = document.querySelector('.btn-top-rated-movies');
 const upcomingVideosBtn = document.querySelector('.btn-upcoming-movies');
 const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
-const switchToMoviesBtn = document.querySelector('.switch-btn-movies');
-const switchToSeriesBtn = document.querySelector('.switch-btn-series');
 
 // ************FUNCTIONS************
 const fetchMovies = async (link) => {
@@ -177,63 +36,20 @@ const fetchMovies = async (link) => {
   createCards();
 };
 
-const fetchNowPlayingVideos = async () => {
+const fetchVideos = async (param) => {
   cardsContainer.textContent = '';
 
-  if (nowPlayingVideosBtn.textContent.includes('Movies')) {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`
-    );
-  } else {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}`
-    );
+  if (param === 'now_playing' && videoFlag === 'tv') {
+    param = 'airing_today';
+  } else if (param === 'upcoming' && videoFlag === 'tv') {
+    param = 'on_the_air';
   }
+  await fetchMovies(
+    `https://api.themoviedb.org/3/${videoFlag}/${param}?api_key=${API_KEY}`
+  );
 };
 
-const fetchPopularVideos = async () => {
-  cardsContainer.textContent = '';
-
-  if (popularVideosBtn.textContent.includes('Movies')) {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
-    );
-  } else {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`
-    );
-  }
-};
-
-const fetchTopRatedVideos = async () => {
-  cardsContainer.textContent = '';
-
-  if (topRatedVideosBtn.textContent.includes('Movies')) {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`
-    );
-  } else {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}`
-    );
-  }
-};
-
-const fetchUpcomingVideos = async () => {
-  cardsContainer.textContent = '';
-
-  if (upcomingVideosBtn.textContent.includes('Movies')) {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}`
-    );
-  } else {
-    await fetchMovies(
-      `https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}`
-    );
-  }
-};
-
-fetchNowPlayingVideos();
+fetchVideos('now_playing');
 
 const createCards = () => {
   movies.forEach((movie) => {
@@ -252,20 +68,37 @@ const createCards = () => {
   });
 };
 
-const toggleButton = (typeOfVideo) => {
-  if (typeOfVideo === 'Movies') {
-    switchBgcBtn.style.left = '0';
-    switchToMoviesBtn.classList.add('toggle-active');
-    switchToSeriesBtn.classList.remove('toggle-active');
-    upcomingVideosBtn.innerHTML = `Upcoming <span>${typeOfVideo}</span>`;
+const switchTypeOfVideo = (e) => {
+  nowPlayingVideosBtn.click();
+
+  switcherBgc.classList.toggle('switch-bgc-to-active');
+  switchToMovies.classList.toggle('switch-to-active');
+  switchToSeries.classList.toggle('switch-to-active');
+  videoFlag = videoFlag === 'movie' ? 'tv' : 'movie';
+  buttonsListSpan.forEach((spanBtn) => {
+    spanBtn.textContent =
+      spanBtn.textContent === 'series' ? 'movies' : 'series';
+  });
+
+  if (videoFlag === 'movie') {
+    fetchVideos('now_playing');
+    upcomingVideosBtn.textContent = 'Upcoming Movies';
   } else {
-    switchBgcBtn.style.left = '50%';
-    switchToSeriesBtn.classList.add('toggle-active');
-    switchToMoviesBtn.classList.remove('toggle-active');
-    upcomingVideosBtn.innerHTML = `On the air <span>${typeOfVideo}</span>`;
+    fetchVideos('airing_today');
+    upcomingVideosBtn.textContent = 'Airing today Series';
   }
-  buttonsListSpan.forEach((button) => {
-    button.textContent = `${typeOfVideo}`;
+
+  chooseButtonsList.forEach((chooseButton) => {
+    chooseButton.classList.remove('btn-choose-active');
+    nowPlayingVideosBtn.classList.add('btn-choose-active');
+  });
+};
+
+const selectActiveChoice = (e) => {
+  const activeButton = e.currentTarget;
+  chooseButtonsList.forEach((chooseButton) => {
+    chooseButton.classList.remove('btn-choose-active');
+    activeButton.classList.add('btn-choose-active');
   });
 };
 
@@ -291,7 +124,6 @@ const setCurrentTitle = (e) => {
 
 const showGenresInModal = (movie) => {
   let arrayOfCategories = [];
-  console.log(movie);
   movie.genre_ids.forEach((movieId) => {
     moviesGenres.forEach((movieGenre) => {
       if (movieId === movieGenre.id) {
@@ -299,7 +131,7 @@ const showGenresInModal = (movie) => {
       }
     });
   });
-  return arrayOfCategories.join(", ");
+  return arrayOfCategories.join(', ');
 };
 
 const createModal = (movie) => {
@@ -309,9 +141,11 @@ const createModal = (movie) => {
   modal.innerHTML = `<div class="modal-flex-box">
   <button class = "modal-close-btn">X</button>
 <div class="modal-left-side">
-<img src="https://www.themoviedb.org/t/p/w220_and_h330_face${
+<img src="${
     movie.backdrop_path
-  }" alt="${movie.title ? movie.title : movie.name} poster">
+      ? `https://www.themoviedb.org/t/p/w220_and_h330_face${movie.backdrop_path}`
+      : './picture_not_found.jpg'
+  }" alt = "${movie.title ? movie.title : movie.name}">
 </div>
 <div class="modal-right-side">
   <p>
@@ -379,12 +213,16 @@ getCurrentYear();
 
 // ************LISTENERS************
 
-nowPlayingVideosBtn.addEventListener('click', fetchNowPlayingVideos);
-popularVideosBtn.addEventListener('click', fetchPopularVideos);
-topRatedVideosBtn.addEventListener('click', fetchTopRatedVideos);
-upcomingVideosBtn.addEventListener('click', fetchUpcomingVideos);
-switchToMoviesBtn.addEventListener('click', () => toggleButton('Movies'));
-switchToSeriesBtn.addEventListener('click', () => toggleButton('Series'));
+nowPlayingVideosBtn.addEventListener('click', () => fetchVideos('now_playing'));
+popularVideosBtn.addEventListener('click', () => fetchVideos('popular'));
+topRatedVideosBtn.addEventListener('click', () => fetchVideos('top_rated'));
+upcomingVideosBtn.addEventListener('click', () => fetchVideos('upcoming'));
+
+switcher.addEventListener('click', switchTypeOfVideo);
+
 chooseButtonsList.forEach((button) => {
-  button.addEventListener('click', setCurrentTitle);
+  button.addEventListener('click', (e) => {
+    setCurrentTitle(e);
+    selectActiveChoice(e);
+  });
 });

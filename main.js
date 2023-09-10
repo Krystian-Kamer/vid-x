@@ -7,6 +7,8 @@ const buttonsListSpan = document.querySelectorAll('.btn-choose span');
 const switcherBgc = document.querySelector('.switcher-background');
 const switchToMovies = document.querySelector('.switch-to-movies');
 const switchToSeries = document.querySelector('.switch-to-series');
+const genresBox = document.querySelector('.genres-box');
+
 const sections = [
   document.querySelector('.nav'),
   document.querySelector('.main'),
@@ -16,10 +18,11 @@ const spanYear = document.querySelector('.current-year span');
 
 const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
 let movies = [];
+let arrayOfSelectedGenres = [];
 let titleIsRunning = false;
 let videoFlag = 'movie';
 let indexTyping;
-
+let latestParam;
 // ************BUTTONS VARIABLES************
 const switcher = document.querySelector('.switcher');
 const nowPlayingVideosBtn = document.querySelector('.btn-now-playing-movies');
@@ -45,8 +48,11 @@ const fetchVideos = async (param) => {
     param = 'on_the_air';
   }
   await fetchMovies(
-    `https://api.themoviedb.org/3/${videoFlag}/${param}?api_key=${API_KEY}`
+    `https://api.themoviedb.org/3/${videoFlag}/${param}?api_key=${API_KEY}&with_genres=${arrayOfSelectedGenres.join(
+      ','
+    )}`
   );
+  latestParam = param;
 };
 
 fetchVideos('now_playing');
@@ -68,7 +74,8 @@ const createCards = () => {
   });
 };
 
-const switchTypeOfVideo = (e) => {
+const switchTypeOfVideo = () => {
+  arrayOfSelectedGenres = [];
   switcherBgc.classList.toggle('switch-bgc-to-active');
   switchToMovies.classList.toggle('switch-to-active');
   switchToSeries.classList.toggle('switch-to-active');
@@ -83,19 +90,18 @@ const switchTypeOfVideo = (e) => {
       upcomingVideosBtn.innerHTML = `Airing today <span>${spanBtn.textContent}</span>`;
     }
   });
-
   if (videoFlag === 'movie') {
     fetchVideos('now_playing');
   } else {
     fetchVideos('airing_today');
   }
-
   chooseButtonsList.forEach((chooseButton) => {
     chooseButton.classList.remove('btn-choose-active');
     nowPlayingVideosBtn.classList.add('btn-choose-active');
   });
-
   nowPlayingVideosBtn.click();
+  genresBox.textContent = '';
+  uploadGenres();
 };
 
 const selectActiveChoice = (e) => {
@@ -104,6 +110,33 @@ const selectActiveChoice = (e) => {
     chooseButton.classList.remove('btn-choose-active');
     activeButton.classList.add('btn-choose-active');
   });
+};
+
+const uploadGenres = () => {
+  const genres = videoFlag === 'movie' ? moviesGenres : seriesGenres;
+  genres.forEach((genre) => {
+    const createdGenre = document.createElement('button');
+    createdGenre.classList.add('genre-btn');
+    createdGenre.textContent = genre.name;
+    createdGenre.id = genre.id;
+    genresBox.append(createdGenre);
+    createdGenre.addEventListener('click', (e) => selectActiveGenres(e, genre));
+  });
+};
+uploadGenres();
+
+const selectActiveGenres = (e, activeGenre) => {
+  const selectedGenre = e.target;
+  selectedGenre.classList.toggle('genre-btn-selected');
+  const index = arrayOfSelectedGenres.indexOf(activeGenre.id);
+  if (index !== -1) {
+    arrayOfSelectedGenres.splice(index, 1);
+  } else {
+    arrayOfSelectedGenres.push(activeGenre.id);
+  }
+  if (arrayOfSelectedGenres.includes(activeGenre.id)) {
+  }
+  fetchVideos(latestParam);
 };
 
 const setCurrentTitle = (e) => {
@@ -124,18 +157,6 @@ const setCurrentTitle = (e) => {
     }
   };
   indexTyping = setInterval(addLetterToTitle, 70);
-};
-
-const showGenresInModal = (movie) => {
-  let arrayOfCategories = [];
-  movie.genre_ids.forEach((movieId) => {
-    moviesGenres.forEach((movieGenre) => {
-      if (movieId === movieGenre.id) {
-        arrayOfCategories.push(movieGenre.name);
-      }
-    });
-  });
-  return arrayOfCategories.join(', ');
 };
 
 const createModal = (movie) => {
@@ -181,6 +202,14 @@ const createModal = (movie) => {
   sections.forEach((section) => {
     section.classList.add('blur-active');
   });
+};
+
+const showGenresInModal = (video) => {
+  const genres = videoFlag === 'movie' ? moviesGenres : seriesGenres;
+  return video.genre_ids
+    .map((id) => genres.find((genre) => genre.id === id)?.name)
+    .filter(Boolean)
+    .join(', ');
 };
 
 const closeModal = (modal) => {

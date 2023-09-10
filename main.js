@@ -69,8 +69,6 @@ const createCards = () => {
 };
 
 const switchTypeOfVideo = (e) => {
-  nowPlayingVideosBtn.click();
-
   switcherBgc.classList.toggle('switch-bgc-to-active');
   switchToMovies.classList.toggle('switch-to-active');
   switchToSeries.classList.toggle('switch-to-active');
@@ -78,20 +76,26 @@ const switchTypeOfVideo = (e) => {
   buttonsListSpan.forEach((spanBtn) => {
     spanBtn.textContent =
       spanBtn.textContent === 'series' ? 'movies' : 'series';
+
+    if (videoFlag === 'movie') {
+      upcomingVideosBtn.innerHTML = `Upcoming <span>${spanBtn.textContent}</span>`;
+    } else {
+      upcomingVideosBtn.innerHTML = `Airing today <span>${spanBtn.textContent}</span>`;
+    }
   });
 
   if (videoFlag === 'movie') {
     fetchVideos('now_playing');
-    upcomingVideosBtn.textContent = 'Upcoming Movies';
   } else {
     fetchVideos('airing_today');
-    upcomingVideosBtn.textContent = 'Airing today Series';
   }
 
   chooseButtonsList.forEach((chooseButton) => {
     chooseButton.classList.remove('btn-choose-active');
     nowPlayingVideosBtn.classList.add('btn-choose-active');
   });
+
+  nowPlayingVideosBtn.click();
 };
 
 const selectActiveChoice = (e) => {

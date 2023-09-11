@@ -23,6 +23,8 @@ let titleIsRunning = false;
 let videoFlag = 'movie';
 let indexTyping;
 let latestParam;
+let latestSort = "original_title.asc"
+
 // ************BUTTONS VARIABLES************
 const switcher = document.querySelector('.switcher');
 const nowPlayingVideosBtn = document.querySelector('.btn-now-playing-movies');
@@ -32,14 +34,14 @@ const upcomingVideosBtn = document.querySelector('.btn-upcoming-movies');
 const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
 
 // ************FUNCTIONS************
-const fetchMovies = async (link) => {
+const fetchVideos = async (link) => {
   const res = await fetch(link);
   const json = await res.json();
   movies = json.results;
   createCards();
 };
 
-const fetchVideos = async (param) => {
+const showVideos = async (param) => {
   cardsContainer.textContent = '';
 
   if (param === 'now_playing' && videoFlag === 'tv') {
@@ -47,26 +49,43 @@ const fetchVideos = async (param) => {
   } else if (param === 'upcoming' && videoFlag === 'tv') {
     param = 'on_the_air';
   }
-  await fetchMovies(
+  await fetchVideos(
     `https://api.themoviedb.org/3/${videoFlag}/${param}?api_key=${API_KEY}&with_genres=${arrayOfSelectedGenres.join(
       ','
     )}`
   );
+
+// SEARCHING BY ALL MOVIES
+  // await fetchVideos(
+  //   `https://api.themoviedb.org/3/discover/${videoFlag}?sort_by=${latestSort}&api_key=${API_KEY}&with_genres=${arrayOfSelectedGenres.join(
+  //     ','
+  //   )}`
+  // );
+
   latestParam = param;
 };
 
-fetchVideos('now_playing');
+showVideos('now_playing');
 
 const createCards = () => {
   movies.forEach((movie) => {
     let card = document.createElement('div');
-    card.innerHTML = `<div class="card"><div class="card-poster"><img src="https://www.themoviedb.org/t/p/w220_and_h330_face${
-      movie.poster_path
-    }" alt="${
+
+    let imagePath = movie.poster_path
+      ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.poster_path
+      : movie.backdrop_path
+      ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' +
+        movie.backdrop_path
+      : './picture_not_found.jpg';
+
+    card.innerHTML = `<div class="card">
+      <div class="card-poster">
+        <img src="${imagePath}" alt="${
       movie.title ? movie.title : movie.name
-    } poster"></div><p class="card-title">${
-      movie.title ? movie.title : movie.name
-    }</p></div>`;
+    } poster">
+      </div>
+      <p class="card-title">${movie.title ? movie.title : movie.name}</p>
+    </div>`;
     cardsContainer.append(card);
     card.addEventListener('click', () => {
       createModal(movie);
@@ -91,9 +110,9 @@ const switchTypeOfVideo = () => {
     }
   });
   if (videoFlag === 'movie') {
-    fetchVideos('now_playing');
+    showVideos('now_playing');
   } else {
-    fetchVideos('airing_today');
+    showVideos('airing_today');
   }
   chooseButtonsList.forEach((chooseButton) => {
     chooseButton.classList.remove('btn-choose-active');
@@ -136,7 +155,7 @@ const selectActiveGenres = (e, activeGenre) => {
   }
   if (arrayOfSelectedGenres.includes(activeGenre.id)) {
   }
-  fetchVideos(latestParam);
+  showVideos(latestParam);
 };
 
 const setCurrentTitle = (e) => {
@@ -163,14 +182,15 @@ const createModal = (movie) => {
   const modal = document.createElement('div');
   document.body.append(modal);
   modal.classList.add('modal');
+  let imagePath = movie.backdrop_path
+    ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.backdrop_path
+    : movie.backdrop_path
+    ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.poster_path
+    : './picture_not_found.jpg';
   modal.innerHTML = `<div class="modal-flex-box">
   <button class = "modal-close-btn">X</button>
 <div class="modal-left-side">
-<img src="${
-    movie.backdrop_path
-      ? `https://www.themoviedb.org/t/p/w220_and_h330_face${movie.backdrop_path}`
-      : './picture_not_found.jpg'
-  }" alt = "${movie.title ? movie.title : movie.name}">
+<img src="${imagePath}" alt = "${movie.title ? movie.title : movie.name}">
 </div>
 <div class="modal-right-side">
   <p>
@@ -244,12 +264,44 @@ const getCurrentYear = () => {
 };
 getCurrentYear();
 
+const dropdowns = document.querySelectorAll('.dropdown');
+dropdowns.forEach((dropdown) => {
+  const select = dropdown.querySelector('.select');
+  const caret = dropdown.querySelector('.caret');
+  const menu = dropdown.querySelector('.menu');
+  const options = dropdown.querySelectorAll('.menu li');
+  const selected = dropdown.querySelectorAll('.selected');
+
+  select.addEventListener('click', () => {
+    select.classList.toggle('select-clicked');
+    caret.classList.toggle('caret-rotate');
+    menu.classList.toggle('menu-open');
+  });
+
+  options.forEach((option) => {
+    option.addEventListener('click', () => {
+      selected.forEach((select) => {
+        select.innerText = option.innerText;
+      });
+      select.classList.remove('select-clicked');
+      caret.classList.remove('caret-rotate');
+      menu.classList.remove('menu-open');
+
+      options.forEach((option) => {
+        option.classList.remove('active');
+      });
+
+      option.classList.add('active');
+    });
+  });
+});
+
 // ************LISTENERS************
 
-nowPlayingVideosBtn.addEventListener('click', () => fetchVideos('now_playing'));
-popularVideosBtn.addEventListener('click', () => fetchVideos('popular'));
-topRatedVideosBtn.addEventListener('click', () => fetchVideos('top_rated'));
-upcomingVideosBtn.addEventListener('click', () => fetchVideos('upcoming'));
+nowPlayingVideosBtn.addEventListener('click', () => showVideos('now_playing'));
+popularVideosBtn.addEventListener('click', () => showVideos('popular'));
+topRatedVideosBtn.addEventListener('click', () => showVideos('top_rated'));
+upcomingVideosBtn.addEventListener('click', () => showVideos('upcoming'));
 
 switcher.addEventListener('click', switchTypeOfVideo);
 

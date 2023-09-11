@@ -17,7 +17,12 @@
 <body>
     <nav class="nav">
         <a class="nav-logo" href="#">VID-X</a>
-        <input placeholder="Search..." class="nav-input" type="text">
+        <div class="search-box">
+            <input placeholder="Search..." class="nav-input" type="text">
+            <button class="search-btn">
+                <p>Search <span>movies</span></p>
+            </button>
+        </div>
         <a class="nav-link" href="#">about project</a>
         <a class="nav-link" href="#">contact</a>
     </nav>
@@ -39,6 +44,30 @@
             <button class="btn-choose btn-popular-movies">Popular <span>Movies</span></button>
             <button class="btn-choose btn-top-rated-movies">Top rated <span>Movies</span></button>
             <button class="btn-choose btn-upcoming-movies">Upcoming <span>Movies</span></button>
+            <button class="btn-choose btn-discover">Discover
+                <span>Movies</span>
+            </button>
+            <div class="dropdown">
+                <div class="select">
+                    <span class="selected">Popularity Descending</span>
+                    <div class="caret"></div>
+                </div>
+                <ul class="menu">
+                    <li class="active" id="popularity.desc">Popularity Descending</li>
+                    <li id="popularity.asc">Popularity Ascending</li>
+                    <li id="vote_average.desc">Vote Average Descending</li>
+                    <li id="vote_average.asc">Vote Average Ascending</li>
+                    <li id="vote_count.desc">Vote Count Descending</li>
+                    <li id="vote_count.asc">Vote Count Ascending</li>
+                    <li id="primary_release_date.desc">Release Date Descending</li>
+                    <li id="primary_release_date.asc">Release Date Ascending</li>
+                    <li id="">Title A-Z</li>
+                    <li id="">Title Z-A</li>
+                </ul>
+            </div>
+
+
+
         </div>
         <p>---You can select by Genres---</p>
 
@@ -50,6 +79,14 @@
 
         <div class="cards-container">
         </div>
+
+
+        <!-- <div class="pages-box">
+            <button>-</button>
+            <p>122</p>
+            <button>+</button>
+        </div> -->
+
     </main>
 
     <footer class="footer">

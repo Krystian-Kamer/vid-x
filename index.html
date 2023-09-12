@@ -40,33 +40,11 @@
         </div>
 
         <div class="buttons-choose-box">
-            <button class="btn-choose btn-now-playing-movies btn-choose-active">Now playing <span>Movies</span></button>
-            <button class="btn-choose btn-popular-movies">Popular <span>Movies</span></button>
-            <button class="btn-choose btn-top-rated-movies">Top rated <span>Movies</span></button>
-            <button class="btn-choose btn-upcoming-movies">Upcoming <span>Movies</span></button>
-            <button class="btn-choose btn-discover">Discover
-                <span>Movies</span>
-            </button>
-            <div class="dropdown">
-                <div class="select">
-                    <span class="selected">Popularity Descending</span>
-                    <div class="caret"></div>
-                </div>
-                <ul class="menu">
-                    <li class="active" id="popularity.desc">Popularity Descending</li>
-                    <li id="popularity.asc">Popularity Ascending</li>
-                    <li id="vote_average.desc">Vote Average Descending</li>
-                    <li id="vote_average.asc">Vote Average Ascending</li>
-                    <li id="vote_count.desc">Vote Count Descending</li>
-                    <li id="vote_count.asc">Vote Count Ascending</li>
-                    <li id="primary_release_date.desc">Release Date Descending</li>
-                    <li id="primary_release_date.asc">Release Date Ascending</li>
-                    <li id="">Title A-Z</li>
-                    <li id="">Title Z-A</li>
-                </ul>
-            </div>
-
-
+            <button class="btn-choose btn-now-playing btn-choose-active">Now playing <span>Movies</span></button>
+            <button class="btn-choose btn-popular">Popular <span>Movies</span></button>
+            <button class="btn-choose btn-top-rated">Top rated <span>Movies</span></button>
+            <button class="btn-choose btn-upcoming">Upcoming <span>Movies</span></button>
+            <button class="btn-choose btn-discover">Discover <span>Movies</span></button>
 
         </div>
         <p>---You can select by Genres---</p>
@@ -77,15 +55,34 @@
 
         <h2>Now playing <span>Movies</span></h2>
 
+        <div class="sort-dropdown">
+            <div class="select">
+                <span class="selected" id="">Popularity Descending</span>
+                <div class="caret"></div>
+            </div>
+            <ul class="menu">
+                <li id="popularity.desc" class="active">Popularity Descending</li>
+                <li id="popularity.asc">Popularity Ascending</li>
+                <li id="vote_average.desc">Vote Average Descending</li>
+                <li id="vote_average.asc">Vote Average Ascending</li>
+                <li id="vote_count.desc">Vote Count Descending</li>
+                <li id="vote_count.asc">Vote Count Ascending</li>
+                <li id="primary_release_date.desc">Release Date Descending</li>
+                <li id="primary_release_date.asc">Release Date Ascending</li>
+                <li id="">Title A-Z</li>
+                <li id="">Title Z-A</li>
+            </ul>
+        </div>
+
         <div class="cards-container">
         </div>
 
 
-        <!-- <div class="pages-box">
-            <button>-</button>
-            <p>122</p>
-            <button>+</button>
-        </div> -->
+        <div class="pages-box">
+            <button class="decrement">-</button>
+            <span>01</span>
+            <button class="increment">+</button>
+        </div>
 
     </main>
 

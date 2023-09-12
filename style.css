@@ -11,6 +11,8 @@ html {
 }
 
 body {
+  justify-content: center;
+  text-align: center;
   background-image: linear-gradient(
     180deg,
     #000000 0%,
@@ -163,8 +165,9 @@ h2 {
   cursor: pointer;
 }
 
-.dropdown {
+.sort-dropdown {
   position: relative;
+  align-self: center;
   width: 320px;
 }
 
@@ -172,6 +175,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  visibility: hidden;
   padding: 5px 20px;
   color: white;
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
@@ -362,6 +366,34 @@ h2 span {
 }
 .card:hover {
   opacity: 100%;
+}
+
+.pages-box {
+  align-self: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(255, 140, 58, 0.85);
+  border-radius: 25px;
+  width: 200px;
+}
+
+.pages-box span {
+  color: #000000;
+  font-size: 30px;
+}
+
+.pages-box button {
+  background-color: transparent;
+  padding: 10px 20px;
+  border: none;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.pages-box button:hover {
+  transform: scale(1.2);
+  color: #411414;
 }
 
 .modal {

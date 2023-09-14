@@ -8,13 +8,12 @@ const switcherBgc = document.querySelector('.switcher-background');
 const switchToMovies = document.querySelector('.switch-to-movies');
 const switchToSeries = document.querySelector('.switch-to-series');
 const genresBox = document.querySelector('.genres-box');
-
 const dropdown = document.querySelector('.sort-dropdown');
 const select = dropdown.querySelector('.select');
 const caret = dropdown.querySelector('.caret');
 const menu = dropdown.querySelector('.menu');
 const options = dropdown.querySelectorAll('.menu li');
-const selected = dropdown.querySelectorAll('.selected');
+const currentPage = document.querySelector('.current-page');
 
 const sections = [
   document.querySelector('.nav'),
@@ -31,6 +30,8 @@ let videoFlag = 'movie';
 let indexTyping;
 let latestParam;
 let latestSort = 'popularity.desc';
+let pageNumber = 1;
+let totalPages = null;
 
 // ************BUTTONS VARIABLES************
 const switcher = document.querySelector('.switcher');
@@ -40,12 +41,17 @@ const topRatedVideosBtn = document.querySelector('.btn-top-rated');
 const upcomingVideosBtn = document.querySelector('.btn-upcoming');
 const discoverVideosBtn = document.querySelector('.btn-discover');
 const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
+const decrementBtn = document.querySelector('.decrement-page-btn');
+const incrementBtn = document.querySelector('.increment-page-btn');
+const allPages = document.querySelector('.allPagesBtn');
 
 // ************FUNCTIONS************
 const fetchVideos = async (link) => {
   const res = await fetch(link);
   const json = await res.json();
   movies = json.results;
+  totalPages = json.total_pages;
+  console.log(totalPages);
   createCards();
 };
 
@@ -56,20 +62,20 @@ const showVideos = async (param) => {
   } else if (param === 'upcoming' && videoFlag === 'tv') {
     param = 'on_the_air';
   }
+
   if (param === 'discover') {
     await fetchVideos(
       `https://api.themoviedb.org/3/${param}/${videoFlag}?sort_by=${latestSort}&api_key=${API_KEY}&with_genres=${arrayOfSelectedGenres.join(
         ','
-      )}`
+      )}&page=${pageNumber}`
     );
   } else {
     await fetchVideos(
       `https://api.themoviedb.org/3/${videoFlag}/${param}?api_key=${API_KEY}&with_genres=${arrayOfSelectedGenres.join(
         ','
-      )}`
+      )}&page=${pageNumber}`
     );
   }
-
   latestParam = param;
 };
 showVideos('now_playing');
@@ -135,6 +141,7 @@ const selectActiveChoice = (e) => {
     chooseButton.classList.remove('btn-choose-active');
     activeButton.classList.add('btn-choose-active');
   });
+  resetPageNumber();
 };
 
 const uploadGenres = () => {
@@ -155,12 +162,13 @@ const selectActiveGenres = (e, activeGenre) => {
   selectedGenre.classList.toggle('genre-btn-selected');
   const index = arrayOfSelectedGenres.indexOf(activeGenre.id);
   if (index !== -1) {
+    resetPageNumber();
     arrayOfSelectedGenres.splice(index, 1);
   } else {
     arrayOfSelectedGenres.push(activeGenre.id);
+    resetPageNumber();
   }
-  if (arrayOfSelectedGenres.includes(activeGenre.id)) {
-  }
+
   showVideos(latestParam);
 };
 
@@ -272,10 +280,11 @@ const showSortOptions = () => {
   });
   options.forEach((option) => {
     option.addEventListener('click', () => {
-      selected.forEach((select) => {
-        select.innerText = option.innerText;
-        showVideos('discover');
-      });
+      select.textContent = option.textContent;
+      select.id = option.id;
+      latestSort = select.id;
+      showVideos('discover');
+      resetPageNumber();
       select.classList.remove('select-clicked');
       caret.classList.remove('caret-rotate');
       menu.classList.remove('menu-open');
@@ -286,8 +295,31 @@ const showSortOptions = () => {
     });
   });
 };
-
 showSortOptions();
+
+const setCurrentPage = (number) => {
+  pageNumber += number;
+  decrementBtn.style.visibility = pageNumber > 1 ? 'visible' : 'hidden';
+  incrementBtn.style.visibility =
+    pageNumber < totalPages ? 'visible' : 'hidden';
+  currentPage.textContent = pageNumber < 10 ? `0${pageNumber}` : pageNumber;
+  showVideos(latestParam);
+};
+
+const resetPageNumber = () => {
+  pageNumber = 1;
+  decrementBtn.style.visibility = 'hidden';
+  incrementBtn.style.visibility = 'visible';
+  currentPage.textContent = `0${pageNumber}`;
+};
+
+const loadEveryPage = () => {
+  pageNumber = 1;
+  for (let i = 0; i < totalPages; i++) {
+    pageNumber++;
+    showVideos(latestParam);
+  }
+};
 
 const getCurrentYear = () => {
   const currentYear = new Date().getFullYear();
@@ -309,3 +341,7 @@ chooseButtonsList.forEach((button) => {
     selectActiveChoice(e);
   });
 });
+
+incrementBtn.addEventListener('click', () => setCurrentPage(1));
+decrementBtn.addEventListener('click', () => setCurrentPage(-1));
+allPages.addEventListener('click', loadEveryPage);

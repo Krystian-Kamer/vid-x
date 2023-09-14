@@ -8,6 +8,11 @@
 
 html {
   scroll-behavior: smooth;
+  --maroon: #411414;
+  --black: #000000;
+  --white: rgb(235, 235, 235);
+  --oragne: rgba(255, 140, 58, 0.85);
+  --green: rgba(43, 255, 0, 0.75);
 }
 
 body {
@@ -15,13 +20,13 @@ body {
   text-align: center;
   background-image: linear-gradient(
     180deg,
-    #000000 0%,
-    #411414 50%,
-    #000000 100%
+    var(--black) 0%,
+    var(--maroon) 50%,
+    var(--black) 100%
   );
   font-family: 'Syne Mono', monospace;
   font-size: 20px;
-  color: rgb(235, 235, 235);
+  color: var(--white);
 }
 
 .blur-active {
@@ -32,7 +37,7 @@ body {
 
 a {
   text-decoration: none;
-  color: white;
+  color: var(--white);
 }
 
 .nav {
@@ -51,13 +56,13 @@ a {
 .nav-logo {
   letter-spacing: 10px;
   font-size: 40px;
-  color: #fafafa;
+  color: var(--white);
 }
 
 .nav-input {
   border-radius: 15px;
   padding: 10px 25px;
-  color: white;
+  color: var(--white);
   border: transparent;
   font-size: 18px;
   width: 350px;
@@ -108,12 +113,12 @@ h2 {
   border-radius: 25px;
   cursor: pointer;
   z-index: 0;
-  border: 2px solid #411414;
+  border: 2px solid var(--maroon);
 }
 
 .switcher p {
   position: relative;
-  color: white;
+  color: var(--white);
   display: inline;
   font-size: 24px;
   font-family: 'Syne Mono', monospace;
@@ -128,7 +133,7 @@ h2 {
   width: 50%;
   height: 100%;
   border-radius: 25px;
-  background-color: #411414;
+  background-color: var(--maroon);
   transition: left 0.5s;
 }
 
@@ -137,7 +142,7 @@ h2 {
 }
 
 .switch-to-active {
-  color: rgb(245, 247, 221);
+  color: var(--white);
   text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
     0 0 150px rgb(255, 0, 0);
   overflow: hidden;
@@ -156,8 +161,8 @@ h2 {
   border-radius: 30px;
   text-transform: uppercase;
   background-color: transparent;
-  color: white;
-  border: 2px solid white;
+  color: var(--white);
+  border: 2px solid var(--white);
   font-family: 'Syne Mono', monospace;
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
     0 0 150px rgb(73, 73, 73);
@@ -177,13 +182,13 @@ h2 {
   align-items: center;
   visibility: hidden;
   padding: 5px 20px;
-  color: white;
+  color: var(--white);
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
     0 0 150px rgb(73, 73, 73);
   border: 2px solid black;
   border-radius: 15px;
   cursor: pointer;
-  background-color: rgb(0, 0, 0);
+  background-color: var(--black);
   border: 2px solid rgba(79, 79, 79, 0.85);
   transition: background 0.5s;
 }
@@ -197,7 +202,7 @@ h2 {
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid rgba(255, 140, 58, 0.85);
+  border-top: 5px solid var(--oragne);
   transition: transform 0.3s;
 }
 
@@ -208,7 +213,7 @@ h2 {
 .menu {
   list-style: none;
   background-color: rgba(35, 34, 34, 0.95);
-  border: 1px solid rgba(255, 140, 58, 0.85);
+  border: 1px solid var(--oragne);
   border-radius: 15px;
   color: white;
   position: absolute;
@@ -247,7 +252,7 @@ h2 {
 }
 
 .btn-choose-active {
-  border: 3px solid rgb(111, 219, 53);
+  border: 3px solid var(--green);
 }
 
 .genres-box {
@@ -260,7 +265,7 @@ h2 {
 
 .genre-btn {
   font-size: 20px;
-  background-color: rgba(255, 140, 58, 0.85);
+  background-color: var(--oragne);
   font-family: 'Syne Mono', monospace;
   letter-spacing: 2px;
   padding: 10px 20px;
@@ -277,7 +282,7 @@ h2 {
 
 .genre-btn-selected {
   transform: scale(1.05);
-  background-color: rgba(43, 255, 0, 0.757);
+  background-color: var(--green);
 }
 
 .btn-choose:hover,
@@ -291,7 +296,7 @@ h2 {
   padding: 10px 0;
   font-size: 40px;
   text-transform: uppercase;
-  color: rgb(247, 250, 200);
+  color: #ffffba;
   text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
     0 0 150px rgb(255, 0, 0);
 }
@@ -358,7 +363,7 @@ h2 span {
   min-height: 60px;
   max-height: 100px;
   text-align: center;
-  background-color: black;
+  background-color: var(--black);
 }
 
 .card:hover .card-poster {
@@ -373,7 +378,7 @@ h2 span {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: rgba(255, 140, 58, 0.85);
+  background-color: var(--oragne);
   border-radius: 25px;
   width: 200px;
 }
@@ -381,6 +386,9 @@ h2 span {
 .pages-box span {
   color: #000000;
   font-size: 30px;
+  padding: 5px 25px;
+  border-left: 2px solid rgba(0, 0, 0, 0.3);
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
 }
 
 .pages-box button {
@@ -393,7 +401,11 @@ h2 span {
 
 .pages-box button:hover {
   transform: scale(1.2);
-  color: #411414;
+  color: var(--maroon);
+}
+
+.decrement-page-btn {
+  visibility: hidden;
 }
 
 .modal {
@@ -439,6 +451,7 @@ h2 span {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   margin-left: 30px;
   font-size: 30px;
 }
@@ -479,12 +492,12 @@ h2 span {
   bottom: 0;
   width: 100%;
   height: 70px;
-  background-color: rgba(0, 0, 0);
-  box-shadow: 0px 0px 60px 30px black;
+  background-color: var(--black);
+  box-shadow: 0px 0px 60px 30px var(--black);
   justify-content: center;
   align-items: center;
 }
 
 .current-year {
-  color: white;
+  color: var(--white);
 }

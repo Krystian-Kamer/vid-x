@@ -444,8 +444,8 @@ h2 span {
 
 .pages-box {
   margin-top: 30px;
-  align-self: center;
   display: flex;
+  align-self: center;
   justify-content: space-around;
   align-items: center;
   background-color: var(--oragne);

@@ -14,6 +14,7 @@ const caret = dropdown.querySelector('.caret');
 const menu = dropdown.querySelector('.menu');
 const options = dropdown.querySelectorAll('.menu li');
 const currentPage = document.querySelector('.current-page');
+const pagesBox = document.querySelector('.pages-box');
 const allPagesContainer = document.querySelector('.all-pages-container');
 const searchInput = document.querySelector('.search-input');
 const spanYear = document.querySelector('.current-year span');
@@ -32,6 +33,7 @@ let state = {
   indexTyping: '',
   latestParam: '',
   latestSort: 'popularity.desc',
+  latestInputValue: '',
   pageNumber: 1,
   totalPages: null,
 };
@@ -59,7 +61,6 @@ const fetchVideos = async (link) => {
   if (state.totalPages > 500) {
     state.totalPages = 500;
   }
-  console.log(state.totalPages);
   createCards();
 };
 
@@ -71,7 +72,6 @@ const showVideos = async (param) => {
   } else if (param === 'upcoming' && state.currentVideoType === 'tv') {
     param = 'on_the_air';
   }
-
   if (param === 'discover') {
     await fetchVideos(
       `https://api.themoviedb.org/3/${param}/${
@@ -80,12 +80,19 @@ const showVideos = async (param) => {
         state.latestSort
       }&api_key=${API_KEY}&with_genres=${state.arrayOfSelectedGenres.join(
         ','
-      )}&page=${state.pageNumber}`
+      )}&page=${state.pageNumber}&include_adult=false`
     );
   } else if (param === 'search') {
+    chooseButtonsList.forEach((chooseButton) => {
+      chooseButton.classList.remove('btn-choose-active');
+    });
+    if (searchInput.value === '') {
+      searchInput.value = state.latestInputValue;
+    }
     await fetchVideos(
-      `https://api.themoviedb.org/3/${param}/${state.currentVideoType}?api_key=${API_KEY}&query=${searchInput.value}`
+      `https://api.themoviedb.org/3/${param}/${state.currentVideoType}?api_key=${API_KEY}&query=${searchInput.value}&page=${state.pageNumber}&include_adult=false`
     );
+    state.latestInputValue = searchInput.value;
     searchInput.value = '';
     searchBtn.classList.add('search-btn-hidden');
     searchBtn.classList.remove('search-btn-visible');
@@ -95,10 +102,12 @@ const showVideos = async (param) => {
         state.currentVideoType
       }/${param}?api_key=${API_KEY}&with_genres=${state.arrayOfSelectedGenres.join(
         ','
-      )}&page=${state.pageNumber}`
+      )}&page=${state.pageNumber}&include_adult=false`
     );
   }
+
   state.latestParam = param;
+  criteriaNotFound();
   showAllPages();
 };
 showVideos('now_playing');
@@ -222,7 +231,7 @@ const createModal = (movie) => {
   modal.classList.add('modal');
   let imagePath = movie.backdrop_path
     ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.backdrop_path
-    : movie.backdrop_path
+    : movie.poster_path
     ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.poster_path
     : './picture_not_found.jpg';
 
@@ -405,6 +414,17 @@ const showSearchBtn = () => {
   }
 };
 
+const criteriaNotFound = () => {
+  if (cardsContainer.textContent === '') {
+    cardsContainer.style.fontSize = '24px';
+    pagesBox.style.display = 'none';
+    cardsContainer.textContent =
+      'Sorry, it looks like what you`re looking for doesn`t meet the criteria.';
+  } else {
+    pagesBox.style.display = 'flex';
+  }
+};
+
 const getCurrentYear = () => {
   const currentYear = new Date().getFullYear();
   spanYear.textContent = ` ${currentYear} `;
@@ -429,4 +449,8 @@ chooseButtonsList.forEach((button) => {
 incrementBtn.addEventListener('click', () => setCurrentPage(1));
 decrementBtn.addEventListener('click', () => setCurrentPage(-1));
 searchInput.addEventListener('input', showSearchBtn);
-searchBtn.addEventListener('click', () => showVideos('search'));
+searchBtn.addEventListener('click', () => {
+  state.pageNumber = 1;
+  currentPage.textContent = state.pageNumber;
+  showVideos('search');
+});

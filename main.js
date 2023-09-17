@@ -14,24 +14,29 @@ const caret = dropdown.querySelector('.caret');
 const menu = dropdown.querySelector('.menu');
 const options = dropdown.querySelectorAll('.menu li');
 const currentPage = document.querySelector('.current-page');
+const allPagesContainer = document.querySelector('.all-pages-container');
+const searchInput = document.querySelector('.search-input');
+const spanYear = document.querySelector('.current-year span');
 
 const sections = [
   document.querySelector('.nav'),
   document.querySelector('.main'),
   document.querySelector('.footer'),
 ];
-const spanYear = document.querySelector('.current-year span');
+
+let state = {
+  movies: [],
+  arrayOfSelectedGenres: [],
+  titleIsRunning: false,
+  currentVideoType: 'movie',
+  indexTyping: '',
+  latestParam: '',
+  latestSort: 'popularity.desc',
+  pageNumber: 1,
+  totalPages: null,
+};
 
 const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
-let movies = [];
-let arrayOfSelectedGenres = [];
-let titleIsRunning = false;
-let videoFlag = 'movie';
-let indexTyping;
-let latestParam;
-let latestSort = 'popularity.desc';
-let pageNumber = 1;
-let totalPages = null;
 
 // ************BUTTONS VARIABLES************
 const switcher = document.querySelector('.switcher');
@@ -43,45 +48,63 @@ const discoverVideosBtn = document.querySelector('.btn-discover');
 const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
 const decrementBtn = document.querySelector('.decrement-page-btn');
 const incrementBtn = document.querySelector('.increment-page-btn');
-const allPages = document.querySelector('.allPagesBtn');
+const searchBtn = document.querySelector('.search-btn');
 
 // ************FUNCTIONS************
 const fetchVideos = async (link) => {
   const res = await fetch(link);
   const json = await res.json();
-  movies = json.results;
-  totalPages = json.total_pages;
-  console.log(totalPages);
+  state.movies = json.results;
+  state.totalPages = json.total_pages;
+  if (state.totalPages > 500) {
+    state.totalPages = 500;
+  }
+  console.log(state.totalPages);
   createCards();
 };
 
 const showVideos = async (param) => {
+  allPagesContainer.textContent = '';
   cardsContainer.textContent = '';
-  if (param === 'now_playing' && videoFlag === 'tv') {
+  if (param === 'now_playing' && state.currentVideoType === 'tv') {
     param = 'airing_today';
-  } else if (param === 'upcoming' && videoFlag === 'tv') {
+  } else if (param === 'upcoming' && state.currentVideoType === 'tv') {
     param = 'on_the_air';
   }
 
   if (param === 'discover') {
     await fetchVideos(
-      `https://api.themoviedb.org/3/${param}/${videoFlag}?sort_by=${latestSort}&api_key=${API_KEY}&with_genres=${arrayOfSelectedGenres.join(
+      `https://api.themoviedb.org/3/${param}/${
+        state.currentVideoType
+      }?sort_by=${
+        state.latestSort
+      }&api_key=${API_KEY}&with_genres=${state.arrayOfSelectedGenres.join(
         ','
-      )}&page=${pageNumber}`
+      )}&page=${state.pageNumber}`
     );
+  } else if (param === 'search') {
+    await fetchVideos(
+      `https://api.themoviedb.org/3/${param}/${state.currentVideoType}?api_key=${API_KEY}&query=${searchInput.value}`
+    );
+    searchInput.value = '';
+    searchBtn.classList.add('search-btn-hidden');
+    searchBtn.classList.remove('search-btn-visible');
   } else {
     await fetchVideos(
-      `https://api.themoviedb.org/3/${videoFlag}/${param}?api_key=${API_KEY}&with_genres=${arrayOfSelectedGenres.join(
+      `https://api.themoviedb.org/3/${
+        state.currentVideoType
+      }/${param}?api_key=${API_KEY}&with_genres=${state.arrayOfSelectedGenres.join(
         ','
-      )}&page=${pageNumber}`
+      )}&page=${state.pageNumber}`
     );
   }
-  latestParam = param;
+  state.latestParam = param;
+  showAllPages();
 };
 showVideos('now_playing');
 
 const createCards = () => {
-  movies.forEach((movie) => {
+  state.movies.forEach((movie) => {
     let card = document.createElement('div');
     let imagePath = movie.poster_path
       ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.poster_path
@@ -105,21 +128,21 @@ const createCards = () => {
 };
 
 const switchTypeOfVideo = () => {
-  arrayOfSelectedGenres = [];
+  state.arrayOfSelectedGenres = [];
   switcherBgc.classList.toggle('switch-bgc-to-active');
   switchToMovies.classList.toggle('switch-to-active');
   switchToSeries.classList.toggle('switch-to-active');
-  videoFlag = videoFlag === 'movie' ? 'tv' : 'movie';
+  state.currentVideoType = state.currentVideoType === 'movie' ? 'tv' : 'movie';
   buttonsListSpan.forEach((spanBtn) => {
     spanBtn.textContent =
       spanBtn.textContent === 'series' ? 'movies' : 'series';
-    if (videoFlag === 'movie') {
+    if (state.currentVideoType === 'movie') {
       upcomingVideosBtn.innerHTML = `Upcoming <span>${spanBtn.textContent}</span>`;
     } else {
       upcomingVideosBtn.innerHTML = `Airing today <span>${spanBtn.textContent}</span>`;
     }
   });
-  if (videoFlag === 'movie') {
+  if (state.currentVideoType === 'movie') {
     showVideos('now_playing');
   } else {
     showVideos('airing_today');
@@ -145,7 +168,8 @@ const selectActiveChoice = (e) => {
 };
 
 const uploadGenres = () => {
-  const genres = videoFlag === 'movie' ? moviesGenres : seriesGenres;
+  const genres =
+    state.currentVideoType === 'movie' ? moviesGenres : seriesGenres;
   genres.forEach((genre) => {
     const createdGenre = document.createElement('button');
     createdGenre.classList.add('genre-btn');
@@ -160,24 +184,24 @@ uploadGenres();
 const selectActiveGenres = (e, activeGenre) => {
   const selectedGenre = e.target;
   selectedGenre.classList.toggle('genre-btn-selected');
-  const index = arrayOfSelectedGenres.indexOf(activeGenre.id);
+  const index = state.arrayOfSelectedGenres.indexOf(activeGenre.id);
   if (index !== -1) {
     resetPageNumber();
-    arrayOfSelectedGenres.splice(index, 1);
+    state.arrayOfSelectedGenres.splice(index, 1);
   } else {
-    arrayOfSelectedGenres.push(activeGenre.id);
+    state.arrayOfSelectedGenres.push(activeGenre.id);
     resetPageNumber();
   }
 
-  showVideos(latestParam);
+  showVideos(state.latestParam);
 };
 
 const setCurrentTitle = (e) => {
-  if (titleIsRunning) {
-    clearInterval(indexTyping);
-    titleIsRunning = false;
+  if (state.titleIsRunning) {
+    clearInterval(state.indexTyping);
+    state.titleIsRunning = false;
   }
-  titleIsRunning = true;
+  state.titleIsRunning = true;
   currentTitle.textContent = '';
   const titleFromButton = e.currentTarget;
   let number = 0;
@@ -185,11 +209,11 @@ const setCurrentTitle = (e) => {
     currentTitle.textContent += titleFromButton.textContent[number];
     number++;
     if (number === titleFromButton.textContent.length) {
-      clearInterval(indexTyping);
-      titleIsRunning = false;
+      clearInterval(state.indexTyping);
+      state.titleIsRunning = false;
     }
   };
-  indexTyping = setInterval(addLetterToTitle, 70);
+  state.indexTyping = setInterval(addLetterToTitle, 70);
 };
 
 const createModal = (movie) => {
@@ -201,45 +225,57 @@ const createModal = (movie) => {
     : movie.backdrop_path
     ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.poster_path
     : './picture_not_found.jpg';
-  modal.innerHTML = `<div class="modal-flex-box">
-  <button class = "modal-close-btn">X</button>
-<div class="modal-left-side">
-<img src="${imagePath}" alt = "${movie.title ? movie.title : movie.name}">
-</div>
-<div class="modal-right-side">
-  <p>
-      <i class="fa-solid fa-clapperboard"></i> Title:
-  </p>
-  <p class="modal-title">${movie.title ? movie.title : movie.name}</p>
-  <p>
-      <i class="fa-solid fa-ghost"></i> Genre:
-  </p>
-  <p class="modal-genre">${showGenresInModal(movie)}</p>
-  <p>
-      <i class="fa-solid fa-calendar"></i> Relase date:
-  </p>
-  <p class="modal-relase-date">${
-    movie.release_date ? movie.release_date : movie.first_air_date
-  }</p>
-  <p>
-      <i class="fa-solid fa-star"></i> Vote average:
-  </p>
-  <p class="modal-vote-average">${movie.vote_average}</p>
-</div>
-</div>
-<p class="modal-overview">${movie.overview}</p>`;
-  closeModal(modal);
-  makeFontSizeSmaller(movie);
-  modal.classList.add('modal-active');
-  const deleteButton = modal.querySelector('.modal-close-btn');
-  deleteButton.addEventListener('click', () => closeModal(modal));
-  sections.forEach((section) => {
-    section.classList.add('blur-active');
-  });
+
+  let img = new Image();
+  img.src = imagePath;
+
+  let releaseDate = movie.release_date
+    ? movie.release_date
+    : movie.first_air_date
+    ? movie.first_air_date
+    : 'Date not indicated';
+
+  img.onload = function () {
+    modal.innerHTML = `<div class="modal-flex-box">
+    <button class = "modal-close-btn">X</button>
+    <div class="modal-left-side">
+      <img src="${img.src}" alt = "${movie.title ? movie.title : movie.name}">
+    </div>
+    <div class="modal-right-side">
+      <p>
+          <i class="fa-solid fa-clapperboard"></i> Title:
+      </p>
+      <p class="modal-title">${movie.title ? movie.title : movie.name}</p>
+      <p>
+          <i class="fa-solid fa-ghost"></i> Genre:
+      </p>
+      <p class="modal-genre">${showGenresInModal(movie)}</p>
+      <p>
+          <i class="fa-solid fa-calendar"></i> Relase date:
+      </p>
+      <p class="modal-relase-date">${releaseDate}</p>
+      <p>
+          <i class="fa-solid fa-star"></i> Vote average:
+      </p>
+      <p class="modal-vote-average">${movie.vote_average}</p>
+    </div>
+    </div>
+    <p class="modal-overview">${movie.overview}</p>`;
+
+    closeModal(modal);
+    makeFontSizeSmaller(movie);
+    modal.classList.add('modal-active');
+    const deleteButton = modal.querySelector('.modal-close-btn');
+    deleteButton.addEventListener('click', () => closeModal(modal));
+    sections.forEach((section) => {
+      section.classList.add('blur-active');
+    });
+  };
 };
 
 const showGenresInModal = (video) => {
-  const genres = videoFlag === 'movie' ? moviesGenres : seriesGenres;
+  const genres =
+    state.currentVideoType === 'movie' ? moviesGenres : seriesGenres;
   return video.genre_ids
     .map((id) => genres.find((genre) => genre.id === id)?.name)
     .filter(Boolean)
@@ -282,7 +318,7 @@ const showSortOptions = () => {
     option.addEventListener('click', () => {
       select.textContent = option.textContent;
       select.id = option.id;
-      latestSort = select.id;
+      state.latestSort = select.id;
       showVideos('discover');
       resetPageNumber();
       select.classList.remove('select-clicked');
@@ -298,26 +334,74 @@ const showSortOptions = () => {
 showSortOptions();
 
 const setCurrentPage = (number) => {
-  pageNumber += number;
-  decrementBtn.style.visibility = pageNumber > 1 ? 'visible' : 'hidden';
+  state.pageNumber += number;
+  decrementBtn.style.visibility = state.pageNumber > 1 ? 'visible' : 'hidden';
   incrementBtn.style.visibility =
-    pageNumber < totalPages ? 'visible' : 'hidden';
-  currentPage.textContent = pageNumber < 10 ? `0${pageNumber}` : pageNumber;
-  showVideos(latestParam);
+    state.pageNumber < state.totalPages ? 'visible' : 'hidden';
+  currentPage.textContent =
+    state.pageNumber < 10 ? `0${state.pageNumber}` : state.pageNumber;
+  showVideos(state.latestParam);
 };
 
 const resetPageNumber = () => {
-  pageNumber = 1;
+  state.pageNumber = 1;
   decrementBtn.style.visibility = 'hidden';
   incrementBtn.style.visibility = 'visible';
-  currentPage.textContent = `0${pageNumber}`;
+  currentPage.textContent = `0${state.pageNumber}`;
 };
 
-const loadEveryPage = () => {
-  pageNumber = 1;
-  for (let i = 0; i < totalPages; i++) {
-    pageNumber++;
-    showVideos(latestParam);
+const showAllPages = () => {
+  const renderPages = (start) => {
+    allPagesContainer.innerHTML = '';
+    let end = Math.min(start + 49, state.totalPages);
+    for (let i = start; i <= end; i++) {
+      const page = document.createElement('button');
+      page.id = i;
+      page.textContent = page.id;
+      page.classList.add('page-btn');
+      if (i === state.pageNumber) {
+        page.classList.add('page-btn-active');
+      }
+      page.addEventListener('click', () => {
+        document
+          .querySelector('.page-btn-active')
+          ?.classList.remove('page-btn-active');
+        page.classList.add('page-btn-active');
+        setCurrentPage(i - state.pageNumber);
+      });
+      allPagesContainer.append(page);
+    }
+    if (start > 1) {
+      const prevButton = document.createElement('button');
+      prevButton.classList.add('page-prev');
+      prevButton.textContent = '< Prev';
+      prevButton.classList.add('prev-btn');
+      allPagesContainer.prepend(prevButton);
+      prevButton.addEventListener('click', () => {
+        renderPages(start - 50);
+      });
+    }
+    if (end < state.totalPages) {
+      const nextButton = document.createElement('button');
+      nextButton.classList.add('page-next');
+      nextButton.textContent = 'Next >';
+      nextButton.classList.add('next-btn');
+      allPagesContainer.append(nextButton);
+      nextButton.addEventListener('click', () => {
+        renderPages(start + 50);
+      });
+    }
+  };
+  renderPages(Math.floor((state.pageNumber - 1) / 50) * 50 + 1);
+};
+
+const showSearchBtn = () => {
+  if (searchInput.value !== '') {
+    searchBtn.classList.add('search-btn-visible');
+    searchBtn.classList.remove('search-btn-hidden');
+  } else {
+    searchBtn.classList.add('search-btn-hidden');
+    searchBtn.classList.remove('search-btn-visible');
   }
 };
 
@@ -344,4 +428,5 @@ chooseButtonsList.forEach((button) => {
 
 incrementBtn.addEventListener('click', () => setCurrentPage(1));
 decrementBtn.addEventListener('click', () => setCurrentPage(-1));
-allPages.addEventListener('click', loadEveryPage);
+searchInput.addEventListener('input', showSearchBtn);
+searchBtn.addEventListener('click', () => showVideos('search'));

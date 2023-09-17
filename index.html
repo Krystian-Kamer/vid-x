@@ -17,12 +17,6 @@
 <body>
     <nav class="nav">
         <a class="nav-logo" href="#">VID-X</a>
-        <div class="search-box">
-            <input placeholder="Search..." class="nav-input" type="text">
-            <button class="search-btn">
-                <p>Search <span>movies</span></p>
-            </button>
-        </div>
         <a class="nav-link" href="#">about project</a>
         <a class="nav-link" href="#">contact</a>
     </nav>
@@ -39,15 +33,20 @@
             </button>
         </div>
 
+        <div class="search-box">
+            <input placeholder="Search..." class="search-input" type="text">
+            <button class="search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
         <div class="buttons-choose-box">
             <button class="btn-choose btn-now-playing btn-choose-active">Now playing <span>Movies</span></button>
             <button class="btn-choose btn-popular">Popular <span>Movies</span></button>
             <button class="btn-choose btn-top-rated">Top rated <span>Movies</span></button>
             <button class="btn-choose btn-upcoming">Upcoming <span>Movies</span></button>
             <button class="btn-choose btn-discover">Discover <span>Movies</span></button>
-
         </div>
-        <p>---You can select by Genres---</p>
 
         <div class="genres-box">
         </div>
@@ -77,19 +76,16 @@
         <div class="cards-container">
         </div>
 
-
         <div class="pages-box">
             <button class="decrement-page-btn">-</button>
             <span class="current-page">01</span>
             <button class="increment-page-btn">+</button>
         </div>
-
-        
+        <div class="all-pages-container">
+        </div>
     </main>
 
     <footer class="footer">
-        <button class="allPagesBtn">allPages</button>
-
         <p class="footer-text">All rights reserved.</p>
         <p class="current-year">©<span></span>K.Kamer</p>
     </footer>

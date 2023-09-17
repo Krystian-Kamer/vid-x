@@ -59,23 +59,6 @@ a {
   color: var(--white);
 }
 
-.nav-input {
-  border-radius: 15px;
-  padding: 10px 25px;
-  color: var(--white);
-  border: transparent;
-  font-size: 18px;
-  width: 350px;
-  background-color: #82828242;
-  font-family: 'Syne Mono', monospace;
-}
-
-.nav-input:focus {
-  outline: none;
-  background-color: rgba(78, 77, 77, 0.8);
-  font-family: 'Syne Mono', monospace;
-}
-
 .nav-link {
   padding: 10px 30px;
   text-transform: uppercase;
@@ -146,6 +129,92 @@ h2 {
   text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
     0 0 150px rgb(255, 0, 0);
   overflow: hidden;
+}
+
+.search-box {
+  position: relative;
+  align-self: center;
+}
+
+.search-input {
+  border-radius: 15px;
+  padding: 10px 25px;
+  color: var(--white);
+  border: 2px solid transparent;
+  font-size: 18px;
+  width: 350px;
+  background-color: #323232;
+  font-family: 'Syne Mono', monospace;
+  z-index: 1;
+}
+
+.search-input:focus {
+  outline: none;
+  background-color: rgb(36, 36, 36);
+  font-family: 'Syne Mono', monospace;
+  border: 2px solid transparent;
+}
+
+.search-btn {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  left: 70%;
+  font-size: 18px;
+  border-radius: 50px;
+  padding: 10px 12px;
+  border: 2px solid transparent;
+  background-color: var(--oragne);
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.search-btn-visible {
+  animation: showSearchButton 0.8s forwards;
+}
+
+@keyframes showSearchButton {
+  0% {
+    visibility: hidden;
+    left: 80%;
+    z-index: -1;
+  }
+  95% {
+    visibility: visible;
+    left: 102%;
+    z-index: -1;
+  }
+  100% {
+    visibility: visible;
+    left: 102%;
+    z-index: 1;
+  }
+}
+
+.search-btn-hidden {
+  animation: hideSearchButton 0.8s forwards;
+}
+
+@keyframes hideSearchButton {
+  100% {
+    visibility: hidden;
+    left: 80%;
+    z-index: -1;
+  }
+  5% {
+    visibility: visible;
+    left: 102%;
+    z-index: -1;
+  }
+  0% {
+    visibility: visible;
+    left: 102%;
+    z-index: 1;
+  }
+}
+
+.search-btn:hover {
+  transform: scale(1.1);
 }
 
 .buttons-choose-box {
@@ -374,6 +443,7 @@ h2 span {
 }
 
 .pages-box {
+  margin-top: 30px;
   align-self: center;
   display: flex;
   justify-content: space-around;
@@ -397,15 +467,53 @@ h2 span {
   border: none;
   font-size: 36px;
   cursor: pointer;
+  transition: transform 0.2s;
 }
 
-.pages-box button:hover {
-  transform: scale(1.2);
-  color: var(--maroon);
+.pages-box button:hover,
+.page-btn:hover,
+.page-prev:hover,
+.page-next:hover {
+  transform: scale(1.1);
 }
 
 .decrement-page-btn {
   visibility: hidden;
+}
+
+.all-pages-container {
+  margin-top: 20px;
+}
+
+.page-btn {
+  font-size: 15px;
+  padding: 5px;
+  margin: 3px;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Syne Mono', monospace;
+  background-color: var(--oragne);
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.page-btn-active {
+  background-color: var(--green);
+}
+
+.page-prev,
+.page-next {
+  font-size: 15px;
+  padding: 5px 10px;
+  margin: 3px;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Syne Mono', monospace;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+  background-color: rgba(255, 204, 0, 0.939);
 }
 
 .modal {
@@ -415,10 +523,10 @@ h2 span {
   max-height: 90vh;
   width: 60vw;
   max-width: 1000px;
-  background-color: rgba(20, 19, 19, 0.9);
-  border-radius: 30px;
-  opacity: 0;
   padding: 15px 10px;
+  border-radius: 30px;
+  background-color: rgba(20, 19, 19, 0.9);
+  opacity: 0;
 }
 
 .modal-active {
@@ -451,13 +559,13 @@ h2 span {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  text-align: left;
   margin-left: 30px;
   font-size: 30px;
 }
 
 .modal-right-side p:nth-child(2n-1) {
-  margin-top: 45px;
+  margin-top: 35px;
 }
 
 .modal-overview {
@@ -486,7 +594,7 @@ h2 span {
 }
 
 .footer {
-  margin-top: 50px;
+  margin: 50px 0;
   display: flex;
   flex-direction: column;
   bottom: 0;

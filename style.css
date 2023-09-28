@@ -553,6 +553,7 @@ h2 span {
 .modal-left-side img {
   height: 40vh;
   border-radius: 30px;
+  max-width: 345px;
 }
 
 .modal-right-side {

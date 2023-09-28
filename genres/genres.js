@@ -1,4 +1,4 @@
-export const moviesGenres = [
+const moviesGenres = [
   {
     id: 28,
     name: 'Action',
@@ -77,7 +77,7 @@ export const moviesGenres = [
   },
 ];
 
-export const seriesGenres = [
+const seriesGenres = [
   {
     id: 10759,
     name: 'Action & Adventure',
@@ -143,3 +143,6 @@ export const seriesGenres = [
     name: 'Western',
   },
 ];
+
+
+export {moviesGenres, seriesGenres}

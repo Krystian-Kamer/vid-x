@@ -1,4 +1,4 @@
-import { moviesGenres, seriesGenres } from './genres.js';
+import { moviesGenres, seriesGenres } from './genres/genres.js';
 
 // ************VARIABLES************
 const cardsContainer = document.querySelector('.cards-container');
@@ -54,14 +54,22 @@ const searchBtn = document.querySelector('.search-btn');
 
 // ************FUNCTIONS************
 const fetchVideos = async (link) => {
-  const res = await fetch(link);
-  const json = await res.json();
-  state.movies = json.results;
-  state.totalPages = json.total_pages;
-  if (state.totalPages > 500) {
-    state.totalPages = 500;
+  try {
+    const res = await fetch(link);
+    if (!res.ok) {
+      throw new Error(`Cannot fetch the data, status: ${res.status}`);
+    }
+    const json = await res.json();
+    state.movies = json.results;
+    state.totalPages = json.total_pages;
+    if (state.totalPages > 500) {
+      state.totalPages = 500;
+    }
+    createCards();
+  } catch (error) {
+    console.error(error);
+    alert(`An error occurred: ${error.message}`);
   }
-  createCards();
 };
 
 const showVideos = async (param) => {
@@ -105,7 +113,6 @@ const showVideos = async (param) => {
       )}&page=${state.pageNumber}&include_adult=false`
     );
   }
-
   state.latestParam = param;
   criteriaNotFound();
   showAllPages();
@@ -116,10 +123,7 @@ const createCards = () => {
   state.movies.forEach((movie) => {
     let card = document.createElement('div');
     let imagePath = movie.poster_path
-      ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.poster_path
-      : movie.backdrop_path
-      ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' +
-        movie.backdrop_path
+      ? 'https://www.themoviedb.org/t/p/w220_and_h330_face/' + movie.poster_path
       : './picture_not_found.jpg';
     card.innerHTML = `<div class="card">
       <div class="card-poster">
@@ -229,10 +233,8 @@ const createModal = (movie) => {
   const modal = document.createElement('div');
   document.body.append(modal);
   modal.classList.add('modal');
-  let imagePath = movie.backdrop_path
-    ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.backdrop_path
-    : movie.poster_path
-    ? 'https://www.themoviedb.org/t/p/w220_and_h330_face' + movie.poster_path
+  let imagePath = movie.poster_path
+    ? 'https://www.themoviedb.org/t/p/original/' + movie.poster_path
     : './picture_not_found.jpg';
 
   let img = new Image();
@@ -242,7 +244,7 @@ const createModal = (movie) => {
     ? movie.release_date
     : movie.first_air_date
     ? movie.first_air_date
-    : 'Date not indicated';
+    : 'Date not specified';
 
   img.onload = function () {
     modal.innerHTML = `<div class="modal-flex-box">
@@ -266,13 +268,21 @@ const createModal = (movie) => {
       <p>
           <i class="fa-solid fa-star"></i> Vote average:
       </p>
-      <p class="modal-vote-average">${movie.vote_average}</p>
+      <p class="modal-vote-average">${
+        movie.vote_average
+          ? movie.vote_average.toFixed(1)
+          : 'Vote not specified'
+      }</p>
     </div>
     </div>
-    <p class="modal-overview">${movie.overview}</p>`;
+    <p class="modal-overview">${
+      movie.overview
+        ? movie.overview
+        : `The given video has no available description.`
+    }</p>`;
 
     closeModal(modal);
-    makeFontSizeSmaller(movie);
+    makeSmallerOverviewInModal(movie);
     modal.classList.add('modal-active');
     const deleteButton = modal.querySelector('.modal-close-btn');
     deleteButton.addEventListener('click', () => closeModal(modal));
@@ -285,10 +295,15 @@ const createModal = (movie) => {
 const showGenresInModal = (video) => {
   const genres =
     state.currentVideoType === 'movie' ? moviesGenres : seriesGenres;
-  return video.genre_ids
-    .map((id) => genres.find((genre) => genre.id === id)?.name)
-    .filter(Boolean)
-    .join(', ');
+
+  console.log(video.genre_ids);
+  if (video.genre_ids.length === 0)
+    return (video.genre_ids = ['Genres not specified']);
+  else
+    return video.genre_ids
+      .map((id) => genres.find((genre) => genre.id === id)?.name)
+      .filter(Boolean)
+      .join(', ');
 };
 
 const closeModal = (modal) => {
@@ -308,7 +323,7 @@ const closeModal = (modal) => {
   });
 };
 
-const makeFontSizeSmaller = (movie) => {
+const makeSmallerOverviewInModal = (movie) => {
   const overviewsElement = document.querySelectorAll('.modal-overview');
   if (movie.overview.length > 600) {
     overviewsElement.forEach(
@@ -404,7 +419,7 @@ const showAllPages = () => {
   renderPages(Math.floor((state.pageNumber - 1) / 50) * 50 + 1);
 };
 
-const showSearchBtn = () => {
+const showSearchBtn = (e) => {
   if (searchInput.value !== '') {
     searchBtn.classList.add('search-btn-visible');
     searchBtn.classList.remove('search-btn-hidden');
@@ -412,6 +427,17 @@ const showSearchBtn = () => {
     searchBtn.classList.add('search-btn-hidden');
     searchBtn.classList.remove('search-btn-visible');
   }
+  if (searchInput.value !== '' && e.key === 'Enter') {
+    searchBtn.click();
+  }
+  document.addEventListener('click', (e) => {
+    console.log(e.target);
+    if (searchInput.value !== '' && e.target != searchInput.value) {
+      searchInput.value = '';
+      searchBtn.classList.add('search-btn-hidden');
+      searchBtn.classList.remove('search-btn-visible');
+    }
+  });
 };
 
 const criteriaNotFound = () => {
@@ -445,11 +471,11 @@ chooseButtonsList.forEach((button) => {
     selectActiveChoice(e);
   });
 });
-
 incrementBtn.addEventListener('click', () => setCurrentPage(1));
 decrementBtn.addEventListener('click', () => setCurrentPage(-1));
-searchInput.addEventListener('input', showSearchBtn);
+searchInput.addEventListener('keyup', showSearchBtn);
 searchBtn.addEventListener('click', () => {
+  currentTitle.textContent = searchInput.value;
   state.pageNumber = 1;
   currentPage.textContent = state.pageNumber;
   showVideos('search');

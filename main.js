@@ -280,7 +280,6 @@ const createModal = (movie) => {
         ? movie.overview
         : `The given video has no available description.`
     }</p>`;
-
     closeModal(modal);
     makeSmallerOverviewInModal(movie);
     modal.classList.add('modal-active');

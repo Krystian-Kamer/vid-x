@@ -331,14 +331,6 @@ const showSearchBtn = (e) => {
   if (searchInput.value !== '' && e.key === 'Enter') {
     searchBtn.click();
   }
-  document.addEventListener('click', (e) => {
-    console.log(e.target);
-    if (searchInput.value !== '' && e.target != searchInput.value) {
-      searchInput.value = '';
-      searchBtn.classList.add('search-btn-hidden');
-      searchBtn.classList.remove('search-btn-visible');
-    }
-  });
 };
 
 const criteriaNotFound = () => {

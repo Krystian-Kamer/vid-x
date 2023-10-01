@@ -7,82 +7,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VID-X</title>
     <script src="https://kit.fontawesome.com/c8b3db4dcb.js" crossorigin="anonymous"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monofett&family=Syne+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./src/components/modal/modal.css">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./src/components/modal/modal.css">
+    <link rel="stylesheet" href="./src/components/nav/nav.css">
+    <link rel="stylesheet" href="./src/components/my-list/my-list.css">
+    <link rel="stylesheet" href="./src/components/contact/contact.css">
 </head>
 
 <body>
     <nav class="nav">
         <a class="nav-logo" href="#">VID-X</a>
-        <a class="nav-link" href="#">about project</a>
+        <a class="nav-link" href="#">my list</a>
         <a class="nav-link" href="#">contact</a>
     </nav>
 
-    <main class="main">
-        <h1>All your favorite movies and series in one place</h1>
-        <div class="switcher-box">
-            <button class="switcher">
-                <p class="switch-to-movies switch-to-active">Movies
-                <div class="switcher-background"></div>
-                </p>
-                <p class="switch-to-series">Series</p>
-            </button>
-        </div>
-
-        <div class="search-box">
-            <input placeholder="Search..." class="search-input" type="text">
-            <button class="search-btn">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </div>
-
-        <div class="buttons-choose-box">
-            <button class="btn-choose btn-now-playing btn-choose-active">Now playing <span>Movies</span></button>
-            <button class="btn-choose btn-popular">Popular <span>Movies</span></button>
-            <button class="btn-choose btn-top-rated">Top rated <span>Movies</span></button>
-            <button class="btn-choose btn-upcoming">Upcoming <span>Movies</span></button>
-            <button class="btn-choose btn-discover">Discover <span>Movies</span></button>
-        </div>
-
-        <div class="genres-box">
-        </div>
-
-
-        <h2>Now playing <span>Movies</span></h2>
-
-        <div class="sort-dropdown">
-            <div class="select">
-                <span class="selected" id="">Popularity Descending</span>
-                <div class="caret"></div>
+    <main>
+        <section class="main1">
+            <h1>All your favorite movies and series in one place</h1>
+            <div class="switcher-box">
+                <button class="switcher">
+                    <p class="switch-to-movies switch-to-active">Movies
+                    <div class="switcher-background"></div>
+                    </p>
+                    <p class="switch-to-series">Series</p>
+                </button>
             </div>
-            <ul class="menu">
-                <li id="popularity.desc" class="active">Popularity Descending</li>
-                <li id="popularity.asc">Popularity Ascending</li>
-                <li id="vote_average.desc">Vote Average Descending</li>
-                <li id="vote_average.asc">Vote Average Ascending</li>
-                <li id="vote_count.desc">Vote Count Descending</li>
-                <li id="vote_count.asc">Vote Count Ascending</li>
-                <li id="primary_release_date.desc">Release Date Descending</li>
-                <li id="primary_release_date.asc">Release Date Ascending</li>
-                <li id="">Title A-Z</li>
-                <li id="">Title Z-A</li>
-            </ul>
-        </div>
 
-        <div class="cards-container">
-        </div>
+            <div class="search-box">
+                <input placeholder="Search..." class="search-input" type="text">
+                <button class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
 
-        <div class="pages-box">
-            <button class="decrement-page-btn">-</button>
-            <span class="current-page">01</span>
-            <button class="increment-page-btn">+</button>
-        </div>
-        <div class="all-pages-container">
-        </div>
+            <div class="buttons-choose-box">
+                <button class="btn-choose btn-now-playing btn-choose-active">Now playing <span>Movies</span></button>
+                <button class="btn-choose btn-popular">Popular <span>Movies</span></button>
+                <button class="btn-choose btn-top-rated">Top rated <span>Movies</span></button>
+                <button class="btn-choose btn-upcoming">Upcoming <span>Movies</span></button>
+                <button class="btn-choose btn-discover">Discover <span>Movies</span></button>
+            </div>
+
+            <div class="genres-box">
+            </div>
+
+            <h2>Now playing <span>Movies</span></h2>
+
+            <div class="sort-dropdown">
+                <div class="select">
+                    <span class="selected" id="">Popularity Descending</span>
+                    <div class="caret"></div>
+                </div>
+                <ul class="menu">
+                    <li id="popularity.desc" class="active">Popularity Descending</li>
+                    <li id="popularity.asc">Popularity Ascending</li>
+                    <li id="vote_average.desc">Vote Average Descending</li>
+                    <li id="vote_average.asc">Vote Average Ascending</li>
+                    <li id="vote_count.desc">Vote Count Descending</li>
+                    <li id="vote_count.asc">Vote Count Ascending</li>
+                    <li id="primary_release_date.desc">Release Date Descending</li>
+                    <li id="primary_release_date.asc">Release Date Ascending</li>
+                    <li id="">Title A-Z</li>
+                    <li id="">Title Z-A</li>
+                </ul>
+            </div>
+
+            <div class="cards-container">
+            </div>
+
+            <div class="pages-box">
+                <button class="decrement-page-btn">-</button>
+                <span class="current-page">01</span>
+                <button class="increment-page-btn">+</button>
+            </div>
+            <div class="all-pages-container">
+            </div>
+        </section>
+
+        <section class="my-list"></section>
+        <section class="contact"></section>
+
+
+
     </main>
 
     <footer class="footer">

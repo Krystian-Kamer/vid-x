@@ -87,7 +87,10 @@ const closeModal = (modal) => {
     }
   });
   document.addEventListener('click', (e) => {
-    if (modal.classList.contains('modal-active') && e.target == document.body) {
+    if (
+      modal.classList.contains('modal-active') &&
+      e.target == document.body.querySelector('main')
+    ) {
       closeModal(modal);
     }
   });
@@ -103,4 +106,3 @@ const makeSmallerOverviewInModal = (movie) => {
 };
 
 console.log(localStorage.getItem('myCat'));
-

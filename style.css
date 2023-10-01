@@ -8,8 +8,8 @@
 
 html {
   scroll-behavior: smooth;
-  --maroon: #411414;
-  --black: #000000;
+  --maroon: rgb(65, 20, 20);
+  --black: rgba(0, 0, 0, 0.937);
   --white: rgb(235, 235, 235);
   --oragne: rgba(255, 140, 58, 0.85);
   --green: rgba(43, 255, 0, 0.75);
@@ -40,35 +40,6 @@ a {
   color: var(--white);
 }
 
-.nav {
-  position: sticky;
-  display: flex;
-  top: 0;
-  justify-content: space-around;
-  align-items: center;
-  padding: 40px 0;
-  height: 50px;
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 0px 0px 40px 40px;
-  z-index: 9;
-}
-
-.nav-logo {
-  letter-spacing: 10px;
-  font-size: 40px;
-  color: var(--white);
-}
-
-.nav-link {
-  padding: 10px 30px;
-  text-transform: uppercase;
-  border-radius: 30px;
-  text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
-    0 0 150px rgb(73, 73, 73);
-  border: 2px solid transparent;
-  transition: 0.3s;
-}
-
 h1,
 h2 {
   margin-top: 50px;
@@ -76,7 +47,7 @@ h2 {
   font-size: 25px;
 }
 
-.main {
+.main1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -159,7 +130,7 @@ h2 {
   position: absolute;
   top: 0;
   z-index: -1;
-  left: 70%;
+  left: 0%;
   font-size: 18px;
   border-radius: 50px;
   padding: 10px 12px;
@@ -398,6 +369,7 @@ h2 span {
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 220px;
@@ -433,11 +405,38 @@ h2 span {
   max-height: 100px;
   text-align: center;
   background-color: var(--black);
+  z-index: 1;
+}
+
+.card .btn-add {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0px;
+  left: 40%;
+  width: 45px;
+  height: 45px;
+  font-size: 30px;
+  background-color: var(--oragne);
+  border-radius: 50px;
+  border: 2px solid var(--black);
+  cursor: pointer;
+  transition: background-color 0.5s, bottom 0.5s;
+  z-index: -100;
+}
+
+.card .btn-add:hover {
+  background-color: rgba(43, 255, 0, 0.95);
 }
 
 .card:hover .card-poster {
   transform: scale(1.05);
 }
+
+.card:hover .btn-add {
+  bottom: 22%;
+}
+
 .card:hover {
   opacity: 100%;
 }

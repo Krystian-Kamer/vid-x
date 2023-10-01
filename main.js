@@ -1,5 +1,5 @@
 import { moviesGenres, seriesGenres } from './genres.js';
-import {createModal} from './src/components/modal/modal.js';
+import { createModal } from './src/components/modal/modal.js';
 
 // ************VARIABLES************
 const cardsContainer = document.querySelector('.cards-container');
@@ -22,7 +22,7 @@ const spanYear = document.querySelector('.current-year span');
 
 export const sections = [
   document.querySelector('.nav'),
-  document.querySelector('.main'),
+  document.querySelector('.main1'),
   document.querySelector('.footer'),
 ];
 
@@ -73,8 +73,7 @@ const fetchVideos = async (link) => {
   }
 };
 
-localStorage.setItem("myCat", "Tom");
-
+localStorage.setItem('myCat', 'Tom');
 
 const showVideos = async (param) => {
   allPagesContainer.textContent = '';
@@ -129,19 +128,31 @@ const createCards = () => {
     let imagePath = movie.poster_path
       ? 'https://www.themoviedb.org/t/p/w220_and_h330_face/' + movie.poster_path
       : './src/assets/picture_not_found.jpg';
+
     card.innerHTML = `<div class="card">
       <div class="card-poster">
         <img src="${imagePath}" alt="${
       movie.title ? movie.title : movie.name
     } poster">
       </div>
+      <button class="btn-add" id="${movie.id}">+</button>
       <p class="card-title">${movie.title ? movie.title : movie.name}</p>
     </div>`;
     cardsContainer.append(card);
     card.addEventListener('click', () => {
       createModal(movie);
     });
+
+    const addButton = card.querySelector('.btn-add');
+    addButton.addEventListener('click', () => addVideoToMyList(movie));
+    // sections.forEach((section) => {
+    //   section.classList.add('blur-active');
+    // });
   });
+};
+
+const addVideoToMyList = (movie) => {
+  console.log('klik');
 };
 
 const switchTypeOfVideo = () => {
@@ -167,6 +178,19 @@ const switchTypeOfVideo = () => {
   nowPlayingVideosBtn.click();
   genresBox.textContent = '';
   uploadGenres();
+};
+
+const showSearchBtn = (e) => {
+  if (searchInput.value !== '') {
+    searchBtn.classList.add('search-btn-visible');
+    searchBtn.classList.remove('search-btn-hidden');
+  } else {
+    searchBtn.classList.add('search-btn-hidden');
+    searchBtn.classList.remove('search-btn-visible');
+  }
+  if (searchInput.value !== '' && e.key === 'Enter') {
+    searchBtn.click();
+  }
 };
 
 const selectActiveChoice = (e) => {
@@ -318,19 +342,6 @@ const showAllPages = () => {
     }
   };
   renderPages(Math.floor((state.pageNumber - 1) / 50) * 50 + 1);
-};
-
-const showSearchBtn = (e) => {
-  if (searchInput.value !== '') {
-    searchBtn.classList.add('search-btn-visible');
-    searchBtn.classList.remove('search-btn-hidden');
-  } else {
-    searchBtn.classList.add('search-btn-hidden');
-    searchBtn.classList.remove('search-btn-visible');
-  }
-  if (searchInput.value !== '' && e.key === 'Enter') {
-    searchBtn.click();
-  }
 };
 
 const criteriaNotFound = () => {

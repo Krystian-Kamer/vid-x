@@ -105,4 +105,4 @@ const makeSmallerOverviewInModal = (movie) => {
   }
 };
 
-console.log(localStorage.getItem('myCat'));
+console.log(localStorage);

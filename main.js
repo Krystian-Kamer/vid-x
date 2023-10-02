@@ -73,8 +73,6 @@ const fetchVideos = async (link) => {
   }
 };
 
-localStorage.setItem('myCat', 'Tom');
-
 const showVideos = async (param) => {
   allPagesContainer.textContent = '';
   cardsContainer.textContent = '';
@@ -125,18 +123,18 @@ showVideos('now_playing');
 const createCards = () => {
   state.movies.forEach((movie) => {
     let card = document.createElement('div');
+
+    let videoName = movie.title ? movie.title : movie.name;
     let imagePath = movie.poster_path
       ? 'https://www.themoviedb.org/t/p/w220_and_h330_face/' + movie.poster_path
       : './src/assets/picture_not_found.jpg';
 
     card.innerHTML = `<div class="card">
       <div class="card-poster">
-        <img src="${imagePath}" alt="${
-      movie.title ? movie.title : movie.name
-    } poster">
+        <img src="${imagePath}" alt="${videoName} poster">
       </div>
-      <button class="btn-add" id="${movie.id}">+</button>
-      <p class="card-title">${movie.title ? movie.title : movie.name}</p>
+      <button class="btn-add">+</button>
+      <p class="card-title">${videoName}</p>
     </div>`;
     cardsContainer.append(card);
     card.addEventListener('click', () => {
@@ -144,15 +142,15 @@ const createCards = () => {
     });
 
     const addButton = card.querySelector('.btn-add');
-    addButton.addEventListener('click', () => addVideoToMyList(movie));
-    // sections.forEach((section) => {
-    //   section.classList.add('blur-active');
-    // });
+    addButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      localStorage.setItem(movie.id, videoName);
+      const showInfoAboutVideo = document.createElement('div');
+      showInfoAboutVideo.classList.add('show-info-about-video');
+      document.body.appendChild(showInfoAboutVideo);
+      showInfoAboutVideo.innerHTML = `<p>You added <span>${videoName}</span> to your library!</p>`;
+    });
   });
-};
-
-const addVideoToMyList = (movie) => {
-  console.log('klik');
 };
 
 const switchTypeOfVideo = () => {

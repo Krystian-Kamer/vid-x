@@ -104,5 +104,3 @@ const makeSmallerOverviewInModal = (movie) => {
     );
   }
 };
-
-console.log(localStorage);

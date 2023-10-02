@@ -22,9 +22,12 @@ const spanYear = document.querySelector('.current-year span');
 
 export const sections = [
   document.querySelector('.nav'),
-  document.querySelector('.main1'),
+  document.querySelector('.main-section'),
   document.querySelector('.footer'),
 ];
+
+const library = document.querySelector('.library-section');
+const libraryBtn = document.querySelector('.nav-library');
 
 export let state = {
   movies: [],
@@ -123,12 +126,10 @@ showVideos('now_playing');
 const createCards = () => {
   state.movies.forEach((movie) => {
     let card = document.createElement('div');
-
     let videoName = movie.title ? movie.title : movie.name;
     let imagePath = movie.poster_path
       ? 'https://www.themoviedb.org/t/p/w220_and_h330_face/' + movie.poster_path
       : './src/assets/picture_not_found.jpg';
-
     card.innerHTML = `<div class="card">
       <div class="card-poster">
         <img src="${imagePath}" alt="${videoName} poster">
@@ -142,15 +143,32 @@ const createCards = () => {
     });
 
     const addButton = card.querySelector('.btn-add');
+
     addButton.addEventListener('click', (e) => {
       e.stopPropagation();
+      addButton.textContent = addButton.textContent === '+' ? '-' : '+';
       localStorage.setItem(movie.id, videoName);
+      library.innerHTML = library.innerHTML + card.innerHTML;
+
       const showInfoAboutVideo = document.createElement('div');
       showInfoAboutVideo.classList.add('show-info-about-video');
       document.body.appendChild(showInfoAboutVideo);
-      showInfoAboutVideo.innerHTML = `<p>You added <span>${videoName}</span> to your library!</p>`;
+
+      showInfoAboutVideo.innerHTML =
+        addButton.textContent === '+'
+          ? `<p>You removed <span>${videoName}</span> from your library!</p>`
+          : `<p>You added <span>${videoName}</span> to your library!</p>`;
+      
+          setTimeout(() => {
+        showInfoAboutVideo.remove();
+      }, 3800);
     });
   });
+};
+
+const showLibrary = () => {
+  console.log(localStorage);
+  //create that the main-section will be hidden and I will see list of movies and series but from local storage
 };
 
 const switchTypeOfVideo = () => {
@@ -272,9 +290,9 @@ const showSortOptions = () => {
       caret.classList.remove('caret-rotate');
       menu.classList.remove('menu-open');
       options.forEach((option) => {
-        option.classList.remove('active');
+        option.classList.remove('menu-active');
       });
-      option.classList.add('active');
+      option.classList.add('menu-active');
     });
   });
 };
@@ -382,3 +400,4 @@ searchBtn.addEventListener('click', () => {
   currentPage.textContent = state.pageNumber;
   showVideos('search');
 });
+libraryBtn.addEventListener('click', showLibrary);

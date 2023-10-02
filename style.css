@@ -48,7 +48,7 @@ h2 {
   font-size: 25px;
 }
 
-.main1 {
+.main-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -265,7 +265,7 @@ h2 {
   opacity: 0;
   display: none;
   transition: 0.2s;
-  z-index: 1;
+  z-index: 100;
 }
 
 .menu li {
@@ -279,7 +279,7 @@ h2 {
   background-color: rgba(84, 68, 68, 0.85);
 }
 
-.active {
+.menu-active {
   background-color: rgba(139, 83, 48, 0.85);
 }
 
@@ -491,7 +491,6 @@ h2 span {
   margin: 3px;
   border: none;
   border-radius: 15px;
-  font-family: 'Syne Mono', monospace;
   background-color: var(--oragne);
   font-weight: bold;
   cursor: pointer;

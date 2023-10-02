@@ -20,12 +20,12 @@
 <body>
     <nav class="nav">
         <a class="nav-logo" href="#">VID-X</a>
-        <a class="nav-link" href="#">my library</a>
+        <a class="nav-link nav-library" href="#">my library</a>
         <a class="nav-link" href="#">contact</a>
     </nav>
 
     <main>
-        <section class="main1">
+        <section class="main-section">
             <h1>All your favorite movies and series in one place</h1>
             <div class="switcher-box">
                 <button class="switcher">
@@ -62,7 +62,7 @@
                     <div class="caret"></div>
                 </div>
                 <ul class="menu">
-                    <li id="popularity.desc" class="active">Popularity Descending</li>
+                    <li id="popularity.desc" class="menu-active">Popularity Descending</li>
                     <li id="popularity.asc">Popularity Ascending</li>
                     <li id="vote_average.desc">Vote Average Descending</li>
                     <li id="vote_average.asc">Vote Average Ascending</li>
@@ -87,8 +87,13 @@
             </div>
         </section>
 
-        <section class="my-list"></section>
-        <section class="contact"></section>
+        <section class="library-section">
+            <h2>Here is your library:</h2>
+<!-- Wszystko tu naszykowane, tylo visivility none czy display none a jak kliknę to display: flex czy visibility, jak z modalem, dodatkowo -->
+        </section>
+
+        <section class="contact-section">
+        </section>
 
 
 

@@ -71,14 +71,14 @@ const fetchVideos = async (link) => {
     }
     createCards();
   } catch (error) {
-    console.error(error);
-    alert(`An error occurred: ${error.message}`);
+    console.log(`An error occurred: ${error.message}`);
   }
 };
 
 const showVideos = async (param) => {
   allPagesContainer.textContent = '';
   cardsContainer.textContent = '';
+  if (param !== state.latestParam) state.pageNumber = 1;
   if (param === 'now_playing' && state.currentVideoType === 'tv') {
     param = 'airing_today';
   } else if (param === 'upcoming' && state.currentVideoType === 'tv') {
@@ -158,8 +158,7 @@ const createCards = () => {
         addButton.textContent === '+'
           ? `<p>You removed <span>${videoName}</span> from your library!</p>`
           : `<p>You added <span>${videoName}</span> to your library!</p>`;
-      
-          setTimeout(() => {
+      setTimeout(() => {
         showInfoAboutVideo.remove();
       }, 3800);
     });
@@ -167,9 +166,10 @@ const createCards = () => {
 };
 
 const showLibrary = () => {
-  console.log(localStorage);
-  //create that the main-section will be hidden and I will see list of movies and series but from local storage
+  // console.log(localStorage);
 };
+
+showLibrary();
 
 const switchTypeOfVideo = () => {
   state.arrayOfSelectedGenres = [];
@@ -400,4 +400,22 @@ searchBtn.addEventListener('click', () => {
   currentPage.textContent = state.pageNumber;
   showVideos('search');
 });
-libraryBtn.addEventListener('click', showLibrary);
+// libraryBtn.addEventListener('click', showLibrary);
+
+// const keys = Object.keys(localStorage);
+
+// // fun aktualizacji state.movies o ulubione
+// const myFav = [];
+
+// keys.forEach((key) => {
+//   fetch(`https://api.themoviedb.org/3/movie/${key}?api_key=${API_KEY}`)
+//     .then((res) => res.json())
+//     .then((movie) => {
+//       myFav.push(movie);
+//     });
+//   });
+//   console.log(myFav);
+
+// console.log(
+//   fetchVideos(`https://api.themoviedb.org/3/movie/1008042?api_key=${API_KEY}`)
+// );

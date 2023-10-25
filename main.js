@@ -1,6 +1,8 @@
 import { moviesGenres, seriesGenres } from './genres.js';
 import { createModal } from './src/components/modal/modal.js';
 
+const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
+
 // ************VARIABLES************
 const cardsContainer = document.querySelector('.cards-container');
 const currentTitle = document.querySelector('h2');
@@ -41,9 +43,6 @@ export let state = {
   pageNumber: 1,
   totalPages: null,
 };
-
-const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
-
 // ************BUTTONS VARIABLES************
 const switcher = document.querySelector('.switcher');
 const nowPlayingVideosBtn = document.querySelector('.btn-now-playing');
@@ -71,8 +70,27 @@ const fetchVideos = async (link) => {
     }
     createCards();
   } catch (error) {
-    console.log(`An error occurred: ${error.message}`);
+    console.error(error);
+    alert(`An error occurred: ${error.message}`);
   }
+};
+
+const getMoviesFromKeys = async () => {
+  state.movies = [];
+  const keys = Object.keys(localStorage);
+  for (const key of keys) {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/${key}?api_key=${API_KEY}`
+    );
+    const json = await res.json();
+    state.movies.push(json);
+  }
+};
+
+const showLibrary = async () => {
+  cardsContainer.textContent = '';
+  await getMoviesFromKeys();
+  createCards();
 };
 
 const showVideos = async (param) => {
@@ -121,7 +139,6 @@ const showVideos = async (param) => {
   criteriaNotFound();
   showAllPages();
 };
-showVideos('now_playing');
 
 const createCards = () => {
   state.movies.forEach((movie) => {
@@ -148,7 +165,6 @@ const createCards = () => {
       e.stopPropagation();
       addButton.textContent = addButton.textContent === '+' ? '-' : '+';
       localStorage.setItem(movie.id, videoName);
-      library.innerHTML = library.innerHTML + card.innerHTML;
 
       const showInfoAboutVideo = document.createElement('div');
       showInfoAboutVideo.classList.add('show-info-about-video');
@@ -164,12 +180,6 @@ const createCards = () => {
     });
   });
 };
-
-const showLibrary = () => {
-  // console.log(localStorage);
-};
-
-showLibrary();
 
 const switchTypeOfVideo = () => {
   state.arrayOfSelectedGenres = [];
@@ -236,7 +246,6 @@ const uploadGenres = () => {
     createdGenre.addEventListener('click', (e) => selectActiveGenres(e, genre));
   });
 };
-uploadGenres();
 
 const selectActiveGenres = (e, activeGenre) => {
   const selectedGenre = e.target;
@@ -296,7 +305,6 @@ const showSortOptions = () => {
     });
   });
 };
-showSortOptions();
 
 const setCurrentPage = (number) => {
   state.pageNumber += number;
@@ -375,7 +383,6 @@ const getCurrentYear = () => {
   const currentYear = new Date().getFullYear();
   spanYear.textContent = ` ${currentYear} `;
 };
-getCurrentYear();
 
 // ************LISTENERS************
 
@@ -400,22 +407,12 @@ searchBtn.addEventListener('click', () => {
   currentPage.textContent = state.pageNumber;
   showVideos('search');
 });
-// libraryBtn.addEventListener('click', showLibrary);
+libraryBtn.addEventListener('click', showLibrary);
 
-// const keys = Object.keys(localStorage);
+showVideos('now_playing');
 
-// // fun aktualizacji state.movies o ulubione
-// const myFav = [];
+showSortOptions();
 
-// keys.forEach((key) => {
-//   fetch(`https://api.themoviedb.org/3/movie/${key}?api_key=${API_KEY}`)
-//     .then((res) => res.json())
-//     .then((movie) => {
-//       myFav.push(movie);
-//     });
-//   });
-//   console.log(myFav);
+getCurrentYear();
 
-// console.log(
-//   fetchVideos(`https://api.themoviedb.org/3/movie/1008042?api_key=${API_KEY}`)
-// );
+uploadGenres();

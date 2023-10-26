@@ -487,10 +487,11 @@ h2 span {
 
 .page-btn {
   font-size: 15px;
-  padding: 5px;
   margin: 3px;
   border: none;
   border-radius: 15px;
+  min-width: 30px;
+  min-height: 30px;
   background-color: var(--oragne);
   font-weight: bold;
   cursor: pointer;

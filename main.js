@@ -28,7 +28,6 @@ export const sections = [
   document.querySelector('.footer'),
 ];
 
-const library = document.querySelector('.library-section');
 const libraryBtn = document.querySelector('.nav-library');
 
 export let state = {
@@ -84,10 +83,12 @@ const getMoviesFromKeys = async () => {
     );
     const json = await res.json();
     state.movies.push(json);
+    console.log(keys);
   }
 };
 
 const showLibrary = async () => {
+  state.movies = [];
   cardsContainer.textContent = '';
   await getMoviesFromKeys();
   createCards();
@@ -140,8 +141,37 @@ const showVideos = async (param) => {
   showAllPages();
 };
 
+const renderButtonAddOrRemove = (addOrRemoveButton, movie, videoName) => {
+  addOrRemoveButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (addOrRemoveButton.textContent === '+') {
+      localStorage.setItem(movie.id, videoName);
+      addOrRemoveButton.textContent = '-';
+    } else if (addOrRemoveButton.textContent === '-') {
+      localStorage.removeItem(movie.id);
+      addOrRemoveButton.textContent = '+';
+    } else if (ative) {
+      
+    }
+    const showInfoAboutVideo = document.createElement('div');
+    showInfoAboutVideo.classList.add('show-info-about-video');
+    document.body.appendChild(showInfoAboutVideo);
+
+    showInfoAboutVideo.innerHTML =
+      addOrRemoveButton.textContent === '+'
+        ? `<p>You removed <span>${videoName}</span> from your library!</p>`
+        : `<p>You added <span>${videoName}</span> to your library!</p>`;
+    setTimeout(() => {
+      showInfoAboutVideo.remove();
+    }, 3800);
+  });
+};
+
 const createCards = () => {
+  
+  const keys = Object.keys(localStorage);
   state.movies.forEach((movie) => {
+    const isMovieInFavorites = keys.includes(movie.id.toString());
     let card = document.createElement('div');
     let videoName = movie.title ? movie.title : movie.name;
     let imagePath = movie.poster_path
@@ -151,33 +181,17 @@ const createCards = () => {
       <div class="card-poster">
         <img src="${imagePath}" alt="${videoName} poster">
       </div>
-      <button class="btn-add">+</button>
+      <button class="btn-add">${isMovieInFavorites ? '-' : '+'}</button>
       <p class="card-title">${videoName}</p>
     </div>`;
     cardsContainer.append(card);
     card.addEventListener('click', () => {
-      createModal(movie);
+      createModal(movie, keys);
     });
 
-    const addButton = card.querySelector('.btn-add');
+    const addOrRemoveButton = card.querySelector('.btn-add');
 
-    addButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      addButton.textContent = addButton.textContent === '+' ? '-' : '+';
-      localStorage.setItem(movie.id, videoName);
-
-      const showInfoAboutVideo = document.createElement('div');
-      showInfoAboutVideo.classList.add('show-info-about-video');
-      document.body.appendChild(showInfoAboutVideo);
-
-      showInfoAboutVideo.innerHTML =
-        addButton.textContent === '+'
-          ? `<p>You removed <span>${videoName}</span> from your library!</p>`
-          : `<p>You added <span>${videoName}</span> to your library!</p>`;
-      setTimeout(() => {
-        showInfoAboutVideo.remove();
-      }, 3800);
-    });
+    renderButtonAddOrRemove(addOrRemoveButton, movie, videoName);
   });
 };
 

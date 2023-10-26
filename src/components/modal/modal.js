@@ -2,7 +2,7 @@ import { state } from '../../../main.js';
 import { sections } from '../../../main.js';
 import { moviesGenres, seriesGenres } from '../../../genres.js';
 
-export const createModal = (movie) => {
+export const createModal = (movie, keys) => {
   const modal = document.createElement('div');
   document.body.append(modal);
   modal.classList.add('modal');

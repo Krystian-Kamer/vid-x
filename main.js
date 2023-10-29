@@ -53,6 +53,7 @@ const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
 const decrementBtn = document.querySelector('.decrement-page-btn');
 const incrementBtn = document.querySelector('.increment-page-btn');
 const searchBtn = document.querySelector('.search-btn');
+const backToHomeBtn = document.querySelector('.back-to-home-btn');
 
 // ************FUNCTIONS************
 const fetchVideos = async (link) => {
@@ -63,6 +64,7 @@ const fetchVideos = async (link) => {
     }
     const json = await res.json();
     state.movies = json.results;
+    console.log(state.movies);
     state.totalPages = json.total_pages;
     if (state.totalPages > 500) {
       state.totalPages = 500;
@@ -83,15 +85,37 @@ const getMoviesFromKeys = async () => {
     );
     const json = await res.json();
     state.movies.push(json);
-    console.log(keys);
   }
 };
 
 const showLibrary = async () => {
-  state.movies = [];
+  currentTitle.textContent = 'Here is your library:';
   cardsContainer.textContent = '';
   await getMoviesFromKeys();
   createCards();
+  checkIfLibraryEmpty();
+  hideButtonsAndPagesIfInLibrary();
+  backToHomeBtn.style.visibility = 'visible';
+};
+
+const hideButtonsAndPagesIfInLibrary = () => {
+  const sectionElementsButNotCardsContainerAndTitle = Array.from(
+    document.querySelectorAll('.main-section > *')
+  ).filter(
+    (element) =>
+      element !== currentTitle &&
+      element !== cardsContainer &&
+      element !== backToHomeBtn
+  );
+  if (currentTitle.textContent === 'Here is your library:') {
+    sectionElementsButNotCardsContainerAndTitle.forEach((element) => {
+      element.style.display = 'none';
+    });
+  } else {
+    sectionElementsButNotCardsContainerAndTitle.forEach((element) => {
+      element.style.display = 'inline';
+    });
+  }
 };
 
 const showVideos = async (param) => {
@@ -144,14 +168,17 @@ const showVideos = async (param) => {
 const renderButtonAddOrRemove = (addOrRemoveButton, movie, videoName) => {
   addOrRemoveButton.addEventListener('click', (e) => {
     e.stopPropagation();
+
     if (addOrRemoveButton.textContent === '+') {
       localStorage.setItem(movie.id, videoName);
       addOrRemoveButton.textContent = '-';
     } else if (addOrRemoveButton.textContent === '-') {
+      if (currentTitle.textContent === 'Here is your library:') {
+        e.target.parentNode.remove();
+      }
       localStorage.removeItem(movie.id);
       addOrRemoveButton.textContent = '+';
-    } else if (ative) {
-      
+      checkIfLibraryEmpty();
     }
     const showInfoAboutVideo = document.createElement('div');
     showInfoAboutVideo.classList.add('show-info-about-video');
@@ -167,8 +194,13 @@ const renderButtonAddOrRemove = (addOrRemoveButton, movie, videoName) => {
   });
 };
 
+const checkIfLibraryEmpty = () => {
+  if (localStorage.length === 0) {
+    cardsContainer.textContent = `You don't have any positions in your library.`;
+  }
+};
+
 const createCards = () => {
-  
   const keys = Object.keys(localStorage);
   state.movies.forEach((movie) => {
     const isMovieInFavorites = keys.includes(movie.id.toString());
@@ -399,7 +431,6 @@ const getCurrentYear = () => {
 };
 
 // ************LISTENERS************
-
 nowPlayingVideosBtn.addEventListener('click', () => showVideos('now_playing'));
 popularVideosBtn.addEventListener('click', () => showVideos('popular'));
 topRatedVideosBtn.addEventListener('click', () => showVideos('top_rated'));

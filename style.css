@@ -296,6 +296,23 @@ h2 {
   border: 3px solid var(--green);
 }
 
+.back-to-home-btn {
+  position: fixed;
+  top: 10vh;
+  left: 3vw;
+  font-size: 30px;
+  background-color: var(--oragne);
+  font-family: 'Syne Mono', monospace;
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s;
+  z-index: 10;
+  color: var(--black);
+  visibility: hidden;
+}
+
 .genres-box {
   margin-top: 20px;
   display: flex;
@@ -317,7 +334,7 @@ h2 {
   transition: transform 0.3s;
 }
 
-.genre-btn:hover {
+.genre-btn:hover, .back-to-home-btn:hover {
   transform: scale(1.1);
 }
 
@@ -361,6 +378,7 @@ h2 span {
 .cards-container {
   position: relative;
   max-width: 1400px;
+  min-height: 70vh;
   width: 100%;
   margin: 0 auto;
   display: flex;

@@ -28,8 +28,6 @@ export const sections = [
   document.querySelector('.footer'),
 ];
 
-const libraryBtn = document.querySelector('.nav-library');
-
 export let state = {
   movies: [],
   arrayOfSelectedGenres: [],
@@ -54,6 +52,7 @@ const decrementBtn = document.querySelector('.decrement-page-btn');
 const incrementBtn = document.querySelector('.increment-page-btn');
 const searchBtn = document.querySelector('.search-btn');
 const backToHomeBtn = document.querySelector('.back-to-home-btn');
+const libraryBtn = document.querySelector('.nav-library');
 
 // ************FUNCTIONS************
 const fetchVideos = async (link) => {
@@ -64,7 +63,6 @@ const fetchVideos = async (link) => {
     }
     const json = await res.json();
     state.movies = json.results;
-    console.log(state.movies);
     state.totalPages = json.total_pages;
     if (state.totalPages > 500) {
       state.totalPages = 500;
@@ -75,19 +73,16 @@ const fetchVideos = async (link) => {
     alert(`An error occurred: ${error.message}`);
   }
 };
-
 const getMoviesFromKeys = async () => {
   state.movies = [];
   const keys = Object.keys(localStorage);
   for (const key of keys) {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${key}?api_key=${API_KEY}`
-    );
+    let res = await fetch(
+      `https://api.themoviedb.org/3/${localStorage.getItem(key)}/${key}?api_key=${API_KEY}`)
     const json = await res.json();
     state.movies.push(json);
   }
 };
-
 const showLibrary = async () => {
   currentTitle.textContent = 'Here is your library:';
   cardsContainer.textContent = '';
@@ -153,11 +148,7 @@ const showVideos = async (param) => {
     searchBtn.classList.remove('search-btn-visible');
   } else {
     await fetchVideos(
-      `https://api.themoviedb.org/3/${
-        state.currentVideoType
-      }/${param}?api_key=${API_KEY}&with_genres=${state.arrayOfSelectedGenres.join(
-        ','
-      )}&page=${state.pageNumber}&include_adult=false`
+      `https://api.themoviedb.org/3/${state.currentVideoType}/${param}?api_key=${API_KEY}&page=${state.pageNumber}&include_adult=false`
     );
   }
   state.latestParam = param;
@@ -166,11 +157,13 @@ const showVideos = async (param) => {
 };
 
 const renderButtonAddOrRemove = (addOrRemoveButton, movie, videoName) => {
+const isMovieOrSeries = movie.title ? 'movie' : 'tv'
+
   addOrRemoveButton.addEventListener('click', (e) => {
     e.stopPropagation();
-
+console.log(movie);
     if (addOrRemoveButton.textContent === '+') {
-      localStorage.setItem(movie.id, videoName);
+      localStorage.setItem(movie.id, isMovieOrSeries);
       addOrRemoveButton.textContent = '-';
     } else if (addOrRemoveButton.textContent === '-') {
       if (currentTitle.textContent === 'Here is your library:') {
@@ -242,12 +235,7 @@ const switchTypeOfVideo = () => {
       upcomingVideosBtn.innerHTML = `Airing today <span>${spanBtn.textContent}</span>`;
     }
   });
-  if (state.currentVideoType === 'movie') {
-    showVideos('now_playing');
-  } else {
-    showVideos('airing_today');
-  }
-  nowPlayingVideosBtn.click();
+  discoverVideosBtn.click();
   genresBox.textContent = '';
   uploadGenres();
 };
@@ -269,8 +257,10 @@ const selectActiveChoice = (e) => {
   const activeButton = e.currentTarget;
   if (activeButton === discoverVideosBtn) {
     select.style.visibility = 'visible';
+    genresBox.style.display = 'flex';
   } else {
     select.style.visibility = 'hidden';
+    genresBox.style.display = 'none';
   }
 
   chooseButtonsList.forEach((chooseButton) => {
@@ -454,7 +444,7 @@ searchBtn.addEventListener('click', () => {
 });
 libraryBtn.addEventListener('click', showLibrary);
 
-showVideos('now_playing');
+showVideos('discover');
 
 showSortOptions();
 

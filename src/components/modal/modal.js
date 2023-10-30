@@ -67,10 +67,15 @@ export const createModal = (movie, keys) => {
 const showGenresInModal = (video) => {
   const genres =
     state.currentVideoType === 'movie' ? moviesGenres : seriesGenres;
-  if (video.genre_ids.length === 0)
-    return (video.genre_ids = ['Genres not specified']);
+
+  const checkGenresIfInCardOrLibrary = video.genre_ids
+    ? video.genre_ids
+    : video.genres.map((genre) => genre.id);
+
+  if (checkGenresIfInCardOrLibrary.length === 0)
+    return ['Genres not specified'];
   else
-    return video.genre_ids
+    return checkGenresIfInCardOrLibrary
       .map((id) => genres.find((genre) => genre.id === id)?.name)
       .filter(Boolean)
       .join(', ');

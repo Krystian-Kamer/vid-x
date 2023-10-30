@@ -221,7 +221,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  visibility: hidden;
+  visibility: visible;
   padding: 5px 20px;
   color: var(--white);
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),

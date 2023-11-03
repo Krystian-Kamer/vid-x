@@ -2,38 +2,41 @@ import { state } from '../../../main.js';
 import { sections } from '../../../main.js';
 import { moviesGenres, seriesGenres } from '../../../genres.js';
 
-export const createModal = (movie, keys) => {
+export const createModal = async (video, keys) => {
+  const genres = await showGenresInModal(video);
+
+  console.log(video, 'videeeeeo');
   const modal = document.createElement('div');
   document.body.append(modal);
   modal.classList.add('modal');
-  let imagePath = movie.poster_path
-    ? 'https://www.themoviedb.org/t/p/original/' + movie.poster_path
+  let imagePath = video.poster_path
+    ? 'https://www.themoviedb.org/t/p/original/' + video.poster_path
     : './src/assets/picture_not_found.jpg';
 
   let img = new Image();
   img.src = imagePath;
 
-  let releaseDate = movie.release_date
-    ? movie.release_date
-    : movie.first_air_date
-    ? movie.first_air_date
+  let releaseDate = video.release_date
+    ? video.release_date
+    : video.first_air_date
+    ? video.first_air_date
     : 'Date not specified';
 
-  img.onload = function () {
+  img.onload = async function () {
     modal.innerHTML = `<div class="modal-flex-box">
       <button class = "modal-close-btn">X</button>
       <div class="modal-left-side">
-        <img src="${img.src}" alt = "${movie.title ? movie.title : movie.name}">
+        <img src="${img.src}" alt = "${video.title ? video.title : video.name}">
       </div>
       <div class="modal-right-side">
         <p>
             <i class="fa-solid fa-clapperboard"></i> Title:
         </p>
-        <p class="modal-title">${movie.title ? movie.title : movie.name}</p>
+        <p class="modal-title">${video.title ? video.title : video.name}</p>
         <p>
             <i class="fa-solid fa-ghost"></i> Genre:
         </p>
-        <p class="modal-genre">${showGenresInModal(movie)}</p>
+        <p class="modal-genre">${genres}</p>
         <p>
             <i class="fa-solid fa-calendar"></i> Relase date:
         </p>
@@ -42,19 +45,19 @@ export const createModal = (movie, keys) => {
             <i class="fa-solid fa-star"></i> Vote average:
         </p>
         <p class="modal-vote-average">${
-          movie.vote_average
-            ? movie.vote_average.toFixed(1)
+          video.vote_average
+            ? video.vote_average.toFixed(1)
             : 'Vote not specified'
         }</p>
       </div>
       </div>
       <p class="modal-overview">${
-        movie.overview
-          ? movie.overview
+        video.overview
+          ? video.overview
           : `The given video has no available description.`
       }</p>`;
     closeModal(modal);
-    makeSmallerOverviewInModal(movie);
+    makeSmallerOverviewInModal(video);
     modal.classList.add('modal-active');
     const deleteButton = modal.querySelector('.modal-close-btn');
     deleteButton.addEventListener('click', () => closeModal(modal));
@@ -67,11 +70,9 @@ export const createModal = (movie, keys) => {
 const showGenresInModal = (video) => {
   const genres =
     state.currentVideoType === 'movie' ? moviesGenres : seriesGenres;
-
   const checkGenresIfInCardOrLibrary = video.genre_ids
     ? video.genre_ids
     : video.genres.map((genre) => genre.id);
-
   if (checkGenresIfInCardOrLibrary.length === 0)
     return ['Genres not specified'];
   else

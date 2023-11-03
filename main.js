@@ -73,17 +73,22 @@ const fetchVideos = async (link) => {
     alert(`An error occurred: ${error.message}`);
   }
 };
+
 const getMoviesFromKeys = async () => {
   state.movies = [];
   const keys = Object.keys(localStorage);
   for (const key of keys) {
     let res = await fetch(
-      `https://api.themoviedb.org/3/${localStorage.getItem(key)}/${key}?api_key=${API_KEY}`)
+      `https://api.themoviedb.org/3/${localStorage.getItem(
+        key
+      )}/${key}?api_key=${API_KEY}`
+    );
     const json = await res.json();
     state.movies.push(json);
   }
 };
 const showLibrary = async () => {
+  clearInterval(state.indexTyping);
   currentTitle.textContent = 'Here is your library:';
   cardsContainer.textContent = '';
   await getMoviesFromKeys();
@@ -154,14 +159,24 @@ const showVideos = async (param) => {
   state.latestParam = param;
   criteriaNotFound();
   showAllPages();
+  scrollToTitle();
+};
+
+const scrollToTitle = () => {
+  if (currentTitle) {
+    const rect = currentTitle.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const top = rect.top + scrollTop - 90;
+    window.scrollTo({ top: top, left: 0, behavior: 'smooth' });
+  }
 };
 
 const renderButtonAddOrRemove = (addOrRemoveButton, movie, videoName) => {
-const isMovieOrSeries = movie.title ? 'movie' : 'tv'
+  const isMovieOrSeries = movie.title ? 'movie' : 'tv';
 
   addOrRemoveButton.addEventListener('click', (e) => {
     e.stopPropagation();
-console.log(movie);
+    console.log(movie);
     if (addOrRemoveButton.textContent === '+') {
       localStorage.setItem(movie.id, isMovieOrSeries);
       addOrRemoveButton.textContent = '-';
@@ -202,22 +217,21 @@ const createCards = () => {
     let imagePath = movie.poster_path
       ? 'https://www.themoviedb.org/t/p/w220_and_h330_face/' + movie.poster_path
       : './src/assets/picture_not_found.jpg';
-    card.innerHTML = `<div class="card">
+    card.innerHTML = `<div class="card" data-tilt data-tilt-speed="1000" data-tilt-scale="1.08">
       <div class="card-poster">
         <img src="${imagePath}" alt="${videoName} poster">
       </div>
       <button class="btn-add">${isMovieInFavorites ? '-' : '+'}</button>
-      <p class="card-title">${videoName}</p>
+      <p class="card-title"><span>${videoName}</span></p>
     </div>`;
     cardsContainer.append(card);
     card.addEventListener('click', () => {
       createModal(movie, keys);
     });
-
     const addOrRemoveButton = card.querySelector('.btn-add');
-
     renderButtonAddOrRemove(addOrRemoveButton, movie, videoName);
   });
+  VanillaTilt.init(document.querySelectorAll(".card"))
 };
 
 const switchTypeOfVideo = () => {
@@ -306,6 +320,7 @@ const setCurrentTitle = (e) => {
   state.titleIsRunning = true;
   currentTitle.textContent = '';
   const titleFromButton = e.currentTarget;
+  console.log(titleFromButton);
   let number = 0;
   const addLetterToTitle = (e) => {
     currentTitle.textContent += titleFromButton.textContent[number];
@@ -314,6 +329,7 @@ const setCurrentTitle = (e) => {
       clearInterval(state.indexTyping);
       state.titleIsRunning = false;
     }
+    console.log(currentTitle.textContent);
   };
   state.indexTyping = setInterval(addLetterToTitle, 70);
 };
@@ -339,6 +355,12 @@ const showSortOptions = () => {
       });
       option.classList.add('menu-active');
     });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.remove('menu-open');
+    }
   });
 };
 
@@ -440,6 +462,7 @@ searchBtn.addEventListener('click', () => {
   currentTitle.textContent = searchInput.value;
   state.pageNumber = 1;
   currentPage.textContent = state.pageNumber;
+  genresBox.style.display = 'none';
   showVideos('search');
 });
 libraryBtn.addEventListener('click', showLibrary);

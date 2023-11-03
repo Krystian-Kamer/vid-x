@@ -17,8 +17,6 @@ html {
 
 body {
   position: relative;
-  justify-content: center;
-  text-align: center;
   background-image: linear-gradient(
     180deg,
     var(--black) 0%,
@@ -55,12 +53,11 @@ h2 {
   text-align: center;
 }
 
-.switcher-box {
-  position: relative;
-  margin: 30px 0;
-}
+
 .switcher {
   position: relative;
+  align-self: center;
+  margin: 40px auto;
   background-color: transparent;
   border: none;
   height: 50px;
@@ -223,6 +220,7 @@ h2 {
   align-items: center;
   visibility: visible;
   padding: 5px 20px;
+  margin: 10px auto;
   color: var(--white);
   text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
     0 0 150px rgb(73, 73, 73);
@@ -239,8 +237,6 @@ h2 {
 }
 
 .caret {
-  width: 0;
-  height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid var(--oragne);
@@ -334,7 +330,8 @@ h2 {
   transition: transform 0.3s;
 }
 
-.genre-btn:hover, .back-to-home-btn:hover {
+.genre-btn:hover,
+.back-to-home-btn:hover {
   transform: scale(1.1);
 }
 
@@ -346,7 +343,6 @@ h2 {
 .btn-choose:hover,
 .btn-choose:hover span,
 .nav-link:hover {
-  transform: scale(1.05);
   color: #ff8484;
 }
 
@@ -375,7 +371,8 @@ h2 span {
   }
 }
 
-.cards-container {
+.
+s-container {
   position: relative;
   max-width: 1400px;
   min-height: 70vh;
@@ -409,7 +406,7 @@ h2 span {
   align-items: center;
   width: 220px;
   height: 330px;
-  transition: transform 0.3s;
+  transition: transform 0.6s;
   z-index: -100;
 }
 
@@ -425,6 +422,7 @@ h2 span {
   text-align: center;
   background-color: var(--black);
   z-index: 1;
+
 }
 
 .card .btn-add {

@@ -1,77 +1,77 @@
 .modal {
-    position: fixed;
-    transform: translate(-50%, -50%);
-    min-height: 80vh;
-    max-height: 90vh;
-    width: 60vw;
-    max-width: 1000px;
-    padding: 15px 10px;
-    border-radius: 30px;
-    background-color: rgba(20, 19, 19, 0.9);
+  position: fixed;
+  transform: translate(-50%, -50%);
+  min-height: 80vh;
+  max-height: 100vh;
+  min-width: 70vw;
+  padding: 15px 10px;
+  border-radius: 30px;
+  background-color: rgba(20, 19, 19, 0.9);
+  opacity: 0;
+}
+
+.modal-active {
+  left: 50%;
+  animation: showModal 0.7s forwards;
+  box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.9);
+}
+
+@keyframes showModal {
+  0% {
+    top: 30%;
     opacity: 0;
   }
-  
-  .modal-active {
-    left: 50%;
-    animation: showModal 0.7s forwards;
+  100% {
+    top: 50%;
+    opacity: 1;
   }
-  
-  @keyframes showModal {
-    0% {
-      top: 30%;
-      opacity: 0;
-    }
-    100% {
-      top: 50%;
-      opacity: 1;
-    }
-  }
-  
-  .modal-flex-box {
-    display: flex;
-    padding: 20px;
-  }
-  
-  .modal-left-side img {
-    height: 40vh;
-    border-radius: 30px;
-    max-width: 345px;
-  }
-  
-  .modal-right-side {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-left: 30px;
-    font-size: 30px;
-  }
-  
-  .modal-right-side p:nth-child(2n-1) {
-    margin-top: 35px;
-  }
-  
-  .modal-overview {
-    padding: 0 25px;
-    font-size: 26px;
-  }
-  
-  .modal-close-btn {
-    position: absolute;
-    top: 0px;
-    right: 10px;
-    font-size: 50px;
-    border: none;
-    background-color: transparent;
-    font-family: 'Syne Mono', monospace;
-    color: rgb(251, 68, 68);
-    cursor: pointer;
-    padding: 15px;
-    z-index: 999;
-  }
-  
-  .modal-close-btn:hover {
-    transform: scale(1.1);
-    text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
-      0 0 150px rgb(255, 0, 0);
-  }
+}
+
+.modal-flex-box {
+  display: flex;
+  padding: 20px;
+}
+
+.modal-left-side img {
+  height: 40vh;
+  border-radius: 30px;
+  max-width: 345px;
+}
+
+.modal-right-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-left: 30px;
+  font-size: 30px;
+}
+
+.modal-right-side p:nth-child(2n-1) {
+  margin-top: 35px;
+}
+
+.modal-overview {
+  padding: 0 25px;
+  font-size: 26px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 50px;
+  border: none;
+  background-color: transparent;
+  font-family: 'Syne Mono', monospace;
+  color: rgb(251, 68, 68);
+  cursor: pointer;
+  padding: 15px;
+  z-index: 999;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 5px #ff0000, 0 0 20px #f90808, 0 0 90px rgb(246, 4, 4),
+    0 0 150px rgb(255, 0, 0);
+}

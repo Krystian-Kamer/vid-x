@@ -4,8 +4,6 @@ import { moviesGenres, seriesGenres } from '../../../genres.js';
 
 export const createModal = async (video, keys) => {
   const genres = await showGenresInModal(video);
-
-  console.log(video, 'videeeeeo');
   const modal = document.createElement('div');
   document.body.append(modal);
   modal.classList.add('modal');

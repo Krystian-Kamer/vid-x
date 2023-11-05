@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="./src/components/contact/contact.css">
 </head>
 
-<body >
+<body>
     <nav class="nav">
         <a class="nav-logo" href="/">VID-X</a>
         <a class="nav-link nav-library" href="#">my library</a>
@@ -28,12 +28,12 @@
         <section class="main-section">
             <a class="back-to-home-btn" href="/">←</a>
             <h1>All your favorite movies and series in one place</h1>
-                <button class="switcher" data-tilt data-tilt-axis="x"  data-tilt-perspective="400">
-                    <p class="switch-to-movies switch-to-active">Movies
-                    <div class="switcher-background"></div>
-                    </p>
-                    <p class="switch-to-series">Series</p>
-                </button>
+            <button class="switcher" data-tilt data-tilt-axis="x" data-tilt-perspective="400">
+                <p class="switch-to-movies switch-to-active">Movies
+                <div class="switcher-background"></div>
+                </p>
+                <p class="switch-to-series">Series</p>
+            </button>
 
             <div class="search-box">
                 <input placeholder="Search..." class="search-input" type="text">
@@ -43,11 +43,16 @@
             </div>
 
             <div class="buttons-choose-box">
-                <button class="btn-choose btn-discover btn-choose-active" data-tilt data-tilt-scale="1.07" >Discover <span>Movies</span></button>
-                <button class="btn-choose btn-now-playing" data-tilt data-tilt-scale="1.07">Now playing <span>Movies</span></button>
-                <button class="btn-choose btn-popular" data-tilt data-tilt-scale="1.07">Popular <span>Movies</span></button>
-                <button class="btn-choose btn-top-rated" data-tilt data-tilt-scale="1.07">Top rated <span>Movies</span></button>
-                <button class="btn-choose btn-upcoming" data-tilt data-tilt-scale="1.07">Upcoming <span>Movies</span></button>
+                <button class="btn-choose btn-discover btn-choose-active" data-tilt data-tilt-scale="1.07">Discover
+                    <span>Movies</span></button>
+                <button class="btn-choose btn-now-playing" data-tilt data-tilt-scale="1.07">Now playing
+                    <span>Movies</span></button>
+                <button class="btn-choose btn-popular" data-tilt data-tilt-scale="1.07">Popular
+                    <span>Movies</span></button>
+                <button class="btn-choose btn-top-rated" data-tilt data-tilt-scale="1.07">Top rated
+                    <span>Movies</span></button>
+                <button class="btn-choose btn-upcoming" data-tilt data-tilt-scale="1.07">Upcoming
+                    <span>Movies</span></button>
             </div>
 
             <div class="genres-box">
@@ -83,7 +88,20 @@
             <div class="all-pages-container">
             </div>
         </section>
+
         <section class="contact-section">
+            <div class="card my-card" data-tilt data-tilt-speed="1000" data-tilt-scale="1.2">
+                <img class="card-poster" src="./src/assets/me.jpg" alt="picture of Krystian Kamer">
+                <p class="card-title">Krystian Kamer</p>
+            </div>
+            <div class="info-about-me">
+                <a class="my-info phone" data-tilt data-tilt-axis="x"><i class="my-info-link fa-solid fa-phone"></i>666
+                    660 128</a>
+                <a class="my-info email" data-tilt data-tilt-axis="x"><i
+                        class="my-info-link fa-solid fa-envelope"></i>texen24@gmail.com</i></a>
+                <a href="https://www.linkedin.com/in/krystian-kamer-0aa148279/" class="my-info linkedin" data-tilt data-tilt-axis="x"><i class="my-info-link fa-brands fa-linkedin-in"></i>linkedIn</a>
+                <a href="https://github.com/Krystian-Kamer" class="my-info github" data-tilt data-tilt-axis="x"><i class="my-info-link fa-brands fa-github"></i>Github</a>
+            </div>
         </section>
     </main>
 
@@ -95,13 +113,6 @@
     <script type="module" src="./main.js"></script>
     <script type="module" src="./src/components/modal/modal.js"></script>
     <script type="text/javascript" src="./node_modules/vanilla-tilt/dist/vanilla-tilt.js"></script>
-
-    <script type="text/javascript">
-        VanillaTilt.init(document.querySelectorAll(".card"), {
-            max: 25,
-            speed: 400
-        });
-    </script>
 </body>
 
 </html>

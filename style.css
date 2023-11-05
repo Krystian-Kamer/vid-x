@@ -11,7 +11,7 @@ html {
   --maroon: rgb(65, 20, 20);
   --black: rgba(0, 0, 0, 0.937);
   --white: rgb(235, 235, 235);
-  --oragne: rgba(255, 140, 58, 0.85);
+  --orange: rgba(255, 140, 58, 0.85);
   --green: rgba(43, 255, 0, 0.75);
 }
 
@@ -52,7 +52,6 @@ h2 {
   justify-content: center;
   text-align: center;
 }
-
 
 .switcher {
   position: relative;
@@ -133,7 +132,7 @@ h2 {
   border-radius: 50px;
   padding: 10px 12px;
   border: 2px solid transparent;
-  background-color: var(--oragne);
+  background-color: var(--orange);
   cursor: pointer;
   visibility: hidden;
 }
@@ -239,7 +238,7 @@ h2 {
 .caret {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid var(--oragne);
+  border-top: 5px solid var(--orange);
   transition: transform 0.3s;
 }
 
@@ -250,7 +249,7 @@ h2 {
 .menu {
   list-style: none;
   background-color: rgba(35, 34, 34, 0.95);
-  border: 1px solid var(--oragne);
+  border: 1px solid var(--orange);
   border-radius: 15px;
   color: white;
   position: absolute;
@@ -297,7 +296,7 @@ h2 {
   top: 10vh;
   left: 3vw;
   font-size: 30px;
-  background-color: var(--oragne);
+  background-color: var(--orange);
   font-family: 'Syne Mono', monospace;
   padding: 10px 20px;
   border-radius: 50px;
@@ -310,7 +309,7 @@ h2 {
 }
 
 .genres-box {
-  margin-top: 20px;
+  margin-top: 20px 5px 0px 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -319,7 +318,7 @@ h2 {
 
 .genre-btn {
   font-size: 20px;
-  background-color: var(--oragne);
+  background-color: var(--orange);
   font-family: 'Syne Mono', monospace;
   letter-spacing: 2px;
   padding: 10px 20px;
@@ -371,8 +370,7 @@ h2 span {
   }
 }
 
-.
-s-container {
+.cards-container {
   position: relative;
   max-width: 1400px;
   min-height: 70vh;
@@ -398,6 +396,7 @@ s-container {
   z-index: 1;
   opacity: 85%;
   cursor: pointer;
+  box-shadow: 15px 15px 10px rgba(0,0,0,0.5);
 }
 
 .card-poster {
@@ -416,13 +415,12 @@ s-container {
 }
 
 .card-title {
-  padding-top: 7px;
+  padding: 7px 2px;
   min-height: 60px;
   max-height: 100px;
   text-align: center;
   background-color: var(--black);
   z-index: 1;
-
 }
 
 .card .btn-add {
@@ -434,7 +432,7 @@ s-container {
   width: 45px;
   height: 45px;
   font-size: 30px;
-  background-color: var(--oragne);
+  background-color: var(--orange);
   border-radius: 50px;
   border: none;
   cursor: pointer;
@@ -464,7 +462,7 @@ s-container {
   align-self: center;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--oragne);
+  background-color: var(--orange);
   border-radius: 25px;
   width: 200px;
 }
@@ -508,7 +506,7 @@ s-container {
   border-radius: 15px;
   min-width: 30px;
   min-height: 30px;
-  background-color: var(--oragne);
+  background-color: var(--orange);
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s;
@@ -549,21 +547,19 @@ s-container {
   position: fixed;
   top: 20%;
   left: -50%;
-  width: 40vw;
   padding: 20px;
+  width: 500px;
   font-size: 24px;
   background-color: var(--black);
   z-index: 50;
-
-  border-right: 5px solid var(--oragne);
-  border-top: 5px solid var(--oragne);
-  border-bottom: 5px solid var(--oragne);
-
+  border-right: 5px solid var(--orange);
+  border-top: 5px solid var(--orange);
+  border-bottom: 5px solid var(--orange);
   animation: showInfo 4s normal;
 }
 
 .show-info-about-video span {
-  color: var(--oragne);
+  color: var(--orange);
   font-weight: bold;
   letter-spacing: 3px;
   word-wrap: break-word;

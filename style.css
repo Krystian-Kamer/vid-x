@@ -114,6 +114,7 @@ h2 {
   background-color: #323232;
   font-family: 'Syne Mono', monospace;
   z-index: 1;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
 .search-input:focus {
@@ -465,6 +466,7 @@ h2 span {
   background-color: var(--orange);
   border-radius: 25px;
   width: 200px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
 .pages-box span {

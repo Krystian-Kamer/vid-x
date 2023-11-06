@@ -21,10 +21,12 @@ const pagesBox = document.querySelector('.pages-box');
 const allPagesContainer = document.querySelector('.all-pages-container');
 const searchInput = document.querySelector('.search-input');
 const spanYear = document.querySelector('.current-year span');
+const contactSection = document.querySelector('.contact-section');
+const mainSection = document.querySelector('.main-section');
 
 export const sections = [
   document.querySelector('.nav'),
-  document.querySelector('.main-section'),
+  mainSection,
   document.querySelector('.footer'),
 ];
 
@@ -53,7 +55,8 @@ const incrementBtn = document.querySelector('.increment-page-btn');
 const searchBtn = document.querySelector('.search-btn');
 const backToHomeBtn = document.querySelector('.back-to-home-btn');
 const libraryBtn = document.querySelector('.nav-library');
-
+const contactBtn = document.querySelector('.nav-contact');
+// const 
 // ************FUNCTIONS************
 const fetchVideos = async (link) => {
   try {
@@ -89,6 +92,8 @@ const getMoviesFromKeys = async () => {
 };
 const showLibrary = async () => {
   clearInterval(state.indexTyping);
+  mainSection.style.display = 'flex';
+  contactSection.style.display = 'none'
   currentTitle.textContent = 'Here is your library:';
   cardsContainer.textContent = '';
   await getMoviesFromKeys();
@@ -159,10 +164,9 @@ const showVideos = async (param) => {
   criteriaNotFound();
   showAllPages();
 
-if(param !== 'discover') {
-  scrollToTitle()
-}
-
+  if (param !== 'discover') {
+    scrollToTitle();
+  }
 };
 
 const scrollToTitle = () => {
@@ -438,6 +442,12 @@ const criteriaNotFound = () => {
   }
 };
 
+const showContactSection = () => {
+  mainSection.style.display = 'none';
+  backToHomeBtn.style.visibility = 'visible';
+  contactSection.style.display = 'flex';
+};
+
 const getCurrentYear = () => {
   const currentYear = new Date().getFullYear();
   spanYear.textContent = ` ${currentYear} `;
@@ -467,7 +477,7 @@ searchBtn.addEventListener('click', () => {
   showVideos('search');
 });
 libraryBtn.addEventListener('click', showLibrary);
-
+contactBtn.addEventListener('click', showContactSection);
 showVideos('discover');
 
 showSortOptions();

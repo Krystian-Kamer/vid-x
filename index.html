@@ -21,12 +21,13 @@
     <nav class="nav">
         <a class="nav-logo" href="/">VID-X</a>
         <a class="nav-link nav-library" href="#">my library</a>
-        <a class="nav-link" href="#">contact</a>
+        <a class="nav-link nav-contact" href="#">contact</a>
     </nav>
+
+    <a class="back-to-home-btn" href="/">←</a>
 
     <main>
         <section class="main-section">
-            <a class="back-to-home-btn" href="/">←</a>
             <h1>All your favorite movies and series in one place</h1>
             <button class="switcher" data-tilt data-tilt-axis="x" data-tilt-perspective="400">
                 <p class="switch-to-movies switch-to-active">Movies
@@ -43,20 +44,17 @@
             </div>
 
             <div class="buttons-choose-box">
-                <button class="btn-choose btn-discover btn-choose-active" data-tilt data-tilt-scale="1.07">Discover
-                    <span>Movies</span></button>
-                <button class="btn-choose btn-now-playing" data-tilt data-tilt-scale="1.07">Now playing
-                    <span>Movies</span></button>
-                <button class="btn-choose btn-popular" data-tilt data-tilt-scale="1.07">Popular
-                    <span>Movies</span></button>
-                <button class="btn-choose btn-top-rated" data-tilt data-tilt-scale="1.07">Top rated
-                    <span>Movies</span></button>
-                <button class="btn-choose btn-upcoming" data-tilt data-tilt-scale="1.07">Upcoming
-                    <span>Movies</span></button>
+                <button class="btn-choose btn-discover btn-choose-active" data-tilt
+                    data-tilt-scale="1.07">Discover <span>Movies</span></button>
+                <button class="btn-choose btn-now-playing" data-tilt data-tilt-scale="1.07">Now playing <span>Movies</span></button>
+                <button class="btn-choose btn-popular" data-tilt
+                    data-tilt-scale="1.07">Popular <span>Movies</span></button>
+                <button class="btn-choose btn-top-rated" data-tilt data-tilt-scale="1.07">Top rated <span>Movies</span></button>
+                <button class="btn-choose btn-upcoming" data-tilt
+                    data-tilt-scale="1.07">Upcoming <span>Movies</span></button>
             </div>
 
-            <div class="genres-box">
-            </div>
+            <div class="genres-box"></div>
 
             <h2>Discover <span>movies</span></h2>
 
@@ -90,17 +88,34 @@
         </section>
 
         <section class="contact-section">
-            <div class="card my-card" data-tilt data-tilt-speed="1000" data-tilt-scale="1.2">
-                <img class="card-poster" src="./src/assets/me.jpg" alt="picture of Krystian Kamer">
-                <p class="card-title">Krystian Kamer</p>
+            <div class="contact-side-up">
+                <div class="card my-card" data-tilt data-tilt-speed="1000" data-tilt-scale="1.2">
+                    <img class="card-poster" src="./src/assets/me.jpg" alt="picture of Krystian Kamer">
+                    <p class="card-title">Krystian Kamer</p>
+                </div>
+                <div class="info-about-me">
+                    <a class="my-info phone" data-tilt data-tilt-axis="x"><i
+                            class="my-info-link fa-solid fa-phone"></i>666
+                        660 128</a>
+                    <a class="my-info email" data-tilt data-tilt-axis="x"><i
+                            class="my-info-link fa-solid fa-envelope"></i>texen24@gmail.com</i></a>
+                    <a href="https://www.linkedin.com/in/krystian-kamer-0aa148279/" target="_blank"
+                        class="my-info linkedin" data-tilt data-tilt-axis="x"><i
+                            class="my-info-link fa-brands fa-linkedin-in"></i>linkedIn</a>
+                    <a href="https://github.com/Krystian-Kamer" target="_blank" class="my-info github" data-tilt
+                        data-tilt-axis="x"><i class="my-info-link fa-brands fa-github"></i>Github</a>
+                </div>
             </div>
-            <div class="info-about-me">
-                <a class="my-info phone" data-tilt data-tilt-axis="x"><i class="my-info-link fa-solid fa-phone"></i>666
-                    660 128</a>
-                <a class="my-info email" data-tilt data-tilt-axis="x"><i
-                        class="my-info-link fa-solid fa-envelope"></i>texen24@gmail.com</i></a>
-                <a href="https://www.linkedin.com/in/krystian-kamer-0aa148279/" class="my-info linkedin" data-tilt data-tilt-axis="x"><i class="my-info-link fa-brands fa-linkedin-in"></i>linkedIn</a>
-                <a href="https://github.com/Krystian-Kamer" class="my-info github" data-tilt data-tilt-axis="x"><i class="my-info-link fa-brands fa-github"></i>Github</a>
+            <div class="contact-side-down">
+                <form action="https://formsubmit.co/6ee327a787b46a2edd4ee628298c9ecf" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <div class="email-and-button">
+                        <input type="email" name="email" placeholder="Email Address" required>
+                        <button class="send-btn"type="submit">Send</button>
+                    </div>
+                    <input type="hidden" name="_next" value="https://krystian-kamer.github.io/vid-x/">
+                    <textarea name="message" placeholder="Write your message here" required></textarea>
+                </form>
             </div>
         </section>
     </main>

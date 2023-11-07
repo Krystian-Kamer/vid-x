@@ -13,15 +13,14 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./src/components/modal/modal.css">
     <link rel="stylesheet" href="./src/components/nav/nav.css">
-    <link rel="stylesheet" href="./src/components/my-library/my-library.css">
     <link rel="stylesheet" href="./src/components/contact/contact.css">
 </head>
 
 <body>
     <nav class="nav">
-        <a class="nav-logo" href="/">VID-X</a>
-        <a class="nav-link nav-library" href="#">my library</a>
-        <a class="nav-link nav-contact" href="#">contact</a>
+        <a class="nav-logo" href="/">🍿Vid-x</a>
+        <a class="nav-link nav-library">my library</a>
+        <a class="nav-link nav-contact">contact</a>
     </nav>
 
     <a class="back-to-home-btn" href="/">←</a>
@@ -110,11 +109,11 @@
                 <form action="https://formsubmit.co/6ee327a787b46a2edd4ee628298c9ecf" method="POST">
                     <input type="hidden" name="_captcha" value="false">
                     <div class="email-and-button">
-                        <input type="email" name="email" placeholder="Email Address" required>
-                        <button class="send-btn"type="submit">Send</button>
+                        <input type="email" name="email" class="email-input" placeholder="Email Address" required>
+                        <button class="btn-send" type="submit">Send</button>
                     </div>
                     <input type="hidden" name="_next" value="https://krystian-kamer.github.io/vid-x/">
-                    <textarea name="message" placeholder="Write your message here" required></textarea>
+                    <textarea name="message" class="textarea" placeholder="Write your message here" required></textarea>
                 </form>
             </div>
         </section>
@@ -127,6 +126,8 @@
 
     <script type="module" src="./main.js"></script>
     <script type="module" src="./src/components/modal/modal.js"></script>
+    <script type="module" src="./src/components/contact/contact.js"></script>
+    <script type="module" src="./src/components/my-library/my-library.js"></script>
     <script type="text/javascript" src="./node_modules/vanilla-tilt/dist/vanilla-tilt.js"></script>
 </body>
 

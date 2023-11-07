@@ -395,7 +395,7 @@ h2 span {
   flex-shrink: 0;
   border-radius: 15px;
   z-index: 1;
-  opacity: 85%;
+  filter: grayscale(20%);
   cursor: pointer;
   box-shadow: 15px 15px 10px rgba(0,0,0,0.5);
 }
@@ -454,7 +454,8 @@ h2 span {
 }
 
 .card:hover {
-  opacity: 100%;
+  filter: grayscale(0%);
+
 }
 
 .pages-box {

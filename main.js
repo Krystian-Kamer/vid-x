@@ -1,11 +1,13 @@
 import { moviesGenres, seriesGenres } from './genres.js';
 import { createModal } from './src/components/modal/modal.js';
+import { showContactSection } from './src/components/contact/contact.js';
+import { showLibrary } from './src/components/my-library/my-library.js';
 
-const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
+export const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
 
 // ************VARIABLES************
-const cardsContainer = document.querySelector('.cards-container');
-const currentTitle = document.querySelector('h2');
+export const cardsContainer = document.querySelector('.cards-container');
+export const currentTitle = document.querySelector('h2');
 const buttonsListSpan = document.querySelectorAll('.btn-choose span');
 const switcherBgc = document.querySelector('.switcher-background');
 const switchToMovies = document.querySelector('.switch-to-movies');
@@ -21,8 +23,8 @@ const pagesBox = document.querySelector('.pages-box');
 const allPagesContainer = document.querySelector('.all-pages-container');
 const searchInput = document.querySelector('.search-input');
 const spanYear = document.querySelector('.current-year span');
-const contactSection = document.querySelector('.contact-section');
-const mainSection = document.querySelector('.main-section');
+export const contactSection = document.querySelector('.contact-section');
+export const mainSection = document.querySelector('.main-section');
 
 export const sections = [
   document.querySelector('.nav'),
@@ -43,6 +45,7 @@ export let state = {
   totalPages: null,
 };
 // ************BUTTONS VARIABLES************
+export const backToHomeBtn = document.querySelector('.back-to-home-btn');
 const switcher = document.querySelector('.switcher');
 const nowPlayingVideosBtn = document.querySelector('.btn-now-playing');
 const popularVideosBtn = document.querySelector('.btn-popular');
@@ -53,10 +56,10 @@ const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
 const decrementBtn = document.querySelector('.decrement-page-btn');
 const incrementBtn = document.querySelector('.increment-page-btn');
 const searchBtn = document.querySelector('.search-btn');
-const backToHomeBtn = document.querySelector('.back-to-home-btn');
 const libraryBtn = document.querySelector('.nav-library');
 const contactBtn = document.querySelector('.nav-contact');
-// const 
+const sendBtn = document.querySelector('.btn-send');
+
 // ************FUNCTIONS************
 const fetchVideos = async (link) => {
   try {
@@ -74,51 +77,6 @@ const fetchVideos = async (link) => {
   } catch (error) {
     console.error(error);
     alert(`An error occurred: ${error.message}`);
-  }
-};
-
-const getMoviesFromKeys = async () => {
-  state.movies = [];
-  const keys = Object.keys(localStorage);
-  for (const key of keys) {
-    let res = await fetch(
-      `https://api.themoviedb.org/3/${localStorage.getItem(
-        key
-      )}/${key}?api_key=${API_KEY}`
-    );
-    const json = await res.json();
-    state.movies.push(json);
-  }
-};
-const showLibrary = async () => {
-  clearInterval(state.indexTyping);
-  mainSection.style.display = 'flex';
-  contactSection.style.display = 'none'
-  currentTitle.textContent = 'Here is your library:';
-  cardsContainer.textContent = '';
-  await getMoviesFromKeys();
-  createCards();
-  hideButtonsAndPagesIfInLibrary();
-  backToHomeBtn.style.visibility = 'visible';
-};
-
-const hideButtonsAndPagesIfInLibrary = () => {
-  const sectionElementsButNotCardsContainerAndTitle = Array.from(
-    document.querySelectorAll('.main-section > *')
-  ).filter(
-    (element) =>
-      element !== currentTitle &&
-      element !== cardsContainer &&
-      element !== backToHomeBtn
-  );
-  if (currentTitle.textContent === 'Here is your library:') {
-    sectionElementsButNotCardsContainerAndTitle.forEach((element) => {
-      element.style.display = 'none';
-    });
-  } else {
-    sectionElementsButNotCardsContainerAndTitle.forEach((element) => {
-      element.style.display = 'inline';
-    });
   }
 };
 
@@ -191,8 +149,8 @@ const renderButtonAddOrRemove = (addOrRemoveButton, movie, videoName) => {
         e.target.parentNode.remove();
       }
       localStorage.removeItem(movie.id);
-      addOrRemoveButton.textContent = '+';
       checkIfCardsContainerEmptyOrLessThenThree();
+      addOrRemoveButton.textContent = '+';
     }
     const showInfoAboutVideo = document.createElement('div');
     showInfoAboutVideo.classList.add('show-info-about-video');
@@ -209,12 +167,34 @@ const renderButtonAddOrRemove = (addOrRemoveButton, movie, videoName) => {
 };
 
 const checkIfCardsContainerEmptyOrLessThenThree = () => {
-  if (localStorage.length === 0) {
-    cardsContainer.textContent = `You don't have any positions in your library.`;
+  if (currentTitle.textContent === 'Here is your library:') {
+    if (localStorage.length === 0) {
+      console.log(localStorage.length);
+      cardsContainer.textContent = 'You have no items in your library.';
+    }
+  }
+
+  if (cardsContainer.querySelectorAll('.card').length <= 3) {
+    document.querySelectorAll('.card').forEach((card) => {
+      card.style.width = '264px';
+      card.style.minHeight = '468px';
+      card.style.maxHeight = '540px';
+      card.style.margin = '50px';
+    });
+    document.querySelectorAll('.card-poster').forEach((poster) => {
+      poster.style.width = '264px';
+      poster.style.height = '396px';
+    });
+    document.querySelectorAll('.card-title').forEach((title) => {
+      title.style.minHeight = '72px';
+      title.style.maxHeight = '120px';
+      title.style.padding = '12px 4px';
+      title.style.fontSize = '24px';
+    });
   }
 };
 
-const createCards = () => {
+export const createCards = () => {
   const keys = Object.keys(localStorage);
   state.movies.forEach((movie) => {
     const isMovieInFavorites = keys.includes(movie.id.toString());
@@ -236,8 +216,8 @@ const createCards = () => {
     const addOrRemoveButton = card.querySelector('.btn-add');
     renderButtonAddOrRemove(addOrRemoveButton, movie, videoName);
   });
-  VanillaTilt.init(document.querySelectorAll('.card'));
   checkIfCardsContainerEmptyOrLessThenThree();
+  VanillaTilt.init(document.querySelectorAll('.card'));
 };
 
 const switchTypeOfVideo = () => {
@@ -442,12 +422,6 @@ const criteriaNotFound = () => {
   }
 };
 
-const showContactSection = () => {
-  mainSection.style.display = 'none';
-  backToHomeBtn.style.visibility = 'visible';
-  contactSection.style.display = 'flex';
-};
-
 const getCurrentYear = () => {
   const currentYear = new Date().getFullYear();
   spanYear.textContent = ` ${currentYear} `;
@@ -478,6 +452,19 @@ searchBtn.addEventListener('click', () => {
 });
 libraryBtn.addEventListener('click', showLibrary);
 contactBtn.addEventListener('click', showContactSection);
+sendBtn.addEventListener('click', () => {
+  if (
+    document.querySelector('.email').value !== '' &&
+    document.querySelector('.textarea').value !== ''
+  ) {
+    alert(
+      `Thank you for sending your message. It means a lot to me. You will be taken to the homepage.`
+    );
+  } else {
+    alert('The email and message fields must be completed.');
+  }
+});
+
 showVideos('discover');
 
 showSortOptions();

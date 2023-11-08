@@ -1,6 +1,7 @@
 import { moviesGenres, seriesGenres } from './genres.js';
 import { createModal } from './src/components/modal/modal.js';
 import { showContactSection } from './src/components/contact/contact.js';
+import { showMessageAfterSend } from './src/components/contact/contact.js';
 import { showLibrary } from './src/components/my-library/my-library.js';
 
 export const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
@@ -452,18 +453,7 @@ searchBtn.addEventListener('click', () => {
 });
 libraryBtn.addEventListener('click', showLibrary);
 contactBtn.addEventListener('click', showContactSection);
-sendBtn.addEventListener('click', () => {
-  if (
-    document.querySelector('.email').value !== '' &&
-    document.querySelector('.textarea').value !== ''
-  ) {
-    alert(
-      `Thank you for sending your message. It means a lot to me. You will be taken to the homepage.`
-    );
-  } else {
-    alert('The email and message fields must be completed.');
-  }
-});
+sendBtn.addEventListener('click', showMessageAfterSend);
 
 showVideos('discover');
 

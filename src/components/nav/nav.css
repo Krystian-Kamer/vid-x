@@ -1,29 +1,69 @@
 .nav {
-    position: sticky;
+  position: sticky;
+  display: flex;
+  top: 0;
+  padding: 40px 0;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.837);
+  border-radius: 0px 0px 40px 40px;
+/* I must remember to add logic that remove 40px 40px if active */
+  z-index: 9;
+}
+
+.nav-hamburger-icon {
+  font-size: 30px;
+}
+
+.nav-mobile {
+  justify-content: space-around;
+  align-items: center;
+}
+
+.two-nav-links {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 80px;
+  font-size: 30px;
+  height: 200px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.837);
+  border-radius: 0px 0px 40px 40px;
+}
+
+.nav-desktop {
+  display: none;
+}
+
+.nav-logo {
+  letter-spacing: 10px;
+  font-size: 32px;
+  color: var(--white);
+}
+
+.nav-link {
+  padding: 10px 30px;
+  text-transform: uppercase;
+  border-radius: 30px;
+  text-shadow: 0 0 5px #ff0000, 0 0 20px #5c5c5c, 0 0 90px rgb(255, 0, 0),
+    0 0 150px rgb(73, 73, 73);
+  border: 2px solid transparent;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+@media (min-width: 576px) {
+  .nav-logo {
+    font-size: 40px;
+  }
+  .nav-mobile {
+    display: none;
+  }
+  .nav-desktop {
     display: flex;
-    top: 0;
     justify-content: space-around;
     align-items: center;
-    padding: 40px 0;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.837);
-    border-radius: 0px 0px 40px 40px;
-    z-index: 9;
   }
-  
-  .nav-logo {
-    letter-spacing: 10px;
-    font-size: 40px;
-    color: var(--white);
-  }
-  
-  .nav-link {
-    padding: 10px 30px;
-    text-transform: uppercase;
-    border-radius: 30px;
-    text-shadow: 0 0 5px #ff0000, 0 0 20px #000000, 0 0 90px rgb(255, 0, 0),
-      0 0 150px rgb(73, 73, 73);
-    border: 2px solid transparent;
-    transition: 0.3s;
-    cursor: pointer;
-  }
+}

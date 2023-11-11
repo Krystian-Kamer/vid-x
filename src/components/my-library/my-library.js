@@ -7,6 +7,7 @@ import {
   API_KEY,
   createCards,
   backToHomeBtn,
+  toggleMenu
 } from '../../../main.js';
 
 const getMoviesFromKeys = async () => {
@@ -24,6 +25,7 @@ const getMoviesFromKeys = async () => {
 };
 
 export const showLibrary = async () => {
+  toggleMenu();
   clearInterval(state.indexTyping);
   mainSection.style.display = 'flex';
   contactSection.style.display = 'none';

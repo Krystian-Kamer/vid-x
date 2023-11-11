@@ -8,6 +8,7 @@
 
 .contact-side-up {
   display: flex;
+  flex-direction: column;
 }
 
 .my-card {
@@ -19,13 +20,13 @@
 .info-about-me {
   display: flex;
   flex-direction: column;
-  margin-left: 70px;
 }
 
 .my-info {
-  margin: 30px 0;
-  font-size: 24px;
+  margin: 20px 0px 20px 35px;
+  font-size: 20px;
 }
+
 .my-info-link {
   background-color: var(--orange);
   padding: 10px;
@@ -43,6 +44,8 @@
 .contact-side-down form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .contact-side-down input,
@@ -51,7 +54,7 @@ textarea {
   padding: 10px 25px;
   color: var(--white);
   border: 2px solid transparent;
-  font-size: 18px;
+  font-size: 16px;
   background-color: #323232;
   font-family: 'Syne Mono', monospace;
   margin: 20px 0;
@@ -59,15 +62,15 @@ textarea {
 }
 
 .contact-side-down input {
-  width: 350px;
+  width: 230px;
   height: 45px;
 }
 
 .contact-side-down button {
-  width: 200px;
+  width: 100px;
   height: 45px;
   font-family: 'Syne Mono', monospace;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 15px;
   padding: 10px 25px;
   border: 2px solid transparent;
@@ -85,8 +88,8 @@ textarea {
 }
 
 .contact-side-down textarea {
-  min-width: 570px;
-  max-width: 670px;     
+  min-width: 350px;
+  max-width: 350px;
   min-height: 300px;
   max-height: 400px;
 }
@@ -99,3 +102,37 @@ textarea:focus {
   border: 2px solid transparent;
 }
 
+@media (min-width: 576px) {
+  .contact-side-up {
+    flex-direction: row;
+  }
+  .info-about-me {
+    margin: 60px 0px 0px 20px;
+  }
+
+  .my-info {
+    margin: 30px 0;
+    font-size: 24px;
+  }
+
+  .contact-side-down input,
+  textarea {
+    font-size: 18px;
+  }
+
+  .contact-side-down input {
+    width: 350px;
+  }
+
+  .contact-side-down button {
+    width: 200px;
+    font-size: 18px;
+  }
+
+  .contact-side-down textarea {
+    min-width: 570px;
+    max-width: 670px;
+    min-height: 300px;
+    max-height: 400px;
+  }
+}

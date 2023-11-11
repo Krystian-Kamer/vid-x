@@ -1,8 +1,11 @@
-import { state } from '../../../main.js';
-import { sections } from '../../../main.js';
+import { state, sections, toggleMenu, hamburgerButton } from '../../../main.js';
 import { moviesGenres, seriesGenres } from '../../../genres.js';
 
 export const createModal = async (video, keys) => {
+if(hamburgerButton.classList.contains('fa-xmark')) {
+  toggleMenu()
+}
+
   const genres = await showGenresInModal(video);
   const modal = document.createElement('div');
   document.body.append(modal);

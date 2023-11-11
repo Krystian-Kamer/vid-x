@@ -24,9 +24,10 @@ const pagesBox = document.querySelector('.pages-box');
 const allPagesContainer = document.querySelector('.all-pages-container');
 const searchInput = document.querySelector('.search-input');
 const spanYear = document.querySelector('.current-year span');
+export const hamburgerButton = document.querySelector('.nav-hamburger-icon');
 export const contactSection = document.querySelector('.contact-section');
 export const mainSection = document.querySelector('.main-section');
-
+export const twoNavLinks = document.querySelector('.two-nav-links');
 export const sections = [
   document.querySelector('.nav'),
   mainSection,
@@ -57,8 +58,8 @@ const chooseButtonsList = [...document.querySelectorAll('.btn-choose')];
 const decrementBtn = document.querySelector('.decrement-page-btn');
 const incrementBtn = document.querySelector('.increment-page-btn');
 const searchBtn = document.querySelector('.search-btn');
-const libraryBtn = document.querySelector('.nav-library');
-const contactBtn = document.querySelector('.nav-contact');
+const libraryBtns = document.querySelectorAll('.nav-library');
+const contactBtns = document.querySelectorAll('.nav-contact');
 const sendBtn = document.querySelector('.btn-send');
 
 // ************FUNCTIONS************
@@ -198,6 +199,7 @@ const checkIfCardsContainerEmptyOrLessThenThree = () => {
 export const createCards = () => {
   const keys = Object.keys(localStorage);
   state.movies.forEach((movie) => {
+    console.log(movie);
     const isMovieInFavorites = keys.includes(movie.id.toString());
     let card = document.createElement('div');
     let videoName = movie.title ? movie.title : movie.name;
@@ -428,6 +430,12 @@ const getCurrentYear = () => {
   spanYear.textContent = ` ${currentYear} `;
 };
 
+export const toggleMenu = () => {
+  hamburgerButton.classList.toggle('fa-bars');
+  hamburgerButton.classList.toggle('fa-xmark');
+  twoNavLinks.classList.toggle('two-nav-links-active');
+};
+
 // ************LISTENERS************
 nowPlayingVideosBtn.addEventListener('click', () => showVideos('now_playing'));
 popularVideosBtn.addEventListener('click', () => showVideos('popular'));
@@ -451,9 +459,16 @@ searchBtn.addEventListener('click', () => {
   genresBox.style.display = 'none';
   showVideos('search');
 });
-libraryBtn.addEventListener('click', showLibrary);
-contactBtn.addEventListener('click', showContactSection);
+
+libraryBtns.forEach((libraryBtn) => {
+  libraryBtn.addEventListener('click', showLibrary);
+});
+contactBtns.forEach((contactBtn) => {
+  contactBtn.addEventListener('click', showContactSection);
+});
+
 sendBtn.addEventListener('click', showMessageAfterSend);
+hamburgerButton.addEventListener('click', toggleMenu);
 
 showVideos('discover');
 

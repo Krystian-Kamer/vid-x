@@ -489,7 +489,7 @@ h2 span {
   border: none;
   font-size: 30px;
   cursor: pointer;
-  color: var(--black);
+  color: #000000;
   transition: transform 0.2s;
 }
 
@@ -507,7 +507,7 @@ h2 span {
 
 .all-pages-container {
   margin: 20px 10px;
-  color: var(--black);
+  color: #000000;
 }
 
 .page-btn {
@@ -518,7 +518,7 @@ h2 span {
   min-width: 30px;
   min-height: 30px;
   background-color: var(--orange);
-  color: var(--black);
+  color: #000000;
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s;
@@ -538,6 +538,7 @@ h2 span {
   font-family: 'Syne Mono', monospace;
   font-weight: bold;
   cursor: pointer;
+  color: #000000;
   transition: transform 0.2s;
   background-color: rgba(255, 204, 0, 0.939);
 }

@@ -54,7 +54,7 @@ textarea {
   padding: 10px 25px;
   color: var(--white);
   border: 2px solid transparent;
-  font-size: 16px;
+  font-size: 18px;
   background-color: #323232;
   font-family: 'Syne Mono', monospace;
   margin: 20px 0;
@@ -113,11 +113,6 @@ textarea:focus {
   .my-info {
     margin: 30px 0;
     font-size: 24px;
-  }
-
-  .contact-side-down input,
-  textarea {
-    font-size: 18px;
   }
 
   .contact-side-down input {

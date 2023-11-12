@@ -332,6 +332,7 @@ h2 {
   border-radius: 25px;
   border: none;
   cursor: pointer;
+  color: var(--black);
   transition: transform 0.3s;
 }
 
@@ -471,11 +472,11 @@ h2 span {
   background-color: var(--orange);
   border-radius: 25px;
   width: 190px;
+  color: var(--black);
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
 .pages-box span {
-  color: #000000;
   font-size: 25px;
   padding: 5px 25px;
   border-left: 2px solid rgba(0, 0, 0, 0.3);
@@ -505,6 +506,7 @@ h2 span {
 
 .all-pages-container {
   margin: 20px 10px;
+  color: var(--black);
 }
 
 .page-btn {

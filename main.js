@@ -204,7 +204,7 @@ export const createCards = () => {
     let card = document.createElement('div');
     let videoName = movie.title ? movie.title : movie.name;
     let imagePath = movie.poster_path
-      ? 'https://www.themoviedb.org/t/p/w220_and_h330_face/' + movie.poster_path
+      ? 'https://www.themoviedb.org/t/p/original/' + movie.poster_path
       : './src/assets/picture_not_found.jpg';
     card.innerHTML = `
     <div class="card" data-tilt data-tilt-speed="1000" data-tilt-scale="1.08">

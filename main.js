@@ -220,7 +220,7 @@ export const createCards = () => {
     renderButtonAddOrRemove(addOrRemoveButton, movie, videoName);
   });
   checkIfCardsContainerEmptyOrLessThenThree();
-  // VanillaTilt.init(document.querySelectorAll('.card'));
+  VanillaTilt.init(document.querySelectorAll('.card'));
 };
 
 const switchTypeOfVideo = () => {

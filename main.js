@@ -3,7 +3,6 @@ import { createModal } from './src/components/modal/modal.js';
 import { showContactSection } from './src/components/contact/contact.js';
 import { showMessageAfterSend } from './src/components/contact/contact.js';
 import { showLibrary } from './src/components/my-library/my-library.js';
-import {VanillaTilt} from "./node_modules/vanilla-tilt/vanilla-tilt.js";
 
 export const API_KEY = '7b4815b3acc118a02199450f50cc8cd7';
 

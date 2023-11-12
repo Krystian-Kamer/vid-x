@@ -489,6 +489,7 @@ h2 span {
   border: none;
   font-size: 30px;
   cursor: pointer;
+  color: var(--black);
   transition: transform 0.2s;
 }
 
@@ -517,6 +518,7 @@ h2 span {
   min-width: 30px;
   min-height: 30px;
   background-color: var(--orange);
+  color: var(--black);
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s;

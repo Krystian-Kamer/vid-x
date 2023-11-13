@@ -105,6 +105,13 @@ const closeModal = (modal) => {
 
 const makeSmallerOverviewInModal = (movie) => {
   const overviewsElement = document.querySelectorAll('.modal-overview');
+
+  if (movie.overview.length > 450) {
+    overviewsElement.forEach(
+      (overviewElement) => (overviewElement.classList.add('modal-smaller-text'))
+    );
+  }
+
   if (movie.overview.length > 600) {
     overviewsElement.forEach(
       (overviewElement) => (overviewElement.style.fontSize = '18px')

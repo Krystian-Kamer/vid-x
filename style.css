@@ -423,7 +423,7 @@ h2 span {
 .card-title {
   padding: 12px 4px;
   min-height: 72px;
-  max-height: 120px;
+  max-height: 150px;
   text-align: center;
   background-color: var(--black);
   z-index: 1;
@@ -665,7 +665,7 @@ h2 span {
   .card-title {
     padding: 7px 2px;
     min-height: 60px;
-    max-height: 100px;
+    max-height: 110px;
     font-size: 20px
   }
 }

@@ -29,7 +29,8 @@ export const contactSection = document.querySelector('.contact-section');
 export const mainSection = document.querySelector('.main-section');
 export const twoNavLinks = document.querySelector('.two-nav-links');
 export const sections = [
-  document.querySelector('.nav'),
+  document.querySelector('.nav-mobile'),
+  document.querySelector('.nav-desktop'),
   mainSection,
   document.querySelector('.footer'),
 ];
@@ -208,14 +209,14 @@ export const createCards = () => {
     card.innerHTML = `
     <div class="card" data-tilt data-tilt-speed="1000" data-tilt-scale="1.08">
       <img class="card-poster" src="${imagePath}" alt="${videoName} poster">
-      <button class="btn-add">${isMovieInFavorites ? '-' : '+'}</button>
+      <button class="btn-add-or-remove">${isMovieInFavorites ? '-' : '+'}</button>
       <p class="card-title">${videoName}</p>
   </div>`;
-    cardsContainer.append(card);
+  cardsContainer.append(card);
     card.addEventListener('click', () => {
       createModal(movie, keys);
     });
-    const addOrRemoveButton = card.querySelector('.btn-add');
+    const addOrRemoveButton = card.querySelector('.btn-add-or-remove');
     renderButtonAddOrRemove(addOrRemoveButton, movie, videoName);
   });
   checkIfCardsContainerEmptyOrLessThenThree();
@@ -328,14 +329,14 @@ const showSortOptions = () => {
   });
   options.forEach((option) => {
     option.addEventListener('click', () => {
-      select.textContent = option.textContent;
+      select.innerHTML = `<span class="selected" id="">${option.textContent}</span><div class="caret"></div>`;
       select.id = option.id;
       state.latestSort = select.id;
-      showVideos('discover');
-      resetPageNumber();
       select.classList.remove('select-clicked');
       caret.classList.remove('caret-rotate');
       menu.classList.remove('menu-open');
+      showVideos('discover');
+      resetPageNumber();
       options.forEach((option) => {
         option.classList.remove('menu-active');
       });

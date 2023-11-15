@@ -39,7 +39,7 @@ a {
   color: var(--white);
 }
 
-h1{
+h1 {
   font-size: 20px;
 }
 
@@ -114,7 +114,7 @@ h2 {
   color: var(--white);
   border: 2px solid transparent;
   font-size: 14px;
-  width: 290px;
+  width: 270px;
   background-color: #323232;
   font-family: 'Syne Mono', monospace;
   z-index: 1;
@@ -216,7 +216,8 @@ h2 {
 .sort-dropdown {
   position: relative;
   align-self: center;
-  width: 320px;
+  width: 270px;
+  font-size: 16px;
 }
 
 .select {
@@ -430,33 +431,30 @@ h2 span {
   font-size: 24px;
 }
 
-.card .btn-add {
+.btn-add-or-remove {
   position: absolute;
   width: 100%;
   height: 100%;
-  bottom: 0px;
-  left: 40%;
   width: 45px;
   height: 45px;
   font-size: 30px;
   background-color: var(--orange);
+  color: #000000;
   border-radius: 50px;
   border: none;
   cursor: pointer;
   transition: background-color 0.5s, bottom 0.5s;
   z-index: -100;
+  /* bottom: 50%;
+  left: 170px; */
 }
 
-.card .btn-add:hover {
+.btn-add-or-remove:hover {
   background-color: rgba(43, 255, 0, 0.95);
 }
 
 .card:hover .card-poster {
   transform: scale(1.05);
-}
-
-.card:hover .btn-add {
-  bottom: 25%;
 }
 
 .card:hover {
@@ -492,7 +490,6 @@ h2 span {
   color: #000000;
   transition: transform 0.2s;
 }
-
 
 .pages-box button:hover,
 .page-btn:hover,
@@ -643,11 +640,10 @@ h2 span {
   .pages-box span {
     font-size: 30px;
   }
-  
+
   .pages-box button {
     font-size: 36px;
   }
-
 
   .card {
     filter: grayscale(20%);
@@ -656,16 +652,34 @@ h2 span {
     max-height: 450px;
     margin: 20px;
   }
-  
+
   .card-poster {
     width: 220px;
     height: 330px;
   }
-  
+
   .card-title {
     padding: 7px 2px;
     min-height: 60px;
     max-height: 110px;
-    font-size: 20px
+    font-size: 20px;
+  }
+
+  .sort-dropdown {
+    position: relative;
+    align-self: center;
+    width: 320px;
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 992px) {
+  .card .btn-add-or-remove {
+    bottom: 0;
+    left: 40%;
+  }
+
+  .card:hover .btn-add-or-remove {
+    bottom: 25%;
   }
 }

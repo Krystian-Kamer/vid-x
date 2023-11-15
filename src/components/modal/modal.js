@@ -1,7 +1,7 @@
 import { state, sections, toggleMenu, hamburgerButton } from '../../../main.js';
 import { moviesGenres, seriesGenres } from '../../../genres.js';
 
-export const createModal = async (video, keys) => {
+export const createModal = async (video, keys, isMovieInFavorites) => {
 if(hamburgerButton.classList.contains('fa-xmark')) {
   toggleMenu()
 }
@@ -56,7 +56,8 @@ if(hamburgerButton.classList.contains('fa-xmark')) {
         video.overview
           ? video.overview
           : `The given video has no available description.`
-      }</p>`;
+      }</p>
+      `;
     closeModal(modal);
     makeSmallerOverviewInModal(video);
     modal.classList.add('modal-active');
@@ -114,7 +115,12 @@ const makeSmallerOverviewInModal = (movie) => {
 
   if (movie.overview.length > 600) {
     overviewsElement.forEach(
-      (overviewElement) => (overviewElement.style.fontSize = '18px')
-    );
+      (overviewElement) => overviewElement.classList.add('modal-smaller-text'))
   }
+
+  if (movie.overview.length > 800) {
+    overviewsElement.forEach(
+      (overviewElement) => overviewElement.classList.add('modal-even-smaller-text'))
+  }
+
 };

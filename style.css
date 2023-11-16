@@ -445,8 +445,8 @@ h2 span {
   cursor: pointer;
   transition: background-color 0.5s, bottom 0.5s;
   z-index: -100;
-  /* bottom: 50%;
-  left: 170px; */
+  /* top: 10px;
+  left: 10px; */
 }
 
 .btn-add-or-remove:hover {
@@ -592,6 +592,14 @@ h2 span {
 
 .current-year {
   color: var(--white);
+}
+
+@media (max-width: 991px) {
+  .btn-add-or-remove {
+    top: 10px;
+    left: 10px;
+  }
+  
 }
 
 @media (min-width: 576px) {

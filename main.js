@@ -209,10 +209,12 @@ export const createCards = () => {
     card.innerHTML = `
     <div class="card" data-tilt data-tilt-speed="1000" data-tilt-scale="1.08">
       <img class="card-poster" src="${imagePath}" alt="${videoName} poster">
-      <button class="btn-add-or-remove">${isMovieInFavorites ? '-' : '+'}</button>
+      <button class="btn-add-or-remove">${
+        isMovieInFavorites ? '-' : '+'
+      }</button>
       <p class="card-title">${videoName}</p>
   </div>`;
-  cardsContainer.append(card);
+    cardsContainer.append(card);
     card.addEventListener('click', () => {
       createModal(movie, keys);
     });
@@ -220,7 +222,9 @@ export const createCards = () => {
     renderButtonAddOrRemove(addOrRemoveButton, movie, videoName);
   });
   checkIfCardsContainerEmptyOrLessThenThree();
-  VanillaTilt.init(document.querySelectorAll('.card'));
+  if (window.innerWidth > 600) {
+    VanillaTilt.init(document.querySelectorAll('.card'))
+  }
 };
 
 const switchTypeOfVideo = () => {
@@ -459,14 +463,12 @@ searchBtn.addEventListener('click', () => {
   genresBox.style.display = 'none';
   showVideos('search');
 });
-
 libraryBtns.forEach((libraryBtn) => {
   libraryBtn.addEventListener('click', showLibrary);
 });
 contactBtns.forEach((contactBtn) => {
   contactBtn.addEventListener('click', showContactSection);
 });
-
 sendBtn.addEventListener('click', showMessageAfterSend);
 hamburgerButton.addEventListener('click', toggleMenu);
 

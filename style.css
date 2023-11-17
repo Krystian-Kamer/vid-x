@@ -337,11 +337,6 @@ h2 {
   transition: transform 0.3s;
 }
 
-.genre-btn:hover,
-.back-to-home-btn:hover {
-  transform: scale(1.1);
-}
-
 .genre-btn-selected {
   transform: scale(1.05);
   background-color: var(--green);
@@ -449,10 +444,6 @@ h2 span {
   left: 10px; */
 }
 
-.btn-add-or-remove:hover {
-  background-color: rgba(43, 255, 0, 0.95);
-}
-
 .card:hover .card-poster {
   transform: scale(1.05);
 }
@@ -557,15 +548,15 @@ h2 span {
   position: fixed;
   top: 20%;
   left: -50%;
-  padding: 20px;
-  width: 500px;
-  font-size: 24px;
   background-color: var(--black);
   z-index: 50;
   border-right: 5px solid var(--orange);
   border-top: 5px solid var(--orange);
   border-bottom: 5px solid var(--orange);
   animation: showInfo 4s normal;
+  width: 200px;
+  padding: 7px 2px 7px 15px;
+  font-size: 18px;
 }
 
 .show-info-about-video span {
@@ -599,7 +590,11 @@ h2 span {
     top: 10px;
     left: 10px;
   }
-  
+  .show-info-about-video {
+    width: 200px;
+    padding: 7px 2px 7px 15px;
+    font-size: 18px;
+  }
 }
 
 @media (min-width: 576px) {
@@ -689,5 +684,20 @@ h2 span {
 
   .card:hover .btn-add-or-remove {
     bottom: 25%;
+  }
+
+  .btn-add-or-remove:hover {
+    background-color: rgba(43, 255, 0, 0.95);
+  }
+
+  .genre-btn:hover,
+  .back-to-home-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .show-info-about-video {
+    width: 400px;
+    padding: 10px 2px 10px 15px;
+    font-size: 22px;
   }
 }

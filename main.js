@@ -222,7 +222,7 @@ export const createCards = () => {
     renderButtonAddOrRemove(addOrRemoveButton, movie, videoName);
   });
   checkIfCardsContainerEmptyOrLessThenThree();
-  if (window.innerWidth > 600) {
+  if (window.innerWidth > 991) {
     VanillaTilt.init(document.querySelectorAll('.card'))
   }
 };
